@@ -968,6 +968,14 @@ document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
   });
 });
 
+/* Atualiza Progresso na Escala (Q5) */
+document.querySelectorAll('.scale-item input[type="radio"]').forEach(input => {
+  input.addEventListener('change', updateProgress);
+});
+
+/* ── Progresso ─────────────────────────────────────────── */
+function updateProgress() {
+
 /* ── Escala de avaliação ───────────────────────────────── */
 document.querySelectorAll('.scale-options').forEach(group => {
   const name      = group.dataset.name;
