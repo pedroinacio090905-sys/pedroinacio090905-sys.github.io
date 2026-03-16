@@ -890,16 +890,31 @@
         </label>
         <div class="scale-wrapper">
           <div class="scale-labels"><span>1 (Nada)</span><span>5 (Muito)</span></div>
-          <div class="scale-options" data-name="q5">
-            <button type="button" class="scale-btn" data-value="1">1</button>
-            <button type="button" class="scale-btn" data-value="2">2</button>
-            <button type="button" class="scale-btn" data-value="3">3</button>
-            <button type="button" class="scale-btn" data-value="4">4</button>
-            <button type="button" class="scale-btn" data-value="5">5</button>
+          <div class="scale-options">
+            <label class="scale-item">
+              <input type="radio" name="q5" value="1" required />
+              <span>1</span>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="q5" value="2" />
+              <span>2</span>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="q5" value="3" />
+              <span>3</span>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="q5" value="4" />
+              <span>4</span>
+            </label>
+            <label class="scale-item">
+              <input type="radio" name="q5" value="5" />
+              <span>5</span>
+            </label>
           </div>
-          <input type="hidden" name="q5" id="q5-value" required />
         </div>
       </div>
+      
       <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
       <div class="field">
         <label class="field-label">
@@ -1082,13 +1097,13 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
     errEl.style.display = 'block';
     
-    // Procura a primeira pergunta que ficou com a borda vermelha e rola a tela até ela
     const primeiroErro = document.querySelector('.field[style*="border-left"]');
     if (primeiroErro) {
       primeiroErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Caso de contingência
     }
-    
-    return; // A execução morre aqui. Zero dados enviados.
+    return; 
   }
 
   // 3. ENVIO SEGURO (Só chega aqui se isValid for true)
