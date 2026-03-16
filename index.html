@@ -1057,16 +1057,25 @@ document.getElementById('main-form').addEventListener('submit', async function(e
   });
 
   // SE REPROVOU: Avisa e rola a tela COM PRECISÃO
+  // SE REPROVOU: Bloqueia a execução, avisa e ROLA A TELA PARA O ERRO
   if (!isValid) {
     errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
     errEl.style.display = 'block';
     
-    // Agora o Javascript busca a classe exata em vez de ler CSS inline
     const primeiroErro = document.querySelector('.error-field');
     if (primeiroErro) {
-      primeiroErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Cálculo matemático exato para a rolagem, descontando a barra fixa superior
+      const posicaoElemento = primeiroErro.getBoundingClientRect().top;
+      const posicaoAtual = window.pageYOffset || document.documentElement.scrollTop;
+      
+      window.scrollTo({
+        top: posicaoAtual + posicaoElemento - 120, // 120px de respiro para a barra do topo
+        behavior: 'smooth'
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
-    return; // Para a execução
+    return; 
   }
 
   // 3. ENVIO SEGURO (Só chega aqui se isValid for true)
