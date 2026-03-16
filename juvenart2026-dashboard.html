@@ -844,56 +844,5 @@
   // Carrega ao abrir
   loadData();
 </script>
-
-
-<!--
-═══════════════════════════════════════════════════════════════════════
-  GOOGLE APPS SCRIPT — Adicione esta função doGet() ao mesmo projeto
-  que já tem o doPost(). As duas convivem no mesmo arquivo .gs
-═══════════════════════════════════════════════════════════════════════
-
-function doGet(e) {
-  var action = e.parameter.action;
-
-  if (action === 'getData') {
-    try {
-      var SPREADSHEET_ID = 'SEU_SPREADSHEET_ID_AQUI';  // ★ mesmo ID do doPost
-      var SHEET_NAME     = 'Respostas';
-
-      var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
-      var sheet = ss.getSheetByName(SHEET_NAME);
-
-      if (!sheet || sheet.getLastRow() < 2) {
-        return jsonResponse({ headers: [], rows: [] });
-      }
-
-      var data    = sheet.getDataRange().getValues();
-      var headers = data[0];
-      var rows    = data.slice(1);
-
-      return jsonResponse({ headers: headers, rows: rows });
-
-    } catch(err) {
-      return jsonResponse({ error: err.toString() });
-    }
-  }
-
-  // Fallback
-  return jsonResponse({ status: 'JuvenArt 2026 API ok' });
-}
-
-function jsonResponse(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-═══════════════════════════════════════════════════════════════════════
-  IMPORTANTE: ao fazer novo deploy, mantenha o tipo "Aplicativo da Web",
-  Executar como: Eu, Quem tem acesso: Qualquer pessoa.
-  A URL do deploy é a mesma usada no formulário.
-═══════════════════════════════════════════════════════════════════════
--->
-
 </body>
 </html>
