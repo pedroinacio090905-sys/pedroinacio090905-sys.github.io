@@ -466,22 +466,20 @@
 
    ══════════════════════════════════════════════════════════════ */
 
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUjgnoH4PqI5yFlgWW9-CZ64Iw0tGVMq8VzUomKGytEQEyQNwqXE9QrSjee9hdegbvxA/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBxYAkuYDhnzCppUtKXs9I72zybclILg4UQfhF3gitZUwe32pCKGzjnYsyg4-6hcIHcw/exec';
 
   const QUESTIONS_CONFIG = [
-    // Identificação — aparecem na tabela de CTGs, não como gráfico
     { key: 'ctg_nome',   label: 'CTG',        type: 'identity' },
-    { key: 'ctg_cidade', label: 'Município',   type: 'identity' },
-    { key: 'ctg_regiao', label: 'Região MTG',  type: 'identity' },
+    { key: 'ctg_cidade', label: 'Município',  type: 'identity' },
+    { key: 'ctg_regiao', label: 'Região MTG', type: 'identity' },
 
-    // ★ Substitua abaixo pelas suas perguntas reais ★
-    { key: 'q1', label: '[Pergunta 1]',  type: 'pie' },
-    { key: 'q2', label: '[Pergunta 2]',  type: 'bar' },
-    { key: 'q3', label: '[Pergunta 3]',  type: 'horizontal' },
-    { key: 'q4', label: '[Pergunta 4]',  type: 'scale' },
-    { key: 'q5', label: '[Pergunta 5]',  type: 'scale' },
-    { key: 'q6', label: '[Pergunta 6]',  type: 'pie' },
-    { key: 'q7', label: '[Pergunta 7]',  type: 'text' },
+    { key: 'q1', label: 'O que faz esses festivais serem tão especiais?', type: 'horizontal' }, // Era pie
+    { key: 'q2', label: 'Elemento artístico mais desafiador', type: 'horizontal' }, // Era bar
+    { key: 'q3', label: 'O que ajuda a manter ritmo e energia?', type: 'horizontal' },
+    { key: 'q4', label: 'Maior dificuldade de Harmonia de Conjunto', type: 'horizontal' },
+    { key: 'q5', label: 'Incentivo ao estudo da história (1 a 5)', type: 'scale' },
+    { key: 'q6', label: 'Impacto do nível técnico dentro do CTG', type: 'horizontal' }, // Era pie
+    { key: 'q7', label: 'Sensação de pisar no palco', type: 'text' },
   ];
 /* ══════════════════════════════════════════════════════════════
    FIM DA CONFIGURAÇÃO
@@ -506,7 +504,7 @@
     renderLoading();
 
     try {
-      const res  = await fetch(APPS_SCRIPT_URL + '?action=getData');
+      const res  = await fetch(APPS_SCRIPT_URL + '?action=getData&token=BasesDaTradicao2026');
       const json = await res.json();
 
       if (!json.rows || json.rows.length === 0) {
@@ -867,8 +865,9 @@
     }
   }
 
-  // Carrega ao abrir
+  // Carrega ao abrir e atualiza sozinho a cada 30 segundos
   loadData();
+  setInterval(loadData, 30000);
 </script>
 </body>
 </html>
