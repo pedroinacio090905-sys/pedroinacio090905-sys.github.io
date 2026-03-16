@@ -19,25 +19,25 @@
       --bordô-deep:  #4A0F1A;
       --bordô-glow:  rgba(107,26,39,0.18);
       --ouro:        #C9962C;
-      --ouro-light:  #E8C46A;
+      --ouro-light:  #F2CD7A; /* Ouro mais claro/brilhante */
       --verde:       #2D5C3A;
       --verde-light: #3D7A50;
       --bg:          #0F0A08;
       --bg2:         #180E0B;
       --bg3:         #1E1410;
-      --surface:     #241810;
+      --surface:     #2A1C14; /* Fundo dos cards levemente mais claro */
       --surface2:    #2C1E14;
-      --borda:       rgba(201,150,44,0.12);
-      --borda-hover: rgba(201,150,44,0.28);
-      --texto:       #F5EDD8;
-      --texto-dim:   rgba(245,237,216,0.5);
-      --texto-muted: rgba(245,237,216,0.28);
+      --borda:       rgba(201,150,44,0.30); /* Bordas mais visíveis */
+      --borda-hover: rgba(201,150,44,0.60);
+      --texto:       #FFFFFF; /* Texto principal branco puro */
+      --texto-dim:   rgba(255,255,255,0.75); /* Texto secudário mais legível */
+      --texto-muted: rgba(255,255,255,0.50);
 
       --fonte-display: 'Cormorant Garamond', Georgia, serif;
       --fonte-corpo:   'Raleway', sans-serif;
       --raio: 14px;
       --trans: all 0.3s cubic-bezier(0.4,0,0.2,1);
-
+    
       /* Paleta de gráficos */
       --c1: #C9962C; --c2: #6B1A27; --c3: #2D5C3A;
       --c4: #7B4F1C; --c5: #3D5C6B; --c6: #8B4513;
@@ -475,10 +475,11 @@
 
 
   // Paleta de cores para gráficos
+  // Paleta de cores para gráficos (Mais vibrantes para Dark Mode)
   const PALETTE = [
-    '#C9962C','#6B1A27','#2D5C3A','#7B4F1C',
-    '#3D5C6B','#8B4513','#5C3D6B','#1A6B4A',
-    '#A0522D','#4A7C6B'
+    '#F2CD7A', '#D96877', '#6E9C7C', '#C9962C',
+    '#7AB0C2', '#E2976D', '#A284B3', '#52A889',
+    '#C4755C', '#84A884'
   ];
   const PALETTE_ALPHA = PALETTE.map(c => c + 'CC');
 
@@ -564,8 +565,19 @@
     const total      = rows.length;
     const totalCtgs  = new Set(colData['ctg_nome'] || []).size;
     const totalCid   = new Set(colData['ctg_cidade'] || []).size;
-    const timestamp  = colData['timestamp'] || [];
-    const lastDate   = timestamp.length ? timestamp[timestamp.length - 1] : '—';
+    
+    // Tratamento robusto da Data ISO do Google Sheets
+    const timestampArray = colData['timestamp'] || [];
+    let formattedLastDate = '—';
+    if (timestampArray.length > 0) {
+      const rawDate = timestampArray[timestampArray.length - 1];
+      const d = new Date(rawDate);
+      if (!isNaN(d.getTime())) {
+        formattedLastDate = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+      } else {
+        formattedLastDate = String(rawDate).split(' ')[0];
+      }
+    }
 
     // ── KPIs ──
     const kpiHtml = `
@@ -587,7 +599,7 @@
         </div>
         <div class="kpi-card">
           <span class="kpi-icon">🕐</span>
-          <div class="kpi-value" style="font-size:22px; margin-top:4px;">${lastDate.split(' ')[0] || '—'}</div>
+          <div class="kpi-value" style="font-size:18px; margin-top:8px;">${formattedLastDate}</div>
           <div class="kpi-label">Última resposta</div>
         </div>
       </div>`;
