@@ -1096,7 +1096,7 @@
                Tipo: Aplicativo da Web → Executar como: Eu →
                Quem tem acesso: Qualquer pessoa → Implantar
    ───────────────────────────────────────────────────────────── */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxOEMgbxiBXM5RAUMEB81X8Zng_P1OVyOpqBwOv_s4MLEWa3SnSl4lMyk6U4zqOfexPfQ/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYH5G14NGNmcBjKL91nXpsqihxnpUUrz3UmoJ1fzzkn2mOYOn7nJ9bL_MDjoQ3c4Gixw/exec';
 /* ───────────────────────────────────────────────────────────── */
 
 
