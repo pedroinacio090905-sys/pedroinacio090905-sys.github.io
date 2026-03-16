@@ -1,0 +1,1273 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JuvenArt 2026 — Pesquisa de Opinião</title>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FONTES
+       ═══════════════════════════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       VARIÁVEIS DE TEMA
+       ═══════════════════════════════════════════════════════ */
+    :root {
+      --bordô:      #6B1A27;
+      --bordô-deep: #4A0F1A;
+      --ouro:       #C9962C;
+      --ouro-light: #E8C46A;
+      --verde:      #2D5C3A;
+      --creme:      #FAF5EC;
+      --creme-dark: #F0E8D6;
+      --carvão:     #1E1410;
+      --cinza-soft: #8C7A6B;
+      --branco:     #FFFFFF;
+
+      --fonte-display: 'Cormorant Garamond', Georgia, serif;
+      --fonte-corpo:   'Raleway', sans-serif;
+
+      --raio:   12px;
+      --sombra: 0 8px 40px rgba(107, 26, 39, 0.12);
+      --sombra-sm: 0 2px 12px rgba(107, 26, 39, 0.08);
+
+      --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RESET E BASE
+       ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--fonte-corpo);
+      background-color: var(--creme);
+      color: var(--carvão);
+      min-height: 100vh;
+      line-height: 1.7;
+
+      /* Textura sutil de papel */
+      background-image:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,150,44,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(107,26,39,0.05) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CABEÇALHO / HERO
+       ═══════════════════════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(160deg, var(--bordô-deep) 0%, var(--bordô) 55%, #8B2535 100%);
+      color: var(--branco);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ornamento geométrico de fundo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 18px,
+          rgba(201,150,44,0.08) 18px,
+          rgba(201,150,44,0.08) 19px
+        );
+    }
+
+    /* Círculo decorativo */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,150,44,0.2);
+      right: -120px;
+      top: -120px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 32px 48px;
+      text-align: center;
+    }
+
+    /* Linha ornamental */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .ornament-line {
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--ouro));
+    }
+    .ornament-line.right {
+      background: linear-gradient(to left, transparent, var(--ouro));
+    }
+    .ornament-diamond {
+      width: 8px; height: 8px;
+      background: var(--ouro);
+      transform: rotate(45deg);
+    }
+    .ornament-text {
+      font-family: var(--fonte-corpo);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--ouro-light);
+    }
+
+    .hero-logo {
+      font-family: var(--fonte-display);
+      font-size: clamp(52px, 10vw, 88px);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -1px;
+      color: var(--branco);
+      margin-bottom: 6px;
+    }
+    .hero-logo span {
+      color: var(--ouro-light);
+      font-style: italic;
+    }
+
+    .hero-ano {
+      font-family: var(--fonte-corpo);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 10px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 24px;
+    }
+
+    .hero-titulo {
+      font-family: var(--fonte-display);
+      font-size: clamp(16px, 3vw, 22px);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.88);
+      max-width: 520px;
+      margin: 0 auto 20px;
+      line-height: 1.5;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(201,150,44,0.4);
+      color: var(--ouro-light);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+    }
+
+    /* Borda inferior decorativa */
+    .hero-border {
+      height: 6px;
+      background: linear-gradient(90deg, var(--bordô-deep), var(--ouro), var(--verde), var(--ouro), var(--bordô-deep));
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BARRA DE PROGRESSO
+       ═══════════════════════════════════════════════════════ */
+    .progress-wrapper {
+      background: var(--branco);
+      border-bottom: 1px solid rgba(107,26,39,0.1);
+      padding: 14px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--sombra-sm);
+    }
+    .progress-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .progress-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--cinza-soft);
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 4px;
+      background: var(--creme-dark);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--bordô), var(--ouro));
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+    .progress-pct {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--bordô);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       LAYOUT PRINCIPAL
+       ═══════════════════════════════════════════════════════ */
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SEÇÃO / CARD
+       ═══════════════════════════════════════════════════════ */
+    .section-card {
+      background: var(--branco);
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      margin-bottom: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(107,26,39,0.07);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cabeçalho de seção */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 28px;
+      border-bottom: 1px solid rgba(107,26,39,0.07);
+      background: linear-gradient(to right, rgba(107,26,39,0.03), transparent);
+    }
+    .section-number {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bordô), #8B2535);
+      color: var(--branco);
+      font-family: var(--fonte-display);
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(107,26,39,0.3);
+    }
+    .section-title {
+      font-family: var(--fonte-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--bordô-deep);
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--cinza-soft);
+      margin-top: 2px;
+      letter-spacing: 0.3px;
+    }
+
+    .section-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CAMPO GENÉRICO
+       ═══════════════════════════════════════════════════════ */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-label {
+      font-family: var(--fonte-display);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--carvão);
+      line-height: 1.4;
+    }
+    .field-label .required {
+      color: var(--bordô);
+      margin-left: 3px;
+    }
+    .field-hint {
+      font-size: 12px;
+      color: var(--cinza-soft);
+      margin-top: -4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       INPUT DE TEXTO / SELECT
+       ═══════════════════════════════════════════════════════ */
+    .input-text,
+    .input-select,
+    .input-textarea {
+      font-family: var(--fonte-corpo);
+      font-size: 14px;
+      color: var(--carvão);
+      background: var(--creme);
+      border: 1.5px solid rgba(107,26,39,0.18);
+      border-radius: 8px;
+      padding: 13px 16px;
+      width: 100%;
+      transition: var(--transicao);
+      outline: none;
+    }
+    .input-text:focus,
+    .input-select:focus,
+    .input-textarea:focus {
+      border-color: var(--bordô);
+      background: var(--branco);
+      box-shadow: 0 0 0 3px rgba(107,26,39,0.08);
+    }
+    .input-text::placeholder,
+    .input-textarea::placeholder {
+      color: rgba(140,122,107,0.6);
+    }
+    .input-textarea { resize: vertical; min-height: 90px; }
+
+    .input-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236B1A27' d='M8 10.5L3 5.5h10L8 10.5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Grid para campos lado a lado */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 540px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       MÚLTIPLA ESCOLHA (RADIO)
+       ═══════════════════════════════════════════════════════ */
+    .radio-group,
+    .check-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-item,
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid rgba(107,26,39,0.14);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transicao);
+      background: var(--creme);
+      user-select: none;
+    }
+    .radio-item:hover,
+    .check-item:hover {
+      border-color: var(--bordô);
+      background: rgba(107,26,39,0.03);
+    }
+
+    /* Quando selecionado */
+    .radio-item.selected,
+    .check-item.selected {
+      border-color: var(--bordô);
+      background: rgba(107,26,39,0.06);
+    }
+
+    /* Input nativo oculto */
+    .radio-item input[type="radio"],
+    .check-item input[type="checkbox"] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(107,26,39,0.35);
+      flex-shrink: 0;
+      transition: var(--transicao);
+      position: relative;
+      cursor: pointer;
+    }
+    .radio-item input[type="radio"]  { border-radius: 50%; }
+    .check-item input[type="checkbox"] { border-radius: 4px; }
+
+    .radio-item input[type="radio"]:checked,
+    .check-item input[type="checkbox"]:checked {
+      background-color: var(--bordô);
+      border-color: var(--bordô);
+    }
+    .radio-item input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--branco);
+    }
+    .check-item input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--branco);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .option-label {
+      font-size: 14px;
+      color: var(--carvão);
+      line-height: 1.4;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       ESCALA LIKERT / AVALIAÇÃO
+       ═══════════════════════════════════════════════════════ */
+    .scale-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cinza-soft);
+      letter-spacing: 0.3px;
+    }
+    .scale-options {
+      display: flex;
+      gap: 6px;
+    }
+    .scale-btn {
+      flex: 1;
+      padding: 10px 4px;
+      border: 1.5px solid rgba(107,26,39,0.18);
+      border-radius: 8px;
+      background: var(--creme);
+      font-family: var(--fonte-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cinza-soft);
+      cursor: pointer;
+      transition: var(--transicao);
+      text-align: center;
+    }
+    .scale-btn:hover {
+      border-color: var(--ouro);
+      color: var(--ouro);
+      background: rgba(201,150,44,0.05);
+    }
+    .scale-btn.active {
+      background: linear-gradient(135deg, var(--bordô), #8B2535);
+      border-color: var(--bordô);
+      color: var(--branco);
+      box-shadow: 0 4px 12px rgba(107,26,39,0.25);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SEPARADOR DE SEÇÃO
+       ═══════════════════════════════════════════════════════ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 8px 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(107,26,39,0.1);
+    }
+    .divider-icon {
+      color: var(--ouro);
+      font-size: 14px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BOTÃO DE ENVIO
+       ═══════════════════════════════════════════════════════ */
+    .submit-area {
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .btn-submit {
+      font-family: var(--fonte-corpo);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--branco);
+      background: linear-gradient(135deg, var(--bordô-deep), var(--bordô));
+      border: none;
+      padding: 18px 56px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: var(--transicao);
+      box-shadow: 0 8px 32px rgba(107,26,39,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--ouro), var(--ouro-light));
+      opacity: 0;
+      transition: var(--transicao);
+    }
+    .btn-submit:hover::before { opacity: 1; }
+    .btn-submit:hover { box-shadow: 0 12px 40px rgba(107,26,39,0.45); transform: translateY(-2px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit span { position: relative; z-index: 1; }
+    .btn-submit:hover span { color: var(--bordô-deep); }
+
+    .submit-note {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--cinza-soft);
+      letter-spacing: 0.3px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       MENSAGEM DE SUCESSO
+       ═══════════════════════════════════════════════════════ */
+    #success-msg {
+      display: none;
+      background: linear-gradient(135deg, var(--verde), #3D7A50);
+      color: var(--branco);
+      border-radius: var(--raio);
+      padding: 40px 32px;
+      text-align: center;
+      margin-top: 24px;
+      animation: fadeUp 0.5s ease;
+    }
+    #success-msg h2 {
+      font-family: var(--fonte-display);
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    #success-msg p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       MENSAGEM DE ERRO
+       ═══════════════════════════════════════════════════════ */
+    #error-msg {
+      display: none;
+      background: rgba(107,26,39,0.08);
+      border: 1.5px solid rgba(107,26,39,0.3);
+      color: var(--bordô-deep);
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RODAPÉ
+       ═══════════════════════════════════════════════════════ */
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid rgba(107,26,39,0.1);
+      margin-top: 20px;
+    }
+    footer p {
+      font-size: 11px;
+      color: var(--cinza-soft);
+      letter-spacing: 1px;
+    }
+    footer strong {
+      color: var(--bordô);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       ANIMAÇÃO DE ENTRADA ESCALONADA
+       ═══════════════════════════════════════════════════════ */
+    .section-card:nth-child(1) { animation-delay: 0.05s; }
+    .section-card:nth-child(2) { animation-delay: 0.10s; }
+    .section-card:nth-child(3) { animation-delay: 0.15s; }
+    .section-card:nth-child(4) { animation-delay: 0.20s; }
+    .section-card:nth-child(5) { animation-delay: 0.25s; }
+    .section-card:nth-child(6) { animation-delay: 0.30s; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVIDADE
+       ═══════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .hero-inner    { padding: 40px 20px 36px; }
+      .section-body  { padding: 20px; gap: 20px; }
+      .section-header{ padding: 18px 20px; }
+      .scale-options { gap: 4px; }
+      .scale-btn     { font-size: 14px; padding: 9px 2px; }
+      .btn-submit    { padding: 16px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CABEÇALHO / HERO
+     ═══════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <span class="ornament-text">Pesquisa de Opinião</span>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+
+    <h1 class="hero-logo">Juven<span>Art</span> & Fest<span>Mirim</span></h1>
+    <p class="hero-ano">2 · 0 · 2 · 6</p>
+
+    <p class="hero-titulo">
+      Pesquisa de opinião destinada às Entidades Tradicionalistas
+      e seus dançarinos das categorias Mirim e Juvenil.
+    </p>
+
+
+    <div class="hero-badges">
+      <!-- ★ Adicione ou remova badges conforme as categorias do evento ★ -->
+      <span class="badge">Danças Tradicionais Gaúchas</span>
+      <span class="badge">Categoria Mirim</span>
+      <span class="badge">Categoria Juvenil</span>
+    </div>
+  </div>
+  <div class="hero-border"></div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BARRA DE PROGRESSO
+     ═══════════════════════════════════════════════════════════ -->
+<div class="progress-wrapper">
+  <div class="progress-inner">
+    <span class="progress-label">Progresso</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <span class="progress-pct" id="progress-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FORMULÁRIO PRINCIPAL
+     ═══════════════════════════════════════════════════════════ -->
+<main class="container">
+<form id="main-form" novalidate>
+
+  <!-- ══════════════════════════════════════════════════════
+       SEÇÃO 0 — IDENTIFICAÇÃO DA ENTIDADE
+       ══════════════════════════════════════════════════════ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">I</div>
+      <div>
+        <div class="section-title">Identificação da Entidade</div>
+        <div class="section-subtitle">Dados do CTG participante</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!-- Nome da Entidade -->
+      <div class="field">
+        <label class="field-label" for="ctg-nome">
+          Nome da Entidade <span class="required">*</span>
+        </label>
+        <input class="input-text" type="text" id="ctg-nome" name="ctg_nome"
+               placeholder="Ex.: CTG Querência dos Pampas" required />
+      </div>
+
+      <!-- Cidade e Região / Município -->
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="ctg-cidade">
+            Município <span class="required">*</span>
+          </label>
+          <input class="input-text" type="text" id="ctg-cidade" name="ctg_cidade"
+                 placeholder="Ex.: Alegrete" required />
+        </div>
+        <div class="field">
+          <label class="field-label" for="ctg-regiao">
+            Região Tradicionalista
+          </label>
+          <input class="input-text" type="text" id="ctg-regiao" name="ctg_regiao"
+                 placeholder="Ex.: 7ª Região" />
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /section-card identificação -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SEÇÃO 1 — QUESTÕES DE MÚLTIPLA ESCOLHA (RADIO)
+       Exemplo de molde: copie o bloco .field inteiro e
+       ajuste o name, label e as opções (radio-item).
+       ══════════════════════════════════════════════════════ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">II</div>
+      <div>
+        <!--
+          ★ PERSONALIZE ★
+          Altere o título e subtítulo da seção conforme o tema do bloco de perguntas.
+        -->
+        <div class="section-title">Título da Seção 1</div>
+        <div class="section-subtitle">Descrição opcional desta seção</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — PERGUNTA DE MÚLTIPLA ESCOLHA (RADIO)  ║
+        ║   ► Uma única opção selecionável                 ║
+        ║   ► Copie este bloco .field para cada pergunta  ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+      <div class="field">
+        <label class="field-label">
+          1. [Escreva aqui o texto da pergunta 1] <span class="required">*</span>
+        </label>
+        <p class="field-hint">[Dica opcional sobre como responder esta questão]</p>
+        <div class="radio-group" data-name="q1">
+          <!-- ★ Duplique os radio-item e altere o value e o texto ★ -->
+          <label class="radio-item">
+            <input type="radio" name="q1" value="opcao_a" required />
+            <span class="option-label">[Opção A]</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="q1" value="opcao_b" />
+            <span class="option-label">[Opção B]</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="q1" value="opcao_c" />
+            <span class="option-label">[Opção C]</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="q1" value="opcao_d" />
+            <span class="option-label">[Opção D]</span>
+          </label>
+        </div>
+      </div><!-- /molde radio -->
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — PERGUNTA DE MÚLTIPLA ESCOLHA (RADIO)  ║
+        ║   (2ª pergunta desta seção)                      ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+      <div class="field">
+        <label class="field-label">
+          2. [Escreva aqui o texto da pergunta 2]
+        </label>
+        <div class="radio-group" data-name="q2">
+          <label class="radio-item">
+            <input type="radio" name="q2" value="opcao_a" />
+            <span class="option-label">[Opção A]</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="q2" value="opcao_b" />
+            <span class="option-label">[Opção B]</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="q2" value="opcao_c" />
+            <span class="option-label">[Opção C]</span>
+          </label>
+        </div>
+      </div><!-- /molde radio 2 -->
+
+    </div>
+  </div><!-- /section-card seção 1 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SEÇÃO 2 — CAIXAS DE SELEÇÃO (CHECKBOX)
+       ══════════════════════════════════════════════════════ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">III</div>
+      <div>
+        <div class="section-title">Título da Seção 2</div>
+        <div class="section-subtitle">Você pode marcar mais de uma opção</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — PERGUNTA DE CHECKBOX (MÚLTIPLAS RESP.) ║
+        ║   ► Várias opções selecionáveis                  ║
+        ╚══════════════════════════════════════════════════╝
+        ATENÇÃO: cada checkbox deve ter um name diferente
+        (ou name[] para envio múltiplo), ex: q3_a, q3_b…
+        O script de envio concatena os marcados como string.
+      -->
+      <div class="field">
+        <label class="field-label">
+          3. [Escreva aqui o texto da pergunta 3]
+        </label>
+        <p class="field-hint">Selecione todas as opções que se aplicam.</p>
+        <div class="check-group">
+          <label class="check-item">
+            <input type="checkbox" name="q3" value="opcao_a" />
+            <span class="option-label">[Opção A]</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="q3" value="opcao_b" />
+            <span class="option-label">[Opção B]</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="q3" value="opcao_c" />
+            <span class="option-label">[Opção C]</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="q3" value="opcao_d" />
+            <span class="option-label">[Opção D]</span>
+          </label>
+        </div>
+      </div><!-- /molde checkbox -->
+
+    </div>
+  </div><!-- /section-card seção 2 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SEÇÃO 3 — ESCALAS DE AVALIAÇÃO (LIKERT)
+       ══════════════════════════════════════════════════════ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">IV</div>
+      <div>
+        <div class="section-title">Título da Seção 3</div>
+        <div class="section-subtitle">Avalie de 1 (menor) a 5 (maior)</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — ESCALA 1–5 (LIKERT / NPS / AVALIAÇÃO) ║
+        ║   Altere data-name e o texto do label.           ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+      <div class="field">
+        <label class="field-label">
+          4. [Escreva aqui o texto da pergunta 4]
+        </label>
+        <div class="scale-wrapper">
+          <div class="scale-labels">
+            <span>[Rótulo mínimo, ex: Péssimo]</span>
+            <span>[Rótulo máximo, ex: Excelente]</span>
+          </div>
+          <!-- data-name deve ser único para cada pergunta de escala -->
+          <div class="scale-options" data-name="q4" role="group" aria-label="Avaliação de 1 a 5">
+            <button type="button" class="scale-btn" data-value="1">1</button>
+            <button type="button" class="scale-btn" data-value="2">2</button>
+            <button type="button" class="scale-btn" data-value="3">3</button>
+            <button type="button" class="scale-btn" data-value="4">4</button>
+            <button type="button" class="scale-btn" data-value="5">5</button>
+          </div>
+          <!-- Campo oculto que carrega o valor para o submit -->
+          <input type="hidden" name="q4" id="q4-value" />
+        </div>
+      </div><!-- /molde escala 1 -->
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- 2ª escala — copie e ajuste data-name e name do hidden -->
+      <div class="field">
+        <label class="field-label">
+          5. [Escreva aqui o texto da pergunta 5]
+        </label>
+        <div class="scale-wrapper">
+          <div class="scale-labels">
+            <span>[Rótulo mínimo]</span>
+            <span>[Rótulo máximo]</span>
+          </div>
+          <div class="scale-options" data-name="q5">
+            <button type="button" class="scale-btn" data-value="1">1</button>
+            <button type="button" class="scale-btn" data-value="2">2</button>
+            <button type="button" class="scale-btn" data-value="3">3</button>
+            <button type="button" class="scale-btn" data-value="4">4</button>
+            <button type="button" class="scale-btn" data-value="5">5</button>
+          </div>
+          <input type="hidden" name="q5" id="q5-value" />
+        </div>
+      </div><!-- /molde escala 2 -->
+
+    </div>
+  </div><!-- /section-card seção 3 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SEÇÃO 4 — DROPDOWN + TEXTO LIVRE
+       ══════════════════════════════════════════════════════ -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">V</div>
+      <div>
+        <div class="section-title">Título da Seção 4</div>
+        <div class="section-subtitle">Comentários e informações adicionais</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — DROPDOWN (SELECT)                      ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+      <div class="field">
+        <label class="field-label" for="q6">
+          6. [Escreva aqui o texto da pergunta 6]
+        </label>
+        <select class="input-select" id="q6" name="q6">
+          <option value="" disabled selected>— Selecione uma opção —</option>
+          <!-- ★ Adicione as opções abaixo ★ -->
+          <option value="opcao_a">[Opção A]</option>
+          <option value="opcao_b">[Opção B]</option>
+          <option value="opcao_c">[Opção C]</option>
+          <option value="opcao_d">[Opção D]</option>
+        </select>
+      </div><!-- /molde dropdown -->
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <!--
+        ╔══════════════════════════════════════════════════╗
+        ║   MOLDE — TEXTO LIVRE (TEXTAREA)                 ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+      <div class="field">
+        <label class="field-label" for="q7">
+          7. [Escreva aqui o texto da pergunta 7]
+        </label>
+        <p class="field-hint">[Instrução adicional opcional]</p>
+        <textarea class="input-textarea" id="q7" name="q7"
+                  placeholder="Escreva sua resposta aqui…"></textarea>
+      </div><!-- /molde textarea -->
+
+    </div>
+  </div><!-- /section-card seção 4 -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       TEMPLATE — SEÇÃO EXTRA (copie este bloco inteiro
+       para adicionar novas seções de questões)
+       ══════════════════════════════════════════════════════ -->
+  <!--
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">VI</div>
+      <div>
+        <div class="section-title">Título da Nova Seção</div>
+        <div class="section-subtitle">Subtítulo opcional</div>
+      </div>
+    </div>
+    <div class="section-body">
+      [ cole aqui os blocos .field com os moldes desejados ]
+    </div>
+  </div>
+  -->
+
+
+  <!-- ══════════════════════════════════════════════════════
+       ÁREA DE ENVIO
+       ══════════════════════════════════════════════════════ -->
+  <div class="submit-area">
+    <button type="submit" class="btn-submit" id="btn-enviar">
+      <span>Enviar Respostas</span>
+    </button>
+    <p class="submit-note">
+      Suas respostas serão registradas com segurança e utilizadas
+      exclusivamente para fins de pesquisa do JuvenArt 2026.
+    </p>
+    <div id="error-msg">
+      ⚠️ Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.
+    </div>
+  </div>
+
+  <!-- Mensagem de sucesso (aparece após envio) -->
+  <div id="success-msg">
+    <h2>Obrigado! 🤠</h2>
+    <p>Suas respostas foram registradas com sucesso.<br>
+       O JuvenArt 2026 agradece a participação do seu CTG!</p>
+  </div>
+
+</form>
+</main>
+
+<footer>
+  <p><strong>JuvenArt 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião &nbsp;·&nbsp;
+     Danças Tradicionais Gaúchas · Chula · Dança de Salão</p>
+  <p style="margin-top:6px; font-size:10px;">
+    Os dados coletados são de uso exclusivo da organização do evento.
+  </p>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT — INTERATIVIDADE + ENVIO PARA GOOGLE SHEETS
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────────────────
+   ★ CONFIGURAÇÃO — ÚNICO PONTO QUE VOCÊ PRECISA ALTERAR ★
+   Cole abaixo a URL do seu Google Apps Script Web App.
+   Instruções: Apps Script → Implantar → Novo deploy →
+               Tipo: Aplicativo da Web → Executar como: Eu →
+               Quem tem acesso: Qualquer pessoa → Implantar
+   ───────────────────────────────────────────────────────────── */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxOEMgbxiBXM5RAUMEB81X8Zng_P1OVyOpqBwOv_s4MLEWa3SnSl4lMyk6U4zqOfexPfQ/exec';
+/* ───────────────────────────────────────────────────────────── */
+
+
+/* ── 1. Seleção visual de opções (radio/checkbox) ─────────── */
+document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
+  input.addEventListener('change', () => {
+    const group = input.closest('.radio-group');
+    group.querySelectorAll('.radio-item').forEach(li => li.classList.remove('selected'));
+    input.closest('.radio-item').classList.add('selected');
+    updateProgress();
+  });
+});
+
+document.querySelectorAll('.check-item input[type="checkbox"]').forEach(input => {
+  input.addEventListener('change', () => {
+    input.closest('.check-item').classList.toggle('selected', input.checked);
+    updateProgress();
+  });
+});
+
+
+/* ── 2. Escala de avaliação ───────────────────────────────── */
+document.querySelectorAll('.scale-options').forEach(group => {
+  const name      = group.dataset.name;
+  const hiddenEl  = document.getElementById(name + '-value');
+
+  group.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (hiddenEl) hiddenEl.value = btn.dataset.value;
+      updateProgress();
+    });
+  });
+});
+
+
+/* ── 3. Progresso ─────────────────────────────────────────── */
+function updateProgress() {
+  const form        = document.getElementById('main-form');
+  const allInputs   = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
+  let answered      = 0;
+  let total         = 0;
+
+  allInputs.forEach(el => {
+    // Ignora radio/checkbox não-required sem grupo required
+    if (el.type === 'radio') {
+      // conta grupos, não itens individuais
+    } else if (el.type === 'checkbox') {
+      // ignora — checkboxes são opcionais por padrão
+    } else {
+      total++;
+      if (el.value.trim()) answered++;
+    }
+  });
+
+  // Conta grupos de radio
+  const radioGroups = [...new Set(
+    [...form.querySelectorAll('input[type="radio"]')].map(r => r.name)
+  )];
+  radioGroups.forEach(name => {
+    total++;
+    if (form.querySelector(`input[name="${name}"]:checked`)) answered++;
+  });
+
+  // Conta escalas (campos hidden preenchidos)
+  form.querySelectorAll('input[type="hidden"]').forEach(h => {
+    if (h.name) { total++; if (h.value) answered++; }
+  });
+
+  const pct = total > 0 ? Math.round((answered / total) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent  = pct + '%';
+}
+
+// Atualiza progresso ao digitar em textos/selects
+document.getElementById('main-form')
+  .querySelectorAll('input[type="text"], select, textarea')
+  .forEach(el => el.addEventListener('input', updateProgress));
+
+
+/* ── 4. Envio via POST para Google Apps Script ────────────── */
+document.getElementById('main-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn    = document.getElementById('btn-enviar');
+  const errEl  = document.getElementById('error-msg');
+  const sucEl  = document.getElementById('success-msg');
+  errEl.style.display = 'none';
+
+  // Coleta todos os campos normais
+  const formData = new FormData(this);
+  const payload  = {};
+
+  // Campos únicos (texto, select, radio, hidden)
+  formData.forEach((value, key) => {
+    // Checkboxes com mesmo name chegam múltiplas vezes → agrupar
+    if (payload[key]) {
+      payload[key] = payload[key] + '; ' + value;
+    } else {
+      payload[key] = value;
+    }
+  });
+
+  // Timestamp automático
+  payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+
+  // Estado do botão
+  btn.disabled          = true;
+  btn.querySelector('span').textContent = 'Enviando…';
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',   // Necessário para Apps Script evitar CORS
+      headers: { 'Content-Type': 'text/plain' },
+      body:    JSON.stringify(payload)
+    });
+
+    // no-cors retorna opaque response → assumimos sucesso se não houve throw
+    this.style.display       = 'none';
+    sucEl.style.display      = 'block';
+    document.querySelector('.progress-wrapper').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (err) {
+    console.error(err);
+    errEl.style.display      = 'block';
+    btn.disabled             = false;
+    btn.querySelector('span').textContent = 'Enviar Respostas';
+  }
+});
+</script>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  GOOGLE APPS SCRIPT — Cole isto em script.google.com (novo projeto)
+═══════════════════════════════════════════════════════════════════════
+
+function doPost(e) {
+  try {
+    // ★ Troque pelo ID da sua planilha (URL do Sheets → .../d/SEU_ID/edit)
+    var SPREADSHEET_ID = 'SEU_SPREADSHEET_ID_AQUI';
+    var SHEET_NAME     = 'Respostas';   // nome da aba
+
+    var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+
+    var data  = JSON.parse(e.postData.contents);
+
+    // Se a planilha estiver vazia, cria o cabeçalho com as chaves do objeto
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(Object.keys(data));
+    }
+
+    // Acrescenta uma nova linha com os valores
+    sheet.appendRow(Object.values(data));
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+═══════════════════════════════════════════════════════════════════════
+-->
+
+</body>
+</html>
