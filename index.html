@@ -479,47 +479,33 @@
     /* ═══════════════════════════════════════════════════════
        ESCALA LIKERT / AVALIAÇÃO
        ═══════════════════════════════════════════════════════ */
-    .scale-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* NOVA VALIDAÇÃO DE ERRO */
+    .error-field {
+      border-left: 4px solid var(--bordô) !important;
+      padding-left: 12px !important;
+      transition: all 0.3s ease;
     }
-    .scale-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--cinza-soft);
-      letter-spacing: 0.3px;
+
+    /* ESCALA (Q5) MELHORADA - CÍRCULOS CLICÁVEIS */
+    .scale-wrapper { display: flex; flex-direction: column; gap: 12px; padding: 8px 0; }
+    .scale-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--cinza-soft); text-transform: uppercase; letter-spacing: 1px; }
+    .scale-options { display: flex; justify-content: space-between; gap: 8px; }
+    .scale-item { flex: 1; display: flex; justify-content: center; cursor: pointer; }
+    .scale-item input { display: none; }
+    .scale-circle { 
+      width: 48px; height: 48px; 
+      border: 2px solid rgba(107,26,39,0.15); border-radius: 50%; 
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--fonte-display); font-size: 20px; font-weight: 700; color: var(--cinza-soft);
+      transition: var(--transicao); background: var(--branco);
     }
-    .scale-options {
-      display: flex;
-      gap: 6px;
+    .scale-item:hover .scale-circle { border-color: var(--ouro); color: var(--ouro); background: rgba(201,150,44,0.05); }
+    .scale-item input:checked + .scale-circle { 
+      background: linear-gradient(135deg, var(--bordô), #8B2535); border-color: var(--bordô); color: var(--branco); 
+      box-shadow: 0 4px 16px rgba(107,26,39,0.3);
     }
-    .scale-btn {
-      flex: 1;
-      padding: 10px 4px;
-      border: 1.5px solid rgba(107,26,39,0.18);
-      border-radius: 8px;
-      background: var(--creme);
-      font-family: var(--fonte-display);
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--cinza-soft);
-      cursor: pointer;
-      transition: var(--transicao);
-      text-align: center;
-    }
-    .scale-btn:hover {
-      border-color: var(--ouro);
-      color: var(--ouro);
-      background: rgba(201,150,44,0.05);
-    }
-    .scale-btn.active {
-      background: linear-gradient(135deg, var(--bordô), #8B2535);
-      border-color: var(--bordô);
-      color: var(--branco);
-      box-shadow: 0 4px 12px rgba(107,26,39,0.25);
+    @media (max-width: 600px) {
+      .scale-circle { width: 40px; height: 40px; font-size: 16px; }
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -891,26 +877,11 @@
         <div class="scale-wrapper">
           <div class="scale-labels"><span>1 (Nada)</span><span>5 (Muito)</span></div>
           <div class="scale-options">
-            <label class="scale-item">
-              <input type="radio" name="q5" value="1" required />
-              <span>1</span>
-            </label>
-            <label class="scale-item">
-              <input type="radio" name="q5" value="2" />
-              <span>2</span>
-            </label>
-            <label class="scale-item">
-              <input type="radio" name="q5" value="3" />
-              <span>3</span>
-            </label>
-            <label class="scale-item">
-              <input type="radio" name="q5" value="4" />
-              <span>4</span>
-            </label>
-            <label class="scale-item">
-              <input type="radio" name="q5" value="5" />
-              <span>5</span>
-            </label>
+            <label class="scale-item"><input type="radio" name="q5" value="1" required /><span class="scale-circle">1</span></label>
+            <label class="scale-item"><input type="radio" name="q5" value="2" /><span class="scale-circle">2</span></label>
+            <label class="scale-item"><input type="radio" name="q5" value="3" /><span class="scale-circle">3</span></label>
+            <label class="scale-item"><input type="radio" name="q5" value="4" /><span class="scale-circle">4</span></label>
+            <label class="scale-item"><input type="radio" name="q5" value="5" /><span class="scale-circle">5</span></label>
           </div>
         </div>
       </div>
@@ -1065,45 +1036,37 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     }
   });
 
-  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD
-  // Esta lista exige que todas as perguntas existam nos dados finais
+  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD COM CLASSES
   const camposObrigatorios = ['ctg_nome', 'ctg_cidade', 'ctg_regiao', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'];
   let isValid = true;
 
   // Limpa os alertas vermelhos anteriores
-  document.querySelectorAll('.field').forEach(f => {
-    f.style.borderLeft = 'none';
-    f.style.paddingLeft = '0';
-  });
+  document.querySelectorAll('.field').forEach(f => f.classList.remove('error-field'));
 
-  // Varre a lista de obrigatoriedade
   camposObrigatorios.forEach(campo => {
     if (!payload[campo] || payload[campo].toString().trim() === '') {
-      isValid = false; // Reprovou na validação
+      isValid = false; 
       const inputElement = document.querySelector(`[name="${campo}"]`);
       if (inputElement) {
         const parent = inputElement.closest('.field');
         if (parent) {
-          parent.style.borderLeft = '4px solid var(--bordô)';
-          parent.style.paddingLeft = '12px';
-          parent.style.transition = 'all 0.3s';
+          parent.classList.add('error-field'); // Adiciona a classe oficial de erro
         }
       }
     }
   });
 
-  // SE REPROVOU: Bloqueia a execução e avisa
+  // SE REPROVOU: Avisa e rola a tela COM PRECISÃO
   if (!isValid) {
     errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
     errEl.style.display = 'block';
     
-    const primeiroErro = document.querySelector('.field[style*="border-left"]');
+    // Agora o Javascript busca a classe exata em vez de ler CSS inline
+    const primeiroErro = document.querySelector('.error-field');
     if (primeiroErro) {
       primeiroErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Caso de contingência
     }
-    return; 
+    return; // Para a execução
   }
 
   // 3. ENVIO SEGURO (Só chega aqui se isValid for true)
