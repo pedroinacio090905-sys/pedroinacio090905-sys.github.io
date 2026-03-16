@@ -1094,7 +1094,7 @@
                Tipo: Aplicativo da Web → Executar como: Eu →
                Quem tem acesso: Qualquer pessoa → Implantar
    ───────────────────────────────────────────────────────────── */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxUjgnoH4PqI5yFlgWW9-CZ64Iw0tGVMq8VzUomKGytEQEyQNwqXE9QrSjee9hdegbvxA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBxYAkuYDhnzCppUtKXs9I72zybclILg4UQfhF3gitZUwe32pCKGzjnYsyg4-6hcIHcw/exec';
 /* ───────────────────────────────────────────────────────────── */
 
 
@@ -1180,18 +1180,59 @@ document.getElementById('main-form')
 document.getElementById('main-form').addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  const btn    = document.getElementById('btn-enviar');
   const errEl  = document.getElementById('error-msg');
   const sucEl  = document.getElementById('success-msg');
   errEl.style.display = 'none';
+  
+  // ========================================================
+  // 1. VALIDAÇÃO CLIENT-SIDE (Obriga o preenchimento)
+  // ========================================================
+  let isValid = true;
+  this.querySelectorAll('[required]').forEach(field => {
+    let fieldIsValid = true;
+    
+    if (field.type === 'radio' || field.type === 'checkbox') {
+      // Verifica se pelo menos um item do grupo foi marcado
+      if (!this.querySelector(`input[name="${field.name}"]:checked`)) fieldIsValid = false;
+    } else if (field.type === 'hidden' && field.id.includes('value')) {
+      // Verifica a escala de 1 a 5 (input type hidden)
+      if (!field.value) fieldIsValid = false;
+    } else {
+      // Verifica inputs normais (texto, select)
+      if (!field.value.trim()) fieldIsValid = false;
+    }
 
-  // Coleta todos os campos normais
+    // Pinta a borda da pergunta de bordô se estiver vazia
+    const parentField = field.closest('.field');
+    if (!fieldIsValid) {
+      isValid = false;
+      parentField.style.borderLeft = '4px solid var(--bordô)'; 
+      parentField.style.paddingLeft = '12px';
+      parentField.style.transition = 'all 0.3s';
+    } else {
+      parentField.style.borderLeft = 'none';
+      parentField.style.paddingLeft = '0';
+    }
+  });
+
+  // Interrompe o envio e mostra aviso se houver campos em branco
+  if (!isValid) {
+    errEl.innerHTML = '⚠️ Por favor, responda todas as questões obrigatórias (marcadas com a barra lateral vermelha).';
+    errEl.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return; // Para a execução do script aqui!
+  }
+
+  // ========================================================
+  // 2. PREPARAÇÃO DOS DADOS E ENVIO
+  // ========================================================
+  const btn = document.getElementById('btn-enviar');
+  
   const formData = new FormData(this);
   const payload  = {};
 
-  // Campos únicos (texto, select, radio, hidden)
+  // Agrupa checkboxes
   formData.forEach((value, key) => {
-    // Checkboxes com mesmo name chegam múltiplas vezes → agrupar
     if (payload[key]) {
       payload[key] = payload[key] + '; ' + value;
     } else {
@@ -1199,22 +1240,20 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     }
   });
 
-  // Timestamp automático
   payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
-  // Estado do botão
-  btn.disabled          = true;
+  btn.disabled = true;
   btn.querySelector('span').textContent = 'Enviando…';
 
   try {
     await fetch(APPS_SCRIPT_URL, {
       method:  'POST',
-      mode:    'no-cors',   // Necessário para Apps Script evitar CORS
+      mode:    'no-cors',
       headers: { 'Content-Type': 'text/plain' },
       body:    JSON.stringify(payload)
     });
 
-    // no-cors retorna opaque response → assumimos sucesso se não houve throw
+    // Animação de sucesso
     this.style.display       = 'none';
     sucEl.style.display      = 'block';
     document.querySelector('.progress-wrapper').style.display = 'none';
@@ -1222,6 +1261,7 @@ document.getElementById('main-form').addEventListener('submit', async function(e
 
   } catch (err) {
     console.error(err);
+    errEl.innerHTML = '⚠️ Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.';
     errEl.style.display      = 'block';
     btn.disabled             = false;
     btn.querySelector('span').textContent = 'Enviar Respostas';
