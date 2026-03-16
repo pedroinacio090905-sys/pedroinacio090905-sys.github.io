@@ -1081,7 +1081,13 @@ document.getElementById('main-form').addEventListener('submit', async function(e
   if (!isValid) {
     errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
     errEl.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Procura a primeira pergunta que ficou com a borda vermelha e rola a tela até ela
+    const primeiroErro = document.querySelector('.field[style*="border-left"]');
+    if (primeiroErro) {
+      primeiroErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
     return; // A execução morre aqui. Zero dados enviados.
   }
 
