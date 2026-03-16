@@ -1230,44 +1230,5 @@ document.getElementById('main-form').addEventListener('submit', async function(e
   }
 });
 </script>
-
-<!--
-═══════════════════════════════════════════════════════════════════════
-  GOOGLE APPS SCRIPT — Cole isto em script.google.com (novo projeto)
-═══════════════════════════════════════════════════════════════════════
-
-function doPost(e) {
-  try {
-    // ★ Troque pelo ID da sua planilha (URL do Sheets → .../d/SEU_ID/edit)
-    var SPREADSHEET_ID = 'SEU_SPREADSHEET_ID_AQUI';
-    var SHEET_NAME     = 'Respostas';   // nome da aba
-
-    var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
-    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-
-    var data  = JSON.parse(e.postData.contents);
-
-    // Se a planilha estiver vazia, cria o cabeçalho com as chaves do objeto
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(Object.keys(data));
-    }
-
-    // Acrescenta uma nova linha com os valores
-    sheet.appendRow(Object.values(data));
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch(err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-═══════════════════════════════════════════════════════════════════════
--->
-
 </body>
 </html>
