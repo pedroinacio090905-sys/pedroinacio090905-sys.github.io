@@ -1086,19 +1086,10 @@
 <!-- ═══════════════════════════════════════════════════════════
      JAVASCRIPT — INTERATIVIDADE + ENVIO PARA GOOGLE SHEETS
      ═══════════════════════════════════════════════════════════ -->
-<script>
-/* ─────────────────────────────────────────────────────────────
-   ★ CONFIGURAÇÃO — ÚNICO PONTO QUE VOCÊ PRECISA ALTERAR ★
-   Cole abaixo a URL do seu Google Apps Script Web App.
-   Instruções: Apps Script → Implantar → Novo deploy →
-               Tipo: Aplicativo da Web → Executar como: Eu →
-               Quem tem acesso: Qualquer pessoa → Implantar
-   ───────────────────────────────────────────────────────────── */
+// ATENÇÃO: Confirme se esta é a sua NOVA URL gerada no Apps Script!
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBxYAkuYDhnzCppUtKXs9I72zybclILg4UQfhF3gitZUwe32pCKGzjnYsyg4-6hcIHcw/exec';
-/* ───────────────────────────────────────────────────────────── */
 
-
-/* ── 1. Seleção visual de opções (radio/checkbox) ─────────── */
+/* ── Seleção visual de opções (radio/checkbox) ─────────── */
 document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
   input.addEventListener('change', () => {
     const group = input.closest('.radio-group');
@@ -1108,15 +1099,7 @@ document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
   });
 });
 
-document.querySelectorAll('.check-item input[type="checkbox"]').forEach(input => {
-  input.addEventListener('change', () => {
-    input.closest('.check-item').classList.toggle('selected', input.checked);
-    updateProgress();
-  });
-});
-
-
-/* ── 2. Escala de avaliação ───────────────────────────────── */
+/* ── Escala de avaliação ───────────────────────────────── */
 document.querySelectorAll('.scale-options').forEach(group => {
   const name      = group.dataset.name;
   const hiddenEl  = document.getElementById(name + '-value');
@@ -1131,8 +1114,7 @@ document.querySelectorAll('.scale-options').forEach(group => {
   });
 });
 
-
-/* ── 3. Progresso ─────────────────────────────────────────── */
+/* ── Progresso ─────────────────────────────────────────── */
 function updateProgress() {
   const form        = document.getElementById('main-form');
   const allInputs   = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
@@ -1140,27 +1122,20 @@ function updateProgress() {
   let total         = 0;
 
   allInputs.forEach(el => {
-    // Ignora radio/checkbox não-required sem grupo required
-    if (el.type === 'radio') {
-      // conta grupos, não itens individuais
-    } else if (el.type === 'checkbox') {
-      // ignora — checkboxes são opcionais por padrão
+    if (el.type === 'radio' || el.type === 'checkbox') {
+      // Tratado abaixo
     } else {
       total++;
       if (el.value.trim()) answered++;
     }
   });
 
-  // Conta grupos de radio
-  const radioGroups = [...new Set(
-    [...form.querySelectorAll('input[type="radio"]')].map(r => r.name)
-  )];
+  const radioGroups = [...new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name))];
   radioGroups.forEach(name => {
     total++;
     if (form.querySelector(`input[name="${name}"]:checked`)) answered++;
   });
 
-  // Conta escalas (campos hidden preenchidos)
   form.querySelectorAll('input[type="hidden"]').forEach(h => {
     if (h.name) { total++; if (h.value) answered++; }
   });
@@ -1170,68 +1145,20 @@ function updateProgress() {
   document.getElementById('progress-pct').textContent  = pct + '%';
 }
 
-// Atualiza progresso ao digitar em textos/selects
-document.getElementById('main-form')
-  .querySelectorAll('input[type="text"], select, textarea')
-  .forEach(el => el.addEventListener('input', updateProgress));
+document.getElementById('main-form').querySelectorAll('input[type="text"], select, textarea').forEach(el => el.addEventListener('input', updateProgress));
 
-
-/* ── 4. Envio via POST para Google Apps Script ────────────── */
+/* ── Validação e Envio via POST (BLINDADO) ────────────── */
 document.getElementById('main-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
+  e.preventDefault(); // Interrompe envio nativo imediatamente
 
+  const btn = document.getElementById('btn-enviar');
   const errEl  = document.getElementById('error-msg');
   const sucEl  = document.getElementById('success-msg');
   errEl.style.display = 'none';
-  
-  // ========================================================
-  // 1. VALIDAÇÃO CLIENT-SIDE (Obriga o preenchimento)
-  // ========================================================
-  let isValid = true;
-  this.querySelectorAll('[required]').forEach(field => {
-    let fieldIsValid = true;
-    
-    if (field.type === 'radio' || field.type === 'checkbox') {
-      // Verifica se pelo menos um item do grupo foi marcado
-      if (!this.querySelector(`input[name="${field.name}"]:checked`)) fieldIsValid = false;
-    } else if (field.type === 'hidden' && field.id.includes('value')) {
-      // Verifica a escala de 1 a 5 (input type hidden)
-      if (!field.value) fieldIsValid = false;
-    } else {
-      // Verifica inputs normais (texto, select)
-      if (!field.value.trim()) fieldIsValid = false;
-    }
 
-    // Pinta a borda da pergunta de bordô se estiver vazia
-    const parentField = field.closest('.field');
-    if (!fieldIsValid) {
-      isValid = false;
-      parentField.style.borderLeft = '4px solid var(--bordô)'; 
-      parentField.style.paddingLeft = '12px';
-      parentField.style.transition = 'all 0.3s';
-    } else {
-      parentField.style.borderLeft = 'none';
-      parentField.style.paddingLeft = '0';
-    }
-  });
-
-  // Interrompe o envio e mostra aviso se houver campos em branco
-  if (!isValid) {
-    errEl.innerHTML = '⚠️ Por favor, responda todas as questões obrigatórias (marcadas com a barra lateral vermelha).';
-    errEl.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return; // Para a execução do script aqui!
-  }
-
-  // ========================================================
-  // 2. PREPARAÇÃO DOS DADOS E ENVIO
-  // ========================================================
-  const btn = document.getElementById('btn-enviar');
-  
+  // 1. MONTA OS DADOS EXATOS QUE SERIAM ENVIADOS
   const formData = new FormData(this);
   const payload  = {};
-
-  // Agrupa checkboxes
   formData.forEach((value, key) => {
     if (payload[key]) {
       payload[key] = payload[key] + '; ' + value;
@@ -1240,8 +1167,43 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     }
   });
 
-  payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD
+  // Esta lista exige que todas as perguntas existam nos dados finais
+  const camposObrigatorios = ['ctg_nome', 'ctg_cidade', 'ctg_regiao', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'];
+  let isValid = true;
 
+  // Limpa os alertas vermelhos anteriores
+  document.querySelectorAll('.field').forEach(f => {
+    f.style.borderLeft = 'none';
+    f.style.paddingLeft = '0';
+  });
+
+  // Varre a lista de obrigatoriedade
+  camposObrigatorios.forEach(campo => {
+    if (!payload[campo] || payload[campo].toString().trim() === '') {
+      isValid = false; // Reprovou na validação
+      const inputElement = document.querySelector(`[name="${campo}"]`);
+      if (inputElement) {
+        const parent = inputElement.closest('.field');
+        if (parent) {
+          parent.style.borderLeft = '4px solid var(--bordô)';
+          parent.style.paddingLeft = '12px';
+          parent.style.transition = 'all 0.3s';
+        }
+      }
+    }
+  });
+
+  // SE REPROVOU: Bloqueia a execução e avisa
+  if (!isValid) {
+    errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
+    errEl.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return; // A execução morre aqui. Zero dados enviados.
+  }
+
+  // 3. ENVIO SEGURO (Só chega aqui se isValid for true)
+  payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   btn.disabled = true;
   btn.querySelector('span').textContent = 'Enviando…';
 
@@ -1253,7 +1215,6 @@ document.getElementById('main-form').addEventListener('submit', async function(e
       body:    JSON.stringify(payload)
     });
 
-    // Animação de sucesso
     this.style.display       = 'none';
     sucEl.style.display      = 'block';
     document.querySelector('.progress-wrapper').style.display = 'none';
@@ -1267,6 +1228,3 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     btn.querySelector('span').textContent = 'Enviar Respostas';
   }
 });
-</script>
-</body>
-</html>
