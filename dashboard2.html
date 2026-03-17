@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JuvENART & FestMirim 2026 — Dashboard de Respostas</title>
-  <link rel="icon" type="image/png" href="favicon.png?v=5" />
+  <link rel="icon" type="image/png" href="favicon.png?v=6" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -105,7 +105,7 @@
     .last-update { font-size: 11px; font-weight: 500; color: var(--texto-dim); letter-spacing: 0.5px; }
 
     /* ═══════════════════════════════════════
-       HERO STRIP (COM TEXTURA PONCHO E IMAGEM PNG)
+       HERO STRIP (COM MÁSCARA RADIAL PARA A IMAGEM)
        ═══════════════════════════════════════ */
     .hero-strip {
       background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%);
@@ -113,7 +113,6 @@
       position: relative; overflow: hidden;
       border-bottom: 1px solid rgba(197,160,89,0.2);
     }
-    /* Trama de fundo */
     .hero-strip::before {
       content: ''; position: absolute; inset: 0;
       background-image: 
@@ -122,22 +121,22 @@
       z-index: 0;
     }
     
-    /* Imagem Temática Transparente (PNG) */
+    /* A MÁGICA: MÁSCARA DE HOLOFOTE */
     .hero-strip::after {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 55%;
-      height: 100%;
-      background-image: url('tema.png'); /* Atualizado para buscar o arquivo .png */
+      top: -10%;
+      right: -2%;
+      width: 60%;
+      height: 120%;
+      background-image: url('tema.jpg'); /* Puxa o seu arquivo JPG normal */
       background-size: cover;
-      background-position: right center;
+      background-position: center;
       background-repeat: no-repeat;
-      /* Máscara muito suave só para a borda esquerda se fundir ao vermelho, já que não há mais o fundo branco/preto */
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
-      mask-image: linear-gradient(to right, transparent 0%, black 25%);
-      opacity: 0.85; 
+      /* O Holofote: Mantém apenas o centro da imagem visível e APAGA as bordas duras */
+      -webkit-mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
+      mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
+      opacity: 0.9; 
       z-index: 0;
       pointer-events: none;
     }
@@ -235,7 +234,7 @@
     @media (max-width: 700px) {
       .topbar          { padding: 0 20px; border-bottom-width: 4px; }
       .hero-strip      { padding: 32px 20px 28px; }
-      .hero-strip::after { display: none; } /* Oculta a imagem no celular para não atrapalhar a leitura */
+      .hero-strip::after { display: none; } 
       .kpi-row         { padding: 24px 20px 0; }
       .charts-grid     { padding: 24px 20px 60px; grid-template-columns: 1fr; }
       .hero-title      { font-size: 36px; }
