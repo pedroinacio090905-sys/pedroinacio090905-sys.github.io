@@ -1,50 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JuvENART & FestMirim 2026 — Pesquisa de Opinião</title>
-  <link rel="icon" type="image/png" href="favicon.png?v=2" />
+  <title>JuvenArt & FestMirim 2026 — Pesquisa de Opinião</title>
+  
+  <link rel="icon" type="image/png" href="favicon.png?v=3" />
 
-  <!-- ═══════════════════════════════════════════════════════
-       FONTES
-       ═══════════════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ═══════════════════════════════════════════════════════
-       VARIÁVEIS DE TEMA
-       ═══════════════════════════════════════════════════════ */
     :root {
-      --bordô:      #6B1A27;
+      /* Paleta Gaúcha Premium */
+      --bordô:      #8B1E30; /* Vermelho mais vivo da bandeira/lenço */
       --bordô-deep: #4A0F1A;
-      --ouro:       #C9962C;
-      --ouro-light: #E8C46A;
-      --verde:      #2D5C3A;
-      --creme:      #FAF5EC;
-      --creme-dark: #F0E8D6;
-      --carvão:     #1E1410;
-      --cinza-soft: #8C7A6B;
+      --ouro:       #D4AF37; /* Amarelo da bandeira */
+      --ouro-light: #F3E5AB;
+      --verde:      #2E5A36; /* Verde mate/bandeira */
+      --creme:      #FDFBF7; /* Tom de pergaminho claro */
+      --creme-dark: #EAE3D2;
+      --carvão:     #2B1F1C;
+      --cinza-soft: #7A6859;
       --branco:     #FFFFFF;
 
       --fonte-display: 'Cormorant Garamond', Georgia, serif;
       --fonte-corpo:   'Raleway', sans-serif;
 
-      --raio:   12px;
-      --sombra: 0 8px 40px rgba(107, 26, 39, 0.12);
-      --sombra-sm: 0 2px 12px rgba(107, 26, 39, 0.08);
-
+      --raio:   14px;
+      --sombra: 0 10px 40px rgba(74, 15, 26, 0.08);
+      --sombra-sm: 0 4px 16px rgba(74, 15, 26, 0.06);
       --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ═══════════════════════════════════════════════════════
-       RESET E BASE
-       ═══════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,611 +43,136 @@
       color: var(--carvão);
       min-height: 100vh;
       line-height: 1.7;
-
-      /* Textura sutil de papel */
+      /* Textura de papel rústico sutil */
       background-image:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,150,44,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(107,26,39,0.05) 0%, transparent 60%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(139,30,48,0.03) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
     }
 
-    /* ═══════════════════════════════════════════════════════
-       CABEÇALHO / HERO
-       ═══════════════════════════════════════════════════════ */
+    /* O NOVO CABEÇALHO COM IMAGEM DE FUNDO */
     .hero {
-      background: linear-gradient(160deg, var(--bordô-deep) 0%, var(--bordô) 55%, #8B2535 100%);
-      color: var(--branco);
+      position: relative;
       padding: 0;
-      position: relative;
+      color: var(--branco);
       overflow: hidden;
+      /* Imagem de fundo do Pampa com máscara de cor */
+      background-color: var(--bordô-deep);
+      background-image: 
+        linear-gradient(150deg, rgba(74, 15, 26, 0.92) 0%, rgba(139, 30, 48, 0.85) 50%, rgba(46, 90, 54, 0.90) 100%),
+        url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* Efeito Parallax suave */
     }
 
-    /* Ornamento geométrico de fundo */
     .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 18px,
-          rgba(201,150,44,0.08) 18px,
-          rgba(201,150,44,0.08) 19px
-        );
+      content: ''; position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.08) 18px, rgba(212,175,55,0.08) 19px);
     }
-
-    /* Círculo decorativo */
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      border: 1px solid rgba(201,150,44,0.2);
-      right: -120px;
-      top: -120px;
-      pointer-events: none;
-    }
-
     .hero-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 56px 32px 48px;
-      text-align: center;
+      position: relative; z-index: 1; max-width: 820px; margin: 0 auto;
+      padding: 72px 32px 56px; text-align: center;
     }
+    
+    /* Ornamentos Dourados */
+    .ornament { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 24px; }
+    .ornament-line { flex: 1; max-width: 100px; height: 2px; background: linear-gradient(to right, transparent, var(--ouro)); }
+    .ornament-line.right { background: linear-gradient(to left, transparent, var(--ouro)); }
+    .ornament-diamond { width: 10px; height: 10px; background: var(--ouro); transform: rotate(45deg); box-shadow: 0 0 10px rgba(212,175,55,0.5); }
+    .ornament-text { font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--ouro-light); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-    /* Linha ornamental */
-    .ornament {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    .ornament-line {
-      flex: 1;
-      max-width: 80px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--ouro));
-    }
-    .ornament-line.right {
-      background: linear-gradient(to left, transparent, var(--ouro));
-    }
-    .ornament-diamond {
-      width: 8px; height: 8px;
-      background: var(--ouro);
-      transform: rotate(45deg);
-    }
-    .ornament-text {
-      font-family: var(--fonte-corpo);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--ouro-light);
-    }
+    .hero-logo { font-family: var(--fonte-display); font-size: clamp(56px, 12vw, 96px); font-weight: 700; line-height: 0.9; letter-spacing: -2px; color: var(--branco); margin-bottom: 8px; text-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+    .hero-logo span { color: var(--ouro-light); font-style: italic; }
+    .hero-ano { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 400; letter-spacing: 12px; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+    
+    .hero-titulo { font-family: var(--fonte-display); font-size: clamp(18px, 3.5vw, 24px); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.95); max-width: 600px; margin: 0 auto 24px; line-height: 1.5; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    
+    .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    .badge { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.5); color: var(--ouro-light); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 18px; border-radius: 100px; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    
+    /* Borda Tripla - Cores do RS */
+    .hero-border { height: 8px; background: linear-gradient(90deg, var(--verde) 0%, var(--verde) 33.3%, var(--bordô) 33.3%, var(--bordô) 66.6%, var(--ouro) 66.6%, var(--ouro) 100%); }
 
-    .hero-logo {
-      font-family: var(--fonte-display);
-      font-size: clamp(52px, 10vw, 88px);
-      font-weight: 700;
-      line-height: 0.9;
-      letter-spacing: -1px;
-      color: var(--branco);
-      margin-bottom: 6px;
-    }
-    .hero-logo span {
-      color: var(--ouro-light);
-      font-style: italic;
-    }
+    .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(139,30,48,0.1); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
+    .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+    .progress-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-soft); white-space: nowrap; }
+    .progress-track { flex: 1; height: 6px; background: var(--creme-dark); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+    .progress-fill { height: 100%; background: linear-gradient(to right, var(--verde), var(--ouro), var(--bordô)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+    .progress-pct { font-family: var(--fonte-display); font-size: 16px; font-weight: 700; color: var(--bordô); min-width: 40px; text-align: right; }
 
-    .hero-ano {
-      font-family: var(--fonte-corpo);
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 10px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 24px;
-    }
+    .container { max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
 
-    .hero-titulo {
-      font-family: var(--fonte-display);
-      font-size: clamp(16px, 3vw, 22px);
-      font-weight: 400;
-      font-style: italic;
-      color: rgba(255,255,255,0.88);
-      max-width: 520px;
-      margin: 0 auto 20px;
-      line-height: 1.5;
-    }
+    /* Estilo dos Cards */
+    .section-card { background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); margin-bottom: 32px; overflow: hidden; border: 1px solid rgba(139,30,48,0.08); animation: fadeUp 0.5s ease both; position: relative; }
+    .section-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: linear-gradient(to bottom, var(--ouro), var(--bordô)); opacity: 0.6; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    .hero-badges {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .badge {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(201,150,44,0.4);
-      color: var(--ouro-light);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 100px;
-    }
+    .section-header { display: flex; align-items: center; gap: 18px; padding: 24px 32px; border-bottom: 1px solid rgba(139,30,48,0.05); background: linear-gradient(to right, rgba(212,175,55,0.05), transparent); }
+    .section-number { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--bordô), var(--bordô-deep)); color: var(--ouro-light); font-family: var(--fonte-display); font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(139,30,48,0.3); border: 1px solid rgba(212,175,55,0.3); }
+    .section-title { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--bordô-deep); line-height: 1.2; }
+    .section-subtitle { font-size: 13px; font-weight: 500; color: var(--cinza-soft); margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .section-body { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
 
-    /* Borda inferior decorativa */
-    .hero-border {
-      height: 6px;
-      background: linear-gradient(90deg, var(--bordô-deep), var(--ouro), var(--verde), var(--ouro), var(--bordô-deep));
-    }
+    .field { display: flex; flex-direction: column; gap: 10px; border-radius: 4px; }
+    .field-label { font-family: var(--fonte-display); font-size: 19px; font-weight: 700; color: var(--carvão); line-height: 1.4; }
+    .field-label .required { color: var(--bordô); margin-left: 4px; font-size: 22px; }
 
-    /* ═══════════════════════════════════════════════════════
-       BARRA DE PROGRESSO
-       ═══════════════════════════════════════════════════════ */
-    .progress-wrapper {
-      background: var(--branco);
-      border-bottom: 1px solid rgba(107,26,39,0.1);
-      padding: 14px 32px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--sombra-sm);
-    }
-    .progress-inner {
-      max-width: 780px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .progress-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--cinza-soft);
-      white-space: nowrap;
-    }
-    .progress-track {
-      flex: 1;
-      height: 4px;
-      background: var(--creme-dark);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, var(--bordô), var(--ouro));
-      border-radius: 4px;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 0%;
-    }
-    .progress-pct {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--bordô);
-      min-width: 36px;
-      text-align: right;
-    }
+    .input-text { font-family: var(--fonte-corpo); font-size: 15px; font-weight: 500; color: var(--carvão); background: var(--creme); border: 2px solid rgba(139,30,48,0.12); border-radius: 10px; padding: 14px 18px; width: 100%; transition: var(--transicao); outline: none; }
+    .input-text:focus { border-color: var(--ouro); background: var(--branco); box-shadow: 0 0 0 4px rgba(212,175,55,0.15); }
 
-    /* ═══════════════════════════════════════════════════════
-       LAYOUT PRINCIPAL
-       ═══════════════════════════════════════════════════════ */
-    .container {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 40px 20px 80px;
-    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
 
-    /* ═══════════════════════════════════════════════════════
-       SEÇÃO / CARD
-       ═══════════════════════════════════════════════════════ */
-    .section-card {
-      background: var(--branco);
-      border-radius: var(--raio);
-      box-shadow: var(--sombra);
-      margin-bottom: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(107,26,39,0.07);
-      animation: fadeUp 0.5s ease both;
-    }
+    .radio-group { display: flex; flex-direction: column; gap: 12px; }
+    .radio-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px solid rgba(139,30,48,0.1); border-radius: 10px; cursor: pointer; transition: var(--transicao); background: var(--creme); user-select: none; }
+    .radio-item:hover { border-color: var(--ouro); background: rgba(212,175,55,0.05); transform: translateX(4px); }
+    .radio-item.selected { border-color: var(--bordô); background: rgba(139,30,48,0.04); box-shadow: 0 4px 12px rgba(139,30,48,0.08); transform: translateX(4px); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    .radio-item input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid rgba(139,30,48,0.3); flex-shrink: 0; transition: var(--transicao); position: relative; cursor: pointer; border-radius: 50%; background: var(--branco); }
+    .radio-item input[type="radio"]:checked { background-color: var(--bordô); border-color: var(--bordô); box-shadow: 0 0 0 3px rgba(139,30,48,0.2); }
+    .radio-item input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: var(--ouro-light); }
+    
+    .option-label { font-size: 15px; font-weight: 500; color: var(--carvão); line-height: 1.4; }
 
-    /* Cabeçalho de seção */
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 22px 28px;
-      border-bottom: 1px solid rgba(107,26,39,0.07);
-      background: linear-gradient(to right, rgba(107,26,39,0.03), transparent);
-    }
-    .section-number {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--bordô), #8B2535);
-      color: var(--branco);
-      font-family: var(--fonte-display);
-      font-size: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(107,26,39,0.3);
-    }
-    .section-title {
-      font-family: var(--fonte-display);
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--bordô-deep);
-      line-height: 1.2;
-    }
-    .section-subtitle {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--cinza-soft);
-      margin-top: 2px;
-      letter-spacing: 0.3px;
-    }
+    /* VALIDAÇÃO DE ERRO */
+    .error-field { border-left: 4px solid var(--bordô) !important; padding-left: 16px !important; transition: all 0.3s ease; }
 
-    .section-body {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+    .divider { display: flex; align-items: center; gap: 16px; margin: 12px 0; }
+    .divider-line { flex: 1; height: 1px; background: rgba(139,30,48,0.1); }
+    .divider-icon { color: var(--ouro); font-size: 16px; }
 
-    /* ═══════════════════════════════════════════════════════
-       CAMPO GENÉRICO
-       ═══════════════════════════════════════════════════════ */
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .field-label {
-      font-family: var(--fonte-display);
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--carvão);
-      line-height: 1.4;
-    }
-    .field-label .required {
-      color: var(--bordô);
-      margin-left: 3px;
-    }
-    .field-hint {
-      font-size: 12px;
-      color: var(--cinza-soft);
-      margin-top: -4px;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       INPUT DE TEXTO / SELECT
-       ═══════════════════════════════════════════════════════ */
-    .input-text,
-    .input-select,
-    .input-textarea {
-      font-family: var(--fonte-corpo);
-      font-size: 14px;
-      color: var(--carvão);
-      background: var(--creme);
-      border: 1.5px solid rgba(107,26,39,0.18);
-      border-radius: 8px;
-      padding: 13px 16px;
-      width: 100%;
-      transition: var(--transicao);
-      outline: none;
-    }
-    .input-text:focus,
-    .input-select:focus,
-    .input-textarea:focus {
-      border-color: var(--bordô);
-      background: var(--branco);
-      box-shadow: 0 0 0 3px rgba(107,26,39,0.08);
-    }
-    .input-text::placeholder,
-    .input-textarea::placeholder {
-      color: rgba(140,122,107,0.6);
-    }
-    .input-textarea { resize: vertical; min-height: 90px; }
-
-    .input-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%236B1A27' d='M8 10.5L3 5.5h10L8 10.5z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 16px;
-      cursor: pointer;
-    }
-
-    /* Grid para campos lado a lado */
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 540px) {
-      .field-row { grid-template-columns: 1fr; }
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       MÚLTIPLA ESCOLHA (RADIO)
-       ═══════════════════════════════════════════════════════ */
-    .radio-group,
-    .check-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .radio-item,
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1.5px solid rgba(107,26,39,0.14);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: var(--transicao);
-      background: var(--creme);
-      user-select: none;
-    }
-    .radio-item:hover,
-    .check-item:hover {
-      border-color: var(--bordô);
-      background: rgba(107,26,39,0.03);
-    }
-
-    /* Quando selecionado */
-    .radio-item.selected,
-    .check-item.selected {
-      border-color: var(--bordô);
-      background: rgba(107,26,39,0.06);
-    }
-
-    /* Input nativo oculto */
-    .radio-item input[type="radio"],
-    .check-item input[type="checkbox"] {
-      appearance: none;
-      width: 18px; height: 18px;
-      border: 2px solid rgba(107,26,39,0.35);
-      flex-shrink: 0;
-      transition: var(--transicao);
-      position: relative;
-      cursor: pointer;
-    }
-    .radio-item input[type="radio"]  { border-radius: 50%; }
-    .check-item input[type="checkbox"] { border-radius: 4px; }
-
-    .radio-item input[type="radio"]:checked,
-    .check-item input[type="checkbox"]:checked {
-      background-color: var(--bordô);
-      border-color: var(--bordô);
-    }
-    .radio-item input[type="radio"]:checked::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--branco);
-    }
-    .check-item input[type="checkbox"]:checked::after {
-      content: '✓';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--branco);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .option-label {
-      font-size: 14px;
-      color: var(--carvão);
-      line-height: 1.4;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       ESCALA LIKERT / AVALIAÇÃO
-       ═══════════════════════════════════════════════════════ */
-    /* NOVA VALIDAÇÃO DE ERRO */
-    .error-field {
-      border-left: 4px solid var(--bordô) !important;
-      padding-left: 12px !important;
-      transition: all 0.3s ease;
-    }
-
-    /* ESCALA (Q5) MELHORADA - CÍRCULOS CLICÁVEIS */
-    .scale-wrapper { display: flex; flex-direction: column; gap: 12px; padding: 8px 0; }
-    .scale-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--cinza-soft); text-transform: uppercase; letter-spacing: 1px; }
-    .scale-options { display: flex; justify-content: space-between; gap: 8px; }
-    .scale-item { flex: 1; display: flex; justify-content: center; cursor: pointer; }
-    .scale-item input { display: none; }
-    .scale-circle { 
-      width: 48px; height: 48px; 
-      border: 2px solid rgba(107,26,39,0.15); border-radius: 50%; 
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--fonte-display); font-size: 20px; font-weight: 700; color: var(--cinza-soft);
-      transition: var(--transicao); background: var(--branco);
-    }
-    .scale-item:hover .scale-circle { border-color: var(--ouro); color: var(--ouro); background: rgba(201,150,44,0.05); }
-    .scale-item input:checked + .scale-circle { 
-      background: linear-gradient(135deg, var(--bordô), #8B2535); border-color: var(--bordô); color: var(--branco); 
-      box-shadow: 0 4px 16px rgba(107,26,39,0.3);
-    }
-    @media (max-width: 600px) {
-      .scale-circle { width: 40px; height: 40px; font-size: 16px; }
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       SEPARADOR DE SEÇÃO
-       ═══════════════════════════════════════════════════════ */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 8px 0;
-    }
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(107,26,39,0.1);
-    }
-    .divider-icon {
-      color: var(--ouro);
-      font-size: 14px;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       BOTÃO DE ENVIO
-       ═══════════════════════════════════════════════════════ */
-    .submit-area {
-      text-align: center;
-      margin-top: 12px;
-    }
-
-    .btn-submit {
-      font-family: var(--fonte-corpo);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--branco);
-      background: linear-gradient(135deg, var(--bordô-deep), var(--bordô));
-      border: none;
-      padding: 18px 56px;
-      border-radius: 100px;
-      cursor: pointer;
-      transition: var(--transicao);
-      box-shadow: 0 8px 32px rgba(107,26,39,0.35);
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-submit::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--ouro), var(--ouro-light));
-      opacity: 0;
-      transition: var(--transicao);
-    }
+    /* Botão Temático */
+    .submit-area { text-align: center; margin-top: 24px; }
+    .btn-submit { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--branco); background: linear-gradient(135deg, var(--verde), #1A4020); border: 2px solid var(--ouro); padding: 20px 64px; border-radius: 100px; cursor: pointer; transition: var(--transicao); box-shadow: 0 10px 32px rgba(46,90,54,0.4); position: relative; overflow: hidden; }
+    .btn-submit::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--ouro), var(--bordô)); opacity: 0; transition: var(--transicao); }
     .btn-submit:hover::before { opacity: 1; }
-    .btn-submit:hover { box-shadow: 0 12px 40px rgba(107,26,39,0.45); transform: translateY(-2px); }
-    .btn-submit:active { transform: translateY(0); }
-    .btn-submit span { position: relative; z-index: 1; }
-    .btn-submit:hover span { color: var(--bordô-deep); }
+    .btn-submit:hover { box-shadow: 0 14px 48px rgba(139,30,48,0.5); transform: translateY(-3px); border-color: var(--ouro-light); }
+    .btn-submit span { position: relative; z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .btn-submit:hover span { color: var(--branco); }
+    
+    .submit-note { margin-top: 16px; font-size: 12px; font-weight: 500; color: var(--cinza-soft); letter-spacing: 0.5px; }
 
-    .submit-note {
-      margin-top: 14px;
-      font-size: 11px;
-      color: var(--cinza-soft);
-      letter-spacing: 0.3px;
-    }
+    #success-msg { display: none; background: linear-gradient(135deg, var(--verde), #1A4020); color: var(--branco); border-radius: var(--raio); padding: 48px 32px; text-align: center; margin-top: 32px; animation: fadeUp 0.5s ease; border: 2px solid var(--ouro); box-shadow: 0 16px 48px rgba(46,90,54,0.3); }
+    #success-msg h2 { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--ouro-light); }
+    #error-msg { display: none; background: rgba(139,30,48,0.08); border: 2px solid rgba(139,30,48,0.3); color: var(--bordô-deep); border-radius: 10px; padding: 16px 24px; font-size: 14px; font-weight: 600; margin-top: 16px; }
 
-    /* ═══════════════════════════════════════════════════════
-       MENSAGEM DE SUCESSO
-       ═══════════════════════════════════════════════════════ */
-    #success-msg {
-      display: none;
-      background: linear-gradient(135deg, var(--verde), #3D7A50);
-      color: var(--branco);
-      border-radius: var(--raio);
-      padding: 40px 32px;
-      text-align: center;
-      margin-top: 24px;
-      animation: fadeUp 0.5s ease;
-    }
-    #success-msg h2 {
-      font-family: var(--fonte-display);
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    #success-msg p {
-      font-size: 15px;
-      opacity: 0.9;
-    }
+    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(139,30,48,0.1); margin-top: 32px; }
+    footer p { font-size: 12px; color: var(--cinza-soft); letter-spacing: 1.5px; font-weight: 500; }
+    footer strong { color: var(--bordô); font-weight: 700; }
 
-    /* ═══════════════════════════════════════════════════════
-       MENSAGEM DE ERRO
-       ═══════════════════════════════════════════════════════ */
-    #error-msg {
-      display: none;
-      background: rgba(107,26,39,0.08);
-      border: 1.5px solid rgba(107,26,39,0.3);
-      color: var(--bordô-deep);
-      border-radius: 8px;
-      padding: 14px 20px;
-      font-size: 13px;
-      margin-top: 12px;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       RODAPÉ
-       ═══════════════════════════════════════════════════════ */
-    footer {
-      text-align: center;
-      padding: 32px 20px;
-      border-top: 1px solid rgba(107,26,39,0.1);
-      margin-top: 20px;
-    }
-    footer p {
-      font-size: 11px;
-      color: var(--cinza-soft);
-      letter-spacing: 1px;
-    }
-    footer strong {
-      color: var(--bordô);
-      font-weight: 600;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       ANIMAÇÃO DE ENTRADA ESCALONADA
-       ═══════════════════════════════════════════════════════ */
-    .section-card:nth-child(1) { animation-delay: 0.05s; }
-    .section-card:nth-child(2) { animation-delay: 0.10s; }
-    .section-card:nth-child(3) { animation-delay: 0.15s; }
-    .section-card:nth-child(4) { animation-delay: 0.20s; }
-    .section-card:nth-child(5) { animation-delay: 0.25s; }
-    .section-card:nth-child(6) { animation-delay: 0.30s; }
-
-    /* ═══════════════════════════════════════════════════════
-       RESPONSIVIDADE
-       ═══════════════════════════════════════════════════════ */
     @media (max-width: 600px) {
-      .hero-inner    { padding: 40px 20px 36px; }
-      .section-body  { padding: 20px; gap: 20px; }
-      .section-header{ padding: 18px 20px; }
-      .scale-options { gap: 4px; }
-      .scale-btn     { font-size: 14px; padding: 9px 2px; }
-      .btn-submit    { padding: 16px 36px; }
+      .hero-inner    { padding: 56px 20px 40px; }
+      .section-body  { padding: 24px; gap: 24px; }
+      .section-header{ padding: 20px 24px; }
+      .btn-submit    { padding: 18px 40px; width: 100%; }
+      .radio-item:hover { transform: none; }
+      .radio-item.selected { transform: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     CABEÇALHO / HERO
-     ═══════════════════════════════════════════════════════════ -->
 <header class="hero">
   <div class="hero-inner">
     <div class="ornament">
@@ -667,18 +182,12 @@
       <div class="ornament-diamond"></div>
       <div class="ornament-line right"></div>
     </div>
-
-    <h1 class="hero-logo">Juv<span>ENART</span> & Fest<span>Mirim</span></h1>
+    <h1 class="hero-logo">Juven<span>Art</span> & Fest<span>Mirim</span></h1>
     <p class="hero-ano">2 · 0 · 2 · 6</p>
-
     <p class="hero-titulo">
-      Pesquisa de opinião destinada às Entidades Tradicionalistas
-      e seus dançarinos das categorias Mirim e Juvenil.
+      Pesquisa de opinião destinada às Entidades Tradicionalistas e seus dançarinos das categorias Mirim e Juvenil.
     </p>
-
-
     <div class="hero-badges">
-      <!-- ★ Adicione ou remova badges conforme as categorias do evento ★ -->
       <span class="badge">Danças Tradicionais Gaúchas</span>
       <span class="badge">Categoria Mirim</span>
       <span class="badge">Categoria Juvenil</span>
@@ -687,9 +196,6 @@
   <div class="hero-border"></div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════
-     BARRA DE PROGRESSO
-     ═══════════════════════════════════════════════════════════ -->
 <div class="progress-wrapper">
   <div class="progress-inner">
     <span class="progress-label">Progresso</span>
@@ -700,15 +206,9 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     FORMULÁRIO PRINCIPAL
-     ═══════════════════════════════════════════════════════════ -->
 <main class="container">
 <form id="main-form" novalidate>
 
-  <!-- ══════════════════════════════════════════════════════
-       SEÇÃO 0 — IDENTIFICAÇÃO DA ENTIDADE
-       ══════════════════════════════════════════════════════ -->
   <div class="section-card">
     <div class="section-header">
       <div class="section-number">I</div>
@@ -718,123 +218,128 @@
       </div>
     </div>
     <div class="section-body">
-
-      <!-- Nome da Entidade -->
       <div class="field">
-        <label class="field-label" for="ctg-nome">
-          Nome da Entidade <span class="required">*</span>
-        </label>
-        <input class="input-text" type="text" id="ctg-nome" name="ctg_nome"
-               placeholder="Ex.: CTG Querência dos Pampas" required />
+        <label class="field-label" for="ctg-nome">Nome da Entidade <span class="required">*</span></label>
+        <input class="input-text" type="text" id="ctg-nome" name="ctg_nome" placeholder="Ex.: CTG Querência dos Pampas" required />
       </div>
-
-      <!-- Cidade e Região / Município -->
       <div class="field-row">
         <div class="field">
-          <label class="field-label" for="ctg-cidade">
-            Município <span class="required">*</span>
-          </label>
-          <input class="input-text" type="text" id="ctg-cidade" name="ctg_cidade"
-                 placeholder="Ex.: Alegrete" required />
+          <label class="field-label" for="ctg-cidade">Município <span class="required">*</span></label>
+          <input class="input-text" type="text" id="ctg-cidade" name="ctg_cidade" placeholder="Ex.: Alegrete" required />
         </div>
         <div class="field">
-          <label class="field-label" for="ctg-regiao">
-            Região Tradicionalista
-          </label>
-          <input class="input-text" type="text" id="ctg-regiao" name="ctg_regiao"
-                 placeholder="Ex.: 7ª Região" />
-        </div>
-      </div>
-
-    </div>
-  </div><!-- /section-card identificação -->
-
-
-  <!-- ══════════════════════════════════════════════════════
-       SEÇÃO 1 — QUESTÕES DE MÚLTIPLA ESCOLHA (RADIO)
-       Exemplo de molde: copie o bloco .field inteiro e
-       ajuste o name, label e as opções (radio-item).
-       ══════════════════════════════════════════════════════ -->
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number">II</div>
-      <div>
-        <!--
-          ★ PERSONALIZE ★
-          Altere o título e subtítulo da seção conforme o tema do bloco de perguntas.
-        -->
-        <div class="section-title">A Grandeza dos Festivais</div>
-        <div class="section-subtitle">O que te move a participar</div>
-      </div>
-    </div>
-    <div class="section-body">
-
-      <!--
-        ╔══════════════════════════════════════════════════╗
-        ║   MOLDE — PERGUNTA DE MÚLTIPLA ESCOLHA (RADIO)  ║
-        ║   ► Uma única opção selecionável                 ║
-        ║   ► Copie este bloco .field para cada pergunta  ║
-        ╚══════════════════════════════════════════════════╝
-      -->
-      <div class="field">
-        <label class="field-label">
-          1. O FestMirim e o Juvenart estão entre os maiores palcos da nossa tradição. O que faz esses festivais serem tão especiais para ti? <span class="required">*</span>
-        </label>
-        <div class="radio-group" data-name="q1">
-          <label class="radio-item"><input type="radio" name="q1" value="A emoção de dançar para um ginásio lotado e com grande estrutura" required /><span class="option-label">A emoção de dançar para um ginásio lotado e com grande estrutura.</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="A qualidade técnica dos outros grupos, que me inspira a melhorar" /><span class="option-label">A qualidade técnica dos outros grupos, que me inspira a melhorar.</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="O reencontro e a convivência com amigos de outras regiões" /><span class="option-label">O reencontro e a convivência com amigos de outras regiões.</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="O orgulho e a responsabilidade de defender o brasão do meu CTG" /><span class="option-label">O orgulho e a responsabilidade de defender o brasão do meu CTG.</span></label>
+          <label class="field-label" for="ctg-regiao">Região Tradicionalista <span class="required">*</span></label>
+          <input class="input-text" type="text" id="ctg-regiao" name="ctg_regiao" placeholder="Ex.: 7ª Região" required />
         </div>
       </div>
     </div>
   </div>
 
-      <div class="divider">
-        <div class="divider-line"></div>
-        <span class="divider-icon">✦</span>
-        <div class="divider-line"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">II</div>
+      <div>
+        <div class="section-title">Relação com a Dança</div>
+        <div class="section-subtitle">A tua vivência no tradicionalismo</div>
       </div>
-
-      <!--
-        ╔══════════════════════════════════════════════════╗
-        ║   MOLDE — PERGUNTA DE MÚLTIPLA ESCOLHA (RADIO)  ║
-        ║   (2ª pergunta desta seção)                      ║
-        ╚══════════════════════════════════════════════════╝
-      -->
-
-     <div class="section-card">
-      <div class="section-header">
-        <div class="section-number">III</div>
-        <div>
-          <div class="section-title">Expressão e Musicalidade</div>
-          <div class="section-subtitle">O desafio da performance no palco</div>
-        </div>
-      </div>
-      <div class="section-body"> 
-        <div class="field">
-          <label class="field-label">
-            2. Durante a avaliação no festival, qual elemento artístico tu consideras mais desafiador de executar com perfeição?
-          </label>
-        <div class="radio-group" data-name="q2">
-          <label class="radio-item"><input type="radio" name="q2" value="A força e clareza do sapateio e o trabalho de saia no sarandeio" required /><span class="option-label">A força e clareza do sapateio e o trabalho de saia no sarandeio.</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="A expressão facial e o sentimento transmitido aos avaliadores" /><span class="option-label">A expressão facial e o sentimento transmitido aos avaliadores.</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="A interpretação correta da história da dança" /><span class="option-label">A interpretação correta da história da dança.</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="A energia e a presença de palco do início ao fim" /><span class="option-label">A energia e a presença de palco do início ao fim.</span></label>
+    </div>
+    <div class="section-body">
+      
+      <div class="field">
+        <label class="field-label">1. Qual dança tradicional gaúcha tu mais gostas de dançar? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q1">
+          <label class="radio-item"><input type="radio" name="q1" value="Pezinho" required /><span class="option-label">Pezinho</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Maçanico" /><span class="option-label">Maçanico</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Anu" /><span class="option-label">Anu</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Balaio" /><span class="option-label">Balaio</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Rancheira de Carreirinha" /><span class="option-label">Rancheira de Carreirinha</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Todas as danças tradicionais gaúchas" /><span class="option-label">Todas as danças tradicionais gaúchas</span></label>
+          <label class="radio-item"><input type="radio" name="q1" value="Outra" /><span class="option-label">Outra</span></label>
         </div>
       </div>
       <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
       <div class="field">
-        <label class="field-label">
-          3. Na hora de dançar, o que mais te ajuda a não perder o tempo e a manter a energia lá em cima? <span class="required">*</span>
-        </label>
-        <div class="radio-group" data-name="q3">
-          <label class="radio-item"><input type="radio" name="q3" value="A batida forte e a sintonia com o grupo musical" required /><span class="option-label">A batida forte e a sintonia com o grupo musical do CTG.</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="O olhar, o sorriso e a conexão com o meu par" /><span class="option-label">O olhar, o sorriso e a conexão com o meu par.</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="O incentivo e o grito da nossa torcida na arquibancada" /><span class="option-label">O incentivo e o grito da nossa torcida na arquibancada.</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="A memória da exaustão e da repetição nos ensaios" /><span class="option-label">A memória da exaustão e da repetição nos ensaios.</span></label>
+        <label class="field-label">2. O que mais te motiva a participar do grupo de danças do teu CTG? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q2">
+          <label class="radio-item"><input type="radio" name="q2" value="Porque eu gosto de dançar" required /><span class="option-label">Porque eu gosto de dançar</span></label>
+          <label class="radio-item"><input type="radio" name="q2" value="Porque gosto de representar a cultura gaúcha" /><span class="option-label">Porque gosto de representar a cultura gaúcha</span></label>
+          <label class="radio-item"><input type="radio" name="q2" value="Porque fiz amigos no grupo" /><span class="option-label">Porque fiz amigos no grupo</span></label>
+          <label class="radio-item"><input type="radio" name="q2" value="Porque minha família participa ou incentiva" /><span class="option-label">Porque minha família participa ou incentiva</span></label>
+          <label class="radio-item"><input type="radio" name="q2" value="Porque gosto de me apresentar em rodeios e festivais" /><span class="option-label">Porque gosto de me apresentar em rodeios e festivais</span></label>
+          <label class="radio-item"><input type="radio" name="q2" value="Todas as alternativas acima" /><span class="option-label">Todas as alternativas acima</span></label>
         </div>
       </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">3. Como tu te sentes quando estás dançando uma dança tradicional gaúcha? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q3">
+          <label class="radio-item"><input type="radio" name="q3" value="Muito feliz" required /><span class="option-label">Muito feliz</span></label>
+          <label class="radio-item"><input type="radio" name="q3" value="Orgulhoso(a) de ser gaúcho(a)" /><span class="option-label">Orgulhoso(a) de ser gaúcho(a)</span></label>
+          <label class="radio-item"><input type="radio" name="q3" value="Animado(a) e empolgado(a)" /><span class="option-label">Animado(a) e empolgado(a)</span></label>
+          <label class="radio-item"><input type="radio" name="q3" value="Um pouco nervoso(a), mas gosto" /><span class="option-label">Um pouco nervoso(a), mas gosto</span></label>
+          <label class="radio-item"><input type="radio" name="q3" value="Indiferente" /><span class="option-label">Indiferente</span></label>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">4. Quem é a tua maior inspiração dentro do tradicionalismo gaúcho? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q4">
+          <label class="radio-item"><input type="radio" name="q4" value="Meu instrutor(a) de dança" required /><span class="option-label">Meu instrutor(a) de dança</span></label>
+          <label class="radio-item"><input type="radio" name="q4" value="Um colega do grupo de danças" /><span class="option-label">Um colega do grupo de danças</span></label>
+          <label class="radio-item"><input type="radio" name="q4" value="Alguém da minha família" /><span class="option-label">Alguém da minha família</span></label>
+          <label class="radio-item"><input type="radio" name="q4" value="Um dançarino(a) que admiro" /><span class="option-label">Um dançarino(a) que admiro</span></label>
+          <label class="radio-item"><input type="radio" name="q4" value="Um outro grupo de danças que eu admiro" /><span class="option-label">Um outro grupo de danças que eu admiro</span></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-number">III</div>
+      <div>
+        <div class="section-title">Participação nos Festivais</div>
+        <div class="section-subtitle">O teu histórico no evento</div>
+      </div>
+    </div>
+    <div class="section-body">
+      
+      <div class="field">
+        <label class="field-label">5. O que tu mais gostas quando participas das apresentações em concursos de dança como os festivais JUVENART/FESTMIRIM? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q5">
+          <label class="radio-item"><input type="radio" name="q5" value="Confraternizar com o grupo" required /><span class="option-label">Confraternizar com o grupo</span></label>
+          <label class="radio-item"><input type="radio" name="q5" value="Ser finalista" /><span class="option-label">Ser finalista</span></label>
+          <label class="radio-item"><input type="radio" name="q5" value="Realizar uma boa apresentação" /><span class="option-label">Realizar uma boa apresentação</span></label>
+          <label class="radio-item"><input type="radio" name="q5" value="Viajar e conhecer outros lugares" /><span class="option-label">Viajar e conhecer outros lugares</span></label>
+          <label class="radio-item"><input type="radio" name="q5" value="Receber aplausos e reconhecimento" /><span class="option-label">Receber aplausos e reconhecimento</span></label>
+          <label class="radio-item"><input type="radio" name="q5" value="Todas as alternativas acima" /><span class="option-label">Todas as alternativas acima</span></label>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">6. Quantas vezes tu já participaste do FESTMIRIM? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q6">
+          <label class="radio-item"><input type="radio" name="q6" value="Nenhuma vez" required /><span class="option-label">Nenhuma vez</span></label>
+          <label class="radio-item"><input type="radio" name="q6" value="Uma vez" /><span class="option-label">Uma vez</span></label>
+          <label class="radio-item"><input type="radio" name="q6" value="Mais vezes" /><span class="option-label">Mais vezes</span></label>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">7. Quantas vezes tu já participaste do JUVENART? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q7">
+          <label class="radio-item"><input type="radio" name="q7" value="Nenhuma vez" required /><span class="option-label">Nenhuma vez</span></label>
+          <label class="radio-item"><input type="radio" name="q7" value="Uma vez" /><span class="option-label">Uma vez</span></label>
+          <label class="radio-item"><input type="radio" name="q7" value="Mais vezes" /><span class="option-label">Mais vezes</span></label>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -842,22 +347,55 @@
     <div class="section-header">
       <div class="section-number">IV</div>
       <div>
-        <div class="section-title">Harmonia de Conjunto</div>
-        <div class="section-subtitle">O trabalho coletivo do grupo</div>
+        <div class="section-title">Impacto e Preservação</div>
+        <div class="section-subtitle">A importância do evento para a cultura</div>
       </div>
     </div>
     <div class="section-body">
+
       <div class="field">
-        <label class="field-label">
-          4. Na tua opinião, o que é mais difícil para o grupo inteiro atingir durante a preparação para estes festivais? <span class="required">*</span>
-        </label>
-        <div class="radio-group" data-name="q4">
-          <label class="radio-item"><input type="radio" name="q4" value="A sincronia absoluta dos movimentos de todos os pares" required /><span class="option-label">A sincronia absoluta dos movimentos (braços, pés, postura) de todos os pares.</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="A harmonização perfeita das rodas, fileiras e alinhamentos" /><span class="option-label">A harmonização perfeita das rodas, fileiras e alinhamentos.</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Manter a calma e a respiração coletiva no momento de tensão" /><span class="option-label">Manter a calma e a respiração coletiva no momento de tensão.</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Fazer tudo isso sem perder a graciosidade e o sorriso" /><span class="option-label">Fazer tudo isso sem perder a graciosidade e o sorriso.</span></label>
+        <label class="field-label">8. Para ti, qual é o nível de importância do FestMirim e do Juvenart para a preservação das danças tradicionais gaúchas? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q8">
+          <label class="radio-item"><input type="radio" name="q8" value="Muito importante" required /><span class="option-label">Muito importante</span></label>
+          <label class="radio-item"><input type="radio" name="q8" value="Importante" /><span class="option-label">Importante</span></label>
+          <label class="radio-item"><input type="radio" name="q8" value="Pouco importante" /><span class="option-label">Pouco importante</span></label>
+          <label class="radio-item"><input type="radio" name="q8" value="Sem importância" /><span class="option-label">Sem importância</span></label>
         </div>
       </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">9. Tu acreditas que participar do FestMirim e do Juvenart aumenta teu interesse pelas danças tradicionais? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q9">
+          <label class="radio-item"><input type="radio" name="q9" value="Aumenta muito" required /><span class="option-label">Aumenta muito</span></label>
+          <label class="radio-item"><input type="radio" name="q9" value="Aumenta um pouco" /><span class="option-label">Aumenta um pouco</span></label>
+          <label class="radio-item"><input type="radio" name="q9" value="Não altera" /><span class="option-label">Não altera</span></label>
+          <label class="radio-item"><input type="radio" name="q9" value="Diminui" /><span class="option-label">Diminui</span></label>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">10. O quanto o FestMirim e o Juvenart te motivam a participar dos ensaios de danças tradicionais? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q10">
+          <label class="radio-item"><input type="radio" name="q10" value="Motivam muito" required /><span class="option-label">Motivam muito</span></label>
+          <label class="radio-item"><input type="radio" name="q10" value="Motivam moderadamente" /><span class="option-label">Motivam moderadamente</span></label>
+          <label class="radio-item"><input type="radio" name="q10" value="Motivam pouco" /><span class="option-label">Motivam pouco</span></label>
+          <label class="radio-item"><input type="radio" name="q10" value="Não motivam" /><span class="option-label">Não motivam</span></label>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+      <div class="field">
+        <label class="field-label">11. Na preparação para participar do FestMirim ou do Juvenart, com que frequência tu participas dos ensaios de danças tradicionais? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q11">
+          <label class="radio-item"><input type="radio" name="q11" value="Mais de duas vezes por semana" required /><span class="option-label">Mais de duas vezes por semana</span></label>
+          <label class="radio-item"><input type="radio" name="q11" value="Uma a duas vezes por semana" /><span class="option-label">Uma a duas vezes por semana</span></label>
+          <label class="radio-item"><input type="radio" name="q11" value="Esporadicamente" /><span class="option-label">Esporadicamente</span></label>
+          <label class="radio-item"><input type="radio" name="q11" value="Raramente" /><span class="option-label">Raramente</span></label>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -865,129 +403,76 @@
     <div class="section-header">
       <div class="section-number">V</div>
       <div>
-        <div class="section-title">Fidelidade à Tradição e Impacto</div>
-        <div class="section-subtitle">A vivência dentro da tua entidade</div>
+        <div class="section-title">Engajamento e Futuro</div>
+        <div class="section-subtitle">O incentivo para as próximas gerações</div>
       </div>
     </div>
     <div class="section-body">
+
       <div class="field">
-        <label class="field-label">
-          5. Avalie de 1 (Nada) a 5 (Muito): O quanto o alto nível de exigência destes festivais te incentiva a estudar a história do RS e a base correta das danças? <span class="required">*</span>
-        </label>
-        <div class="scale-wrapper">
-          <div class="scale-labels"><span>1 (Nada)</span><span>5 (Muito)</span></div>
-          <div class="scale-options">
-            <label class="scale-item"><input type="radio" name="q5" value="1" required /><span class="scale-circle">1</span></label>
-            <label class="scale-item"><input type="radio" name="q5" value="2" /><span class="scale-circle">2</span></label>
-            <label class="scale-item"><input type="radio" name="q5" value="3" /><span class="scale-circle">3</span></label>
-            <label class="scale-item"><input type="radio" name="q5" value="4" /><span class="scale-circle">4</span></label>
-            <label class="scale-item"><input type="radio" name="q5" value="5" /><span class="scale-circle">5</span></label>
-          </div>
+        <label class="field-label">12. Tu consideras que o FestMirim e o Juvenart incentivam crianças e jovens a continuarem envolvidas e motivadas pelas danças tradicionais? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q12">
+          <label class="radio-item"><input type="radio" name="q12" value="Incentivam muito" required /><span class="option-label">Incentivam muito</span></label>
+          <label class="radio-item"><input type="radio" name="q12" value="Incentivam moderadamente" /><span class="option-label">Incentivam moderadamente</span></label>
+          <label class="radio-item"><input type="radio" name="q12" value="Incentivam pouco" /><span class="option-label">Incentivam pouco</span></label>
+          <label class="radio-item"><input type="radio" name="q12" value="Não incentivam" /><span class="option-label">Não incentivam</span></label>
         </div>
       </div>
-      
       <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
       <div class="field">
-        <label class="field-label">
-          6. De forma geral, qual é o maior impacto gerado pela participação nestes festivais dentro da tua entidade? <span class="required">*</span>
-        </label>
-        <div class="radio-group" data-name="q6">
-          <label class="radio-item"><input type="radio" name="q6" value="Exige que o CTG estude mais a história e a cultura" required /><span class="option-label">Exige que o CTG estude mais a história e a cultura.</span></label>
-          <label class="radio-item"><input type="radio" name="q6" value="Aumenta drasticamente o foco e a disciplina nos ensaios" /><span class="option-label">Aumenta drasticamente o foco e a disciplina nos ensaios semanais.</span></label>
-          <label class="radio-item"><input type="radio" name="q6" value="Une mais os integrantes, pais e a patronagem em prol de um sonho" /><span class="option-label">Une mais os integrantes, pais e a patronagem em prol de um sonho.</span></label>
-          <label class="radio-item"><input type="radio" name="q6" value="Ajuda a manter as crianças e jovens longe das ruas e telas" /><span class="option-label">Ajuda a manter as crianças e jovens longe das ruas e telas.</span></label>
+        <label class="field-label">13. Para ti, participar do FestMirim e do Juvenart fortalece tua ligação com a cultura gaúcha? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q13">
+          <label class="radio-item"><input type="radio" name="q13" value="Fortalece muito" required /><span class="option-label">Fortalece muito</span></label>
+          <label class="radio-item"><input type="radio" name="q13" value="Fortalece um pouco" /><span class="option-label">Fortalece um pouco</span></label>
+          <label class="radio-item"><input type="radio" name="q13" value="Fortalece pouco" /><span class="option-label">Fortalece pouco</span></label>
+          <label class="radio-item"><input type="radio" name="q13" value="Não fortalece" /><span class="option-label">Não fortalece</span></label>
         </div>
       </div>
-    </div>
-  </div>
+      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
 
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number">VI</div>
-      <div>
-        <div class="section-title">Palavras Finais</div>
-        <div class="section-subtitle">O sentimento de quem dança</div>
-      </div>
-    </div>
-    <div class="section-body">
       <div class="field">
-        <label class="field-label" for="q7">
-          7. Em uma frase curta, descreva qual é a sensação de pisar no palco do FestMirim ou do Juvenart para representar o teu CTG: <span class="required">*</span>
-        </label>
-        <p class="field-hint">Seja criativo e escreva com o coração.</p>
-        <textarea class="input-textarea" id="q7" name="q7" placeholder="A sensação é..." required></textarea>
+        <label class="field-label">14. Tu pretendes continuar participando do FestMirim - Festival Mirim ou do Juvenart - Festival Juvenil nos próximos anos? <span class="required">*</span></label>
+        <div class="radio-group" data-name="q14">
+          <label class="radio-item"><input type="radio" name="q14" value="Sim" required /><span class="option-label">Sim</span></label>
+          <label class="radio-item"><input type="radio" name="q14" value="Talvez" /><span class="option-label">Talvez</span></label>
+          <label class="radio-item"><input type="radio" name="q14" value="Não" /><span class="option-label">Não</span></label>
+        </div>
       </div>
+
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       ÁREA DE ENVIO
-       ══════════════════════════════════════════════════════ -->
   <div class="submit-area">
-    <button type="submit" class="btn-submit" id="btn-enviar">
-      <span>Enviar Respostas</span>
-    </button>
-    <p class="submit-note">
-      Suas respostas serão registradas com segurança e utilizadas
-      exclusivamente para fins de pesquisa.
-    </p>
-    <div id="error-msg">
-      ⚠️ Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.
-    </div>
+    <button type="submit" class="btn-submit" id="btn-enviar"><span>Enviar Respostas</span></button>
+    <p class="submit-note">Suas respostas serão registradas com segurança e utilizadas exclusivamente para fins de pesquisa.</p>
+    <div id="error-msg">⚠️ Ocorreu um erro. Verifique sua conexão e tente novamente.</div>
   </div>
-</form> <div id="success-msg">
-    <h2>Obrigado! 🤠</h2>
-    <p>Suas respostas foram registradas com sucesso.<br>
-      Agradecemos a tua participação!</p>
-  </div>
+</form> 
 
+<div id="success-msg">
+  <h2>Obrigado! 🤠</h2>
+  <p>Suas respostas foram registradas com sucesso.<br>A organização agradece a tua participação!</p>
+</div>
 </main>
 
 <footer>
-  <p><strong>JuvENART & FestMirim 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião &nbsp;·&nbsp;
-     Danças Tradicionais Gaúchas · Categoria Mirim · Categoria Juvenil</p>
-  <p style="margin-top:6px; font-size:10px;">
-    Os dados coletados são de uso exclusivo da organização do evento.
-  </p>
+  <p><strong>JuvenArt & FestMirim 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião</p>
 </footer>
 
 <script>
-<!-- ═══════════════════════════════════════════════════════════
-     JAVASCRIPT — INTERATIVIDADE + ENVIO PARA GOOGLE SHEETS
-     ═══════════════════════════════════════════════════════════ -->
-// ATENÇÃO: Confirme se esta é a sua NOVA URL gerada no Apps Script!
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1DexZkb3O0sP_mxC59Jo1Q_SH-S5EjLMIv-h3eJdJk72KlaqV_e6fotRbhPMG3O0STg/exec';
+// =========================================================================
+// ATENÇÃO: COLOQUE A SUA URL DO APPS SCRIPT AQUI DENTRO DAS ASPAS!
+// =========================================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynLJTODqbZGyhKpdBdpyrMbuc8NTHgtujnsfpw0r-7hpn6kStgYfTG8RmrRFnii2LuGQ/exec';
 
-/* ── Seleção visual de opções (radio/checkbox) ─────────── */
+/* ── Seleção visual de opções ─────────── */
 document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
   input.addEventListener('change', () => {
     const group = input.closest('.radio-group');
     group.querySelectorAll('.radio-item').forEach(li => li.classList.remove('selected'));
     input.closest('.radio-item').classList.add('selected');
     updateProgress();
-  });
-});
-
-/* Atualiza Progresso na Escala (Q5) */
-document.querySelectorAll('.scale-item input[type="radio"]').forEach(input => {
-  input.addEventListener('change', updateProgress);
-});
-
-/* ── Progresso ─────────────────────────────────────────── */
-function updateProgress() {
-
-/* ── Escala de avaliação ───────────────────────────────── */
-document.querySelectorAll('.scale-options').forEach(group => {
-  const name      = group.dataset.name;
-  const hiddenEl  = document.getElementById(name + '-value');
-
-  group.querySelectorAll('.scale-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      group.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (hiddenEl) hiddenEl.value = btn.dataset.value;
-      updateProgress();
-    });
   });
 });
 
@@ -1000,7 +485,6 @@ function updateProgress() {
 
   allInputs.forEach(el => {
     if (el.type === 'radio' || el.type === 'checkbox') {
-      // Tratado abaixo
     } else {
       total++;
       if (el.value.trim()) answered++;
@@ -1013,10 +497,6 @@ function updateProgress() {
     if (form.querySelector(`input[name="${name}"]:checked`)) answered++;
   });
 
-  form.querySelectorAll('input[type="hidden"]').forEach(h => {
-    if (h.name) { total++; if (h.value) answered++; }
-  });
-
   const pct = total > 0 ? Math.round((answered / total) * 100) : 0;
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-pct').textContent  = pct + '%';
@@ -1024,16 +504,16 @@ function updateProgress() {
 
 document.getElementById('main-form').querySelectorAll('input[type="text"], select, textarea').forEach(el => el.addEventListener('input', updateProgress));
 
-/* ── Validação e Envio via POST (BLINDADO) ────────────── */
+/* ── Validação e Envio via POST (BLINDADO URL-ENCODED) ────────────── */
 document.getElementById('main-form').addEventListener('submit', async function(e) {
-  e.preventDefault(); // Interrompe envio nativo imediatamente
+  e.preventDefault(); 
 
   const btn = document.getElementById('btn-enviar');
   const errEl  = document.getElementById('error-msg');
   const sucEl  = document.getElementById('success-msg');
   errEl.style.display = 'none';
 
-  // 1. MONTA OS DADOS EXATOS QUE SERIAM ENVIADOS
+  // 1. MONTA OS DADOS 
   const formData = new FormData(this);
   const payload  = {};
   formData.forEach((value, key) => {
@@ -1044,12 +524,13 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     }
   });
 
-  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD COM CLASSES
-  const camposObrigatorios = ['ctg_nome', 'ctg_cidade', 'ctg_regiao', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'];
+  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD COM AS 14 QUESTÕES
+  const camposObrigatorios = ['ctg_nome', 'ctg_cidade', 'ctg_regiao', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14'];
   let isValid = true;
 
-  // Limpa os alertas vermelhos anteriores
-  document.querySelectorAll('.field').forEach(f => f.classList.remove('error-field'));
+  document.querySelectorAll('.field').forEach(f => {
+    f.classList.remove('error-field');
+  });
 
   camposObrigatorios.forEach(campo => {
     if (!payload[campo] || payload[campo].toString().trim() === '') {
@@ -1058,26 +539,22 @@ document.getElementById('main-form').addEventListener('submit', async function(e
       if (inputElement) {
         const parent = inputElement.closest('.field');
         if (parent) {
-          parent.classList.add('error-field'); // Adiciona a classe oficial de erro
+          parent.classList.add('error-field');
         }
       }
     }
   });
 
-  // SE REPROVOU: Avisa e rola a tela COM PRECISÃO
-  // SE REPROVOU: Bloqueia a execução, avisa e ROLA A TELA PARA O ERRO
   if (!isValid) {
     errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
     errEl.style.display = 'block';
     
     const primeiroErro = document.querySelector('.error-field');
     if (primeiroErro) {
-      // Cálculo matemático exato para a rolagem, descontando a barra fixa superior
       const posicaoElemento = primeiroErro.getBoundingClientRect().top;
       const posicaoAtual = window.pageYOffset || document.documentElement.scrollTop;
-      
       window.scrollTo({
-        top: posicaoAtual + posicaoElemento - 120, // 120px de respiro para a barra do topo
+        top: posicaoAtual + posicaoElemento - 120, 
         behavior: 'smooth'
       });
     } else {
@@ -1086,17 +563,19 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     return; 
   }
 
-  // 3. ENVIO SEGURO (Só chega aqui se isValid for true)
+  // 3. ENVIO SEGURO COM NOVO FORMATO
   payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   btn.disabled = true;
   btn.querySelector('span').textContent = 'Enviando…';
+
+  const urlEncodedData = new URLSearchParams(payload).toString();
 
   try {
     await fetch(APPS_SCRIPT_URL, {
       method:  'POST',
       mode:    'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body:    JSON.stringify(payload)
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body:    urlEncodedData
     });
 
     this.style.display       = 'none';
