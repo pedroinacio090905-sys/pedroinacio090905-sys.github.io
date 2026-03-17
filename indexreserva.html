@@ -76,15 +76,13 @@
     
     .hero-inner {
       position: relative; z-index: 1; max-width: 820px; margin: 0 auto;
-      padding: 64px 32px 56px; text-align: center;
+      padding: 64px 32px 48px; text-align: center;
     }
     
     .ornament { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 24px; }
     .ornament-line { flex: 1; max-width: 100px; height: 1px; background: linear-gradient(to right, transparent, var(--ouro-velho)); }
     .ornament-line.right { background: linear-gradient(to left, transparent, var(--ouro-velho)); }
-    .ornament-diamond { width: 8px; height: 8px; background: var(--ouro-velho); transform: rotate(45deg); }
-    .ornament-text { font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--ouro-brilho); }
-
+    
     .hero-logo { font-family: var(--fonte-display); font-size: clamp(56px, 12vw, 92px); font-weight: 700; line-height: 0.9; letter-spacing: -1px; color: var(--branco); margin-bottom: 12px; text-shadow: 0 4px 16px rgba(0,0,0,0.6); }
     .hero-logo span { color: var(--ouro-brilho); font-style: italic; }
     .hero-ano { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 500; letter-spacing: 12px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
@@ -103,6 +101,37 @@
         var(--rs-amarelo) 66.66%, var(--rs-amarelo) 100%); 
     }
 
+    /* GUARDA PAMPA DECORATIVO */
+    .guarda-pampa-band {
+      height: 26px;
+      width: 100%;
+      background-color: var(--sangue-de-boi);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath fill='%23C5A059' opacity='0.75' d='M30,10 h20 v10 h10 v10 h10 v20 h-10 v10 h-10 v10 h-20 v-10 h-10 v-10 h-10 v-20 h10 v-10 h10 z'/%3E%3C/svg%3E");
+      background-size: 26px 26px;
+      background-repeat: repeat-x;
+      background-position: center;
+      border-bottom: 1px solid rgba(197,160,89,0.3);
+    }
+
+    /* SILHUETA MARCA D'ÁGUA */
+    .marca-dagua {
+      position: fixed;
+      bottom: -20px;
+      right: -20px;
+      width: 60vw;
+      max-width: 500px;
+      height: 60vh;
+      /* Link da silhueta (Você pode trocar a URL abaixo pela sua própria imagem no GitHub) */
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3348/3348075.png'); 
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      opacity: 0.04; /* Muito suave para não atrapalhar a leitura */
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(100%) contrast(200%);
+    }
+
     .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(58,13,18,0.08); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
     .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
     .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-pardo); white-space: nowrap; }
@@ -110,11 +139,10 @@
     .progress-fill { height: 100%; background: linear-gradient(to right, var(--erva-mate), var(--rs-vermelho), var(--rs-amarelo)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
     .progress-pct { font-family: var(--fonte-display); font-size: 16px; font-weight: 700; color: var(--sangue-de-boi); min-width: 40px; text-align: right; }
 
-    .container { max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
+    .container { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
 
     /* Estilo dos Cards */
     .section-card { background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); margin-bottom: 32px; overflow: hidden; border: 1px solid rgba(58,13,18,0.06); animation: fadeUp 0.5s ease both; position: relative; }
-    /* Linha lateral de identidade do card */
     .section-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: var(--lenço-colorado); opacity: 0.8; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -146,7 +174,6 @@
     
     .option-label { font-size: 15px; font-weight: 500; color: var(--carvão); line-height: 1.4; }
 
-    /* VALIDAÇÃO DE ERRO */
     .error-field { border-left: 4px solid var(--lenço-colorado) !important; padding-left: 16px !important; transition: all 0.3s ease; }
 
     .divider { display: flex; align-items: center; gap: 16px; margin: 8px 0; }
@@ -167,7 +194,7 @@
     #success-msg h2 { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--ouro-brilho); }
     #error-msg { display: none; background: rgba(139,30,40,0.08); border: 2px solid rgba(139,30,40,0.3); color: var(--sangue-de-boi); border-radius: 8px; padding: 16px 24px; font-size: 14px; font-weight: 700; margin-top: 16px; }
 
-    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(117,101,91,0.2); margin-top: 32px; }
+    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(117,101,91,0.2); margin-top: 32px; position: relative; z-index: 1; }
     footer p { font-size: 12px; color: var(--cinza-pardo); letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; }
     footer strong { color: var(--sangue-de-boi); font-weight: 800; }
 
@@ -182,15 +209,22 @@
 </head>
 <body>
 
+<div class="marca-dagua"></div>
+
 <header class="hero">
   <div class="hero-inner">
     <div class="ornament">
       <div class="ornament-line"></div>
-      <div class="ornament-diamond"></div>
-      <span class="ornament-text">Pesquisa Oficial</span>
-      <div class="ornament-diamond"></div>
+      <svg class="cuia-icon" viewBox="0 0 100 100" width="28" height="28" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
+        <path d="M 25 35 Q 25 90 50 95 Q 75 90 75 35 Z" fill="var(--ouro-velho)"/>
+        <path d="M 20 35 L 80 35 L 75 25 L 25 25 Z" fill="var(--ouro-brilho)"/>
+        <ellipse cx="50" cy="25" rx="25" ry="6" fill="var(--rs-verde)"/>
+        <line x1="60" y1="25" x2="35" y2="5" stroke="var(--ouro-brilho)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="33" cy="3" r="4" fill="var(--ouro-brilho)"/>
+      </svg>
       <div class="ornament-line right"></div>
     </div>
+    
     <h1 class="hero-logo">Juven<span>Art</span> & Fest<span>Mirim</span></h1>
     <p class="hero-ano">2 · 0 · 2 · 6</p>
     <p class="hero-titulo">
@@ -203,6 +237,7 @@
     </div>
   </div>
   <div class="hero-border"></div>
+  <div class="guarda-pampa-band"></div>
 </header>
 
 <div class="progress-wrapper">
