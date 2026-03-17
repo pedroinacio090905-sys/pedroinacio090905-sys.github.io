@@ -132,6 +132,37 @@
       filter: grayscale(100%) contrast(200%);
     }
 
+    /* ADIÇÃO DAS SILHUETAS DO CABEÇALHO */
+    .hero-inner::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0; /* À esquerda do texto central */
+      width: 200px;
+      height: 200px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3348/3348075.png'); /* URL da silhueta do casal dançando */
+      background-size: contain;
+      background-position: left center;
+      opacity: 0.1; /* Sutil */
+      pointer-events: none;
+    }
+
+    .hero-inner::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0; /* À direita do texto central */
+      width: 200px;
+      height: 200px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3348/3348123.png'); /* URL da silhueta do gaúcho a cavalo */
+      background-size: contain;
+      background-position: right center;
+      opacity: 0.1; /* Sutil */
+      pointer-events: none;
+    }
+
     .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(58,13,18,0.08); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
     .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
     .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-pardo); white-space: nowrap; }
