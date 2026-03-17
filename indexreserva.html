@@ -75,20 +75,25 @@
       z-index: 0;
     }
 
-    /* SILHUETAS TEMÁTICAS NAS EXTREMIDADES */
+    /* SILHUETAS TEMÁTICAS (CORRIGIDAS PARA BRANCO E MAIS VISÍVEIS) */
     .silhueta-esquerda {
       position: absolute; top: 0; left: 2%; 
       width: 25vw; max-width: 350px; height: 100%;
       background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/23/Tango.svg'); 
       background-size: contain; background-repeat: no-repeat; background-position: left center;
-      opacity: 0.06; pointer-events: none; z-index: 1;
+      /* Filtro inverte a imagem preta para branca, com leve opacidade */
+      filter: invert(100%) opacity(0.15); 
+      pointer-events: none; z-index: 1;
     }
+    
     .silhueta-direita {
       position: absolute; top: 0; right: 2%; 
       width: 25vw; max-width: 350px; height: 100%;
       background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Silhouette_of_a_horse.svg'); 
       background-size: contain; background-repeat: no-repeat; background-position: right center;
-      opacity: 0.05; pointer-events: none; z-index: 1;
+      /* Filtro inverte a imagem preta para branca, com leve opacidade */
+      filter: invert(100%) opacity(0.15); 
+      pointer-events: none; z-index: 1;
     }
     
     .hero-inner {
@@ -199,7 +204,7 @@
       .section-header{ padding: 20px 24px; }
       .btn-submit    { padding: 18px 40px; width: 100%; }
       .radio-item:hover { background: var(--pergaminho); }
-      .silhueta-esquerda, .silhueta-direita { display: none; } /* Oculta as silhuetas laterais em celulares para não sobrepor o texto */
+      .silhueta-esquerda, .silhueta-direita { display: none; }
     }
   </style>
 </head>
