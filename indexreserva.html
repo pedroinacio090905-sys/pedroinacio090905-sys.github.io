@@ -13,24 +13,34 @@
 
   <style>
     :root {
-      /* Paleta Gaúcha Premium */
-      --bordô:      #8B1E30; /* Vermelho mais vivo da bandeira/lenço */
-      --bordô-deep: #4A0F1A;
-      --ouro:       #D4AF37; /* Amarelo da bandeira */
-      --ouro-light: #F3E5AB;
-      --verde:      #2E5A36; /* Verde mate/bandeira */
-      --creme:      #FDFBF7; /* Tom de pergaminho claro */
-      --creme-dark: #EAE3D2;
-      --carvão:     #2B1F1C;
-      --cinza-soft: #7A6859;
-      --branco:     #FFFFFF;
+      /* CORES PURAS DO TRADICIONALISMO */
+      --lenço-colorado: #8B1E28;
+      --sangue-de-boi:  #3A0D12;
+      --galpão-escuro:  #170305;
+      
+      --rs-verde:       #007A33;
+      --rs-vermelho:    #ED1C24;
+      --rs-amarelo:     #FFDE00;
+      
+      --erva-mate:      #2A4B31;
+      --erva-mate-dark: #1A301E;
+
+      --ouro-velho:     #C5A059;
+      --ouro-brilho:    #E8D08D;
+      
+      --pergaminho:     #F7F4EB;
+      --couro-cru:      #EBE5D8;
+      
+      --carvão:         #2B211E;
+      --cinza-pardo:    #75655B;
+      --branco:         #FFFFFF;
 
       --fonte-display: 'Cormorant Garamond', Georgia, serif;
       --fonte-corpo:   'Raleway', sans-serif;
 
-      --raio:   14px;
-      --sombra: 0 10px 40px rgba(74, 15, 26, 0.08);
-      --sombra-sm: 0 4px 16px rgba(74, 15, 26, 0.06);
+      --raio:   10px;
+      --sombra: 0 12px 32px rgba(58, 13, 18, 0.08);
+      --sombra-sm: 0 4px 12px rgba(58, 13, 18, 0.06);
       --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -39,135 +49,134 @@
 
     body {
       font-family: var(--fonte-corpo);
-      background-color: var(--creme);
+      background-color: var(--pergaminho);
       color: var(--carvão);
       min-height: 100vh;
       line-height: 1.7;
-      /* Textura de papel rústico sutil */
-      background-image:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.04) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(139,30,48,0.03) 0%, transparent 60%),
-        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      /* Textura sutil de papel antigo/couro cru */
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
     }
 
-    /* O NOVO CABEÇALHO COM IMAGEM DE FUNDO */
+    /* O CABEÇALHO - ESTILO PONCHO E LENÇO COLORADO */
     .hero {
       position: relative;
       padding: 0;
       color: var(--branco);
       overflow: hidden;
-      /* Imagem de fundo do Pampa com máscara de cor */
-      background-color: var(--bordô-deep);
-      background-image: 
-        linear-gradient(150deg, rgba(74, 15, 26, 0.92) 0%, rgba(139, 30, 48, 0.85) 50%, rgba(46, 90, 54, 0.90) 100%),
-        url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1920&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed; /* Efeito Parallax suave */
+      background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--galpão-escuro) 100%);
     }
 
+    /* Trama geométrica (Pala/Poncho) */
     .hero::before {
       content: ''; position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.08) 18px, rgba(212,175,55,0.08) 19px);
+      background-image: 
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
     }
+    
     .hero-inner {
       position: relative; z-index: 1; max-width: 820px; margin: 0 auto;
-      padding: 72px 32px 56px; text-align: center;
+      padding: 64px 32px 56px; text-align: center;
     }
     
-    /* Ornamentos Dourados */
     .ornament { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 24px; }
-    .ornament-line { flex: 1; max-width: 100px; height: 2px; background: linear-gradient(to right, transparent, var(--ouro)); }
-    .ornament-line.right { background: linear-gradient(to left, transparent, var(--ouro)); }
-    .ornament-diamond { width: 10px; height: 10px; background: var(--ouro); transform: rotate(45deg); box-shadow: 0 0 10px rgba(212,175,55,0.5); }
-    .ornament-text { font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--ouro-light); text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .ornament-line { flex: 1; max-width: 100px; height: 1px; background: linear-gradient(to right, transparent, var(--ouro-velho)); }
+    .ornament-line.right { background: linear-gradient(to left, transparent, var(--ouro-velho)); }
+    .ornament-diamond { width: 8px; height: 8px; background: var(--ouro-velho); transform: rotate(45deg); }
+    .ornament-text { font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; color: var(--ouro-brilho); }
 
-    .hero-logo { font-family: var(--fonte-display); font-size: clamp(56px, 12vw, 96px); font-weight: 700; line-height: 0.9; letter-spacing: -2px; color: var(--branco); margin-bottom: 8px; text-shadow: 0 4px 16px rgba(0,0,0,0.4); }
-    .hero-logo span { color: var(--ouro-light); font-style: italic; }
-    .hero-ano { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 400; letter-spacing: 12px; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+    .hero-logo { font-family: var(--fonte-display); font-size: clamp(56px, 12vw, 92px); font-weight: 700; line-height: 0.9; letter-spacing: -1px; color: var(--branco); margin-bottom: 12px; text-shadow: 0 4px 16px rgba(0,0,0,0.6); }
+    .hero-logo span { color: var(--ouro-brilho); font-style: italic; }
+    .hero-ano { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 500; letter-spacing: 12px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
     
-    .hero-titulo { font-family: var(--fonte-display); font-size: clamp(18px, 3.5vw, 24px); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.95); max-width: 600px; margin: 0 auto 24px; line-height: 1.5; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .hero-titulo { font-family: var(--fonte-display); font-size: clamp(18px, 3.5vw, 24px); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 24px; line-height: 1.4; }
     
     .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
-    .badge { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.5); color: var(--ouro-light); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 18px; border-radius: 100px; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .badge { background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.3); color: var(--ouro-brilho); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; }
     
-    /* Borda Tripla - Cores do RS */
-    .hero-border { height: 8px; background: linear-gradient(90deg, var(--verde) 0%, var(--verde) 33.3%, var(--bordô) 33.3%, var(--bordô) 66.6%, var(--ouro) 66.6%, var(--ouro) 100%); }
+    /* A BANDEIRA DO RS COMO BORDA OFICIAL */
+    .hero-border { 
+      height: 10px; 
+      background: linear-gradient(90deg, 
+        var(--rs-verde) 0%, var(--rs-verde) 33.33%, 
+        var(--rs-vermelho) 33.33%, var(--rs-vermelho) 66.66%, 
+        var(--rs-amarelo) 66.66%, var(--rs-amarelo) 100%); 
+    }
 
-    .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(139,30,48,0.1); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
+    .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(58,13,18,0.08); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
     .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
-    .progress-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-soft); white-space: nowrap; }
-    .progress-track { flex: 1; height: 6px; background: var(--creme-dark); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
-    .progress-fill { height: 100%; background: linear-gradient(to right, var(--verde), var(--ouro), var(--bordô)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
-    .progress-pct { font-family: var(--fonte-display); font-size: 16px; font-weight: 700; color: var(--bordô); min-width: 40px; text-align: right; }
+    .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-pardo); white-space: nowrap; }
+    .progress-track { flex: 1; height: 6px; background: var(--couro-cru); border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(to right, var(--erva-mate), var(--rs-vermelho), var(--rs-amarelo)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+    .progress-pct { font-family: var(--fonte-display); font-size: 16px; font-weight: 700; color: var(--sangue-de-boi); min-width: 40px; text-align: right; }
 
     .container { max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
 
     /* Estilo dos Cards */
-    .section-card { background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); margin-bottom: 32px; overflow: hidden; border: 1px solid rgba(139,30,48,0.08); animation: fadeUp 0.5s ease both; position: relative; }
-    .section-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: linear-gradient(to bottom, var(--ouro), var(--bordô)); opacity: 0.6; }
+    .section-card { background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); margin-bottom: 32px; overflow: hidden; border: 1px solid rgba(58,13,18,0.06); animation: fadeUp 0.5s ease both; position: relative; }
+    /* Linha lateral de identidade do card */
+    .section-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: var(--lenço-colorado); opacity: 0.8; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    .section-header { display: flex; align-items: center; gap: 18px; padding: 24px 32px; border-bottom: 1px solid rgba(139,30,48,0.05); background: linear-gradient(to right, rgba(212,175,55,0.05), transparent); }
-    .section-number { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--bordô), var(--bordô-deep)); color: var(--ouro-light); font-family: var(--fonte-display); font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(139,30,48,0.3); border: 1px solid rgba(212,175,55,0.3); }
-    .section-title { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--bordô-deep); line-height: 1.2; }
-    .section-subtitle { font-size: 13px; font-weight: 500; color: var(--cinza-soft); margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
-    .section-body { padding: 32px; display: flex; flex-direction: column; gap: 28px; }
+    .section-header { display: flex; align-items: center; gap: 18px; padding: 24px 32px; border-bottom: 1px solid rgba(58,13,18,0.05); background: linear-gradient(to right, rgba(197,160,89,0.06), transparent); }
+    .section-number { width: 40px; height: 40px; border-radius: 4px; background: var(--sangue-de-boi); color: var(--ouro-brilho); font-family: var(--fonte-display); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(197,160,89,0.3); transform: rotate(45deg); }
+    .section-number span { transform: rotate(-45deg); }
+    .section-title { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--sangue-de-boi); line-height: 1.2; }
+    .section-subtitle { font-size: 12px; font-weight: 600; color: var(--cinza-pardo); margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
+    .section-body { padding: 32px; display: flex; flex-direction: column; gap: 32px; }
 
-    .field { display: flex; flex-direction: column; gap: 10px; border-radius: 4px; }
-    .field-label { font-family: var(--fonte-display); font-size: 19px; font-weight: 700; color: var(--carvão); line-height: 1.4; }
-    .field-label .required { color: var(--bordô); margin-left: 4px; font-size: 22px; }
+    .field { display: flex; flex-direction: column; gap: 12px; border-radius: 4px; }
+    .field-label { font-family: var(--fonte-display); font-size: 20px; font-weight: 700; color: var(--carvão); line-height: 1.3; }
+    .field-label .required { color: var(--lenço-colorado); margin-left: 4px; font-size: 20px; }
 
-    .input-text { font-family: var(--fonte-corpo); font-size: 15px; font-weight: 500; color: var(--carvão); background: var(--creme); border: 2px solid rgba(139,30,48,0.12); border-radius: 10px; padding: 14px 18px; width: 100%; transition: var(--transicao); outline: none; }
-    .input-text:focus { border-color: var(--ouro); background: var(--branco); box-shadow: 0 0 0 4px rgba(212,175,55,0.15); }
+    .input-text { font-family: var(--fonte-corpo); font-size: 15px; font-weight: 500; color: var(--carvão); background: var(--pergaminho); border: 2px solid rgba(117,101,91,0.2); border-radius: 8px; padding: 14px 18px; width: 100%; transition: var(--transicao); outline: none; }
+    .input-text:focus { border-color: var(--ouro-velho); background: var(--branco); box-shadow: 0 0 0 4px rgba(197,160,89,0.15); }
 
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
 
-    .radio-group { display: flex; flex-direction: column; gap: 12px; }
-    .radio-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px solid rgba(139,30,48,0.1); border-radius: 10px; cursor: pointer; transition: var(--transicao); background: var(--creme); user-select: none; }
-    .radio-item:hover { border-color: var(--ouro); background: rgba(212,175,55,0.05); transform: translateX(4px); }
-    .radio-item.selected { border-color: var(--bordô); background: rgba(139,30,48,0.04); box-shadow: 0 4px 12px rgba(139,30,48,0.08); transform: translateX(4px); }
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+    .radio-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px solid rgba(117,101,91,0.15); border-radius: 8px; cursor: pointer; transition: var(--transicao); background: var(--pergaminho); user-select: none; }
+    .radio-item:hover { border-color: var(--ouro-velho); background: var(--branco); }
+    .radio-item.selected { border-color: var(--lenço-colorado); background: rgba(139,30,40,0.03); box-shadow: 0 4px 12px rgba(139,30,40,0.06); }
 
-    .radio-item input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid rgba(139,30,48,0.3); flex-shrink: 0; transition: var(--transicao); position: relative; cursor: pointer; border-radius: 50%; background: var(--branco); }
-    .radio-item input[type="radio"]:checked { background-color: var(--bordô); border-color: var(--bordô); box-shadow: 0 0 0 3px rgba(139,30,48,0.2); }
-    .radio-item input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: var(--ouro-light); }
+    .radio-item input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid rgba(117,101,91,0.4); flex-shrink: 0; transition: var(--transicao); position: relative; cursor: pointer; border-radius: 50%; background: var(--branco); }
+    .radio-item input[type="radio"]:checked { background-color: var(--lenço-colorado); border-color: var(--lenço-colorado); box-shadow: 0 0 0 3px rgba(139,30,40,0.15); }
+    .radio-item input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: var(--ouro-brilho); }
     
     .option-label { font-size: 15px; font-weight: 500; color: var(--carvão); line-height: 1.4; }
 
     /* VALIDAÇÃO DE ERRO */
-    .error-field { border-left: 4px solid var(--bordô) !important; padding-left: 16px !important; transition: all 0.3s ease; }
+    .error-field { border-left: 4px solid var(--lenço-colorado) !important; padding-left: 16px !important; transition: all 0.3s ease; }
 
-    .divider { display: flex; align-items: center; gap: 16px; margin: 12px 0; }
-    .divider-line { flex: 1; height: 1px; background: rgba(139,30,48,0.1); }
-    .divider-icon { color: var(--ouro); font-size: 16px; }
+    .divider { display: flex; align-items: center; gap: 16px; margin: 8px 0; }
+    .divider-line { flex: 1; height: 1px; background: rgba(117,101,91,0.15); }
+    .divider-icon { color: var(--ouro-velho); font-size: 16px; }
 
-    /* Botão Temático */
+    /* Botão Tradicional */
     .submit-area { text-align: center; margin-top: 24px; }
-    .btn-submit { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--branco); background: linear-gradient(135deg, var(--verde), #1A4020); border: 2px solid var(--ouro); padding: 20px 64px; border-radius: 100px; cursor: pointer; transition: var(--transicao); box-shadow: 0 10px 32px rgba(46,90,54,0.4); position: relative; overflow: hidden; }
-    .btn-submit::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--ouro), var(--bordô)); opacity: 0; transition: var(--transicao); }
+    .btn-submit { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--branco); background: var(--erva-mate); border: 2px solid var(--ouro-velho); padding: 20px 64px; border-radius: 4px; cursor: pointer; transition: var(--transicao); box-shadow: 0 10px 24px rgba(42,75,49,0.3); position: relative; overflow: hidden; }
+    .btn-submit::before { content: ''; position: absolute; inset: 0; background: var(--erva-mate-dark); opacity: 0; transition: var(--transicao); }
     .btn-submit:hover::before { opacity: 1; }
-    .btn-submit:hover { box-shadow: 0 14px 48px rgba(139,30,48,0.5); transform: translateY(-3px); border-color: var(--ouro-light); }
+    .btn-submit:hover { box-shadow: 0 12px 32px rgba(42,75,49,0.4); transform: translateY(-2px); border-color: var(--ouro-brilho); }
     .btn-submit span { position: relative; z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    .btn-submit:hover span { color: var(--branco); }
     
-    .submit-note { margin-top: 16px; font-size: 12px; font-weight: 500; color: var(--cinza-soft); letter-spacing: 0.5px; }
+    .submit-note { margin-top: 16px; font-size: 12px; font-weight: 600; color: var(--cinza-pardo); letter-spacing: 0.5px; }
 
-    #success-msg { display: none; background: linear-gradient(135deg, var(--verde), #1A4020); color: var(--branco); border-radius: var(--raio); padding: 48px 32px; text-align: center; margin-top: 32px; animation: fadeUp 0.5s ease; border: 2px solid var(--ouro); box-shadow: 0 16px 48px rgba(46,90,54,0.3); }
-    #success-msg h2 { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--ouro-light); }
-    #error-msg { display: none; background: rgba(139,30,48,0.08); border: 2px solid rgba(139,30,48,0.3); color: var(--bordô-deep); border-radius: 10px; padding: 16px 24px; font-size: 14px; font-weight: 600; margin-top: 16px; }
+    #success-msg { display: none; background: var(--erva-mate); color: var(--branco); border-radius: var(--raio); padding: 48px 32px; text-align: center; margin-top: 32px; animation: fadeUp 0.5s ease; border: 2px solid var(--ouro-velho); box-shadow: 0 16px 48px rgba(42,75,49,0.25); }
+    #success-msg h2 { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--ouro-brilho); }
+    #error-msg { display: none; background: rgba(139,30,40,0.08); border: 2px solid rgba(139,30,40,0.3); color: var(--sangue-de-boi); border-radius: 8px; padding: 16px 24px; font-size: 14px; font-weight: 700; margin-top: 16px; }
 
-    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(139,30,48,0.1); margin-top: 32px; }
-    footer p { font-size: 12px; color: var(--cinza-soft); letter-spacing: 1.5px; font-weight: 500; }
-    footer strong { color: var(--bordô); font-weight: 700; }
+    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(117,101,91,0.2); margin-top: 32px; }
+    footer p { font-size: 12px; color: var(--cinza-pardo); letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; }
+    footer strong { color: var(--sangue-de-boi); font-weight: 800; }
 
     @media (max-width: 600px) {
       .hero-inner    { padding: 56px 20px 40px; }
       .section-body  { padding: 24px; gap: 24px; }
       .section-header{ padding: 20px 24px; }
       .btn-submit    { padding: 18px 40px; width: 100%; }
-      .radio-item:hover { transform: none; }
-      .radio-item.selected { transform: none; }
+      .radio-item:hover { background: var(--pergaminho); }
     }
   </style>
 </head>
@@ -178,7 +187,7 @@
     <div class="ornament">
       <div class="ornament-line"></div>
       <div class="ornament-diamond"></div>
-      <span class="ornament-text">Pesquisa de Opinião</span>
+      <span class="ornament-text">Pesquisa Oficial</span>
       <div class="ornament-diamond"></div>
       <div class="ornament-line right"></div>
     </div>
@@ -211,7 +220,7 @@
 
   <div class="section-card">
     <div class="section-header">
-      <div class="section-number">I</div>
+      <div class="section-number"><span>I</span></div>
       <div>
         <div class="section-title">Identificação da Entidade</div>
         <div class="section-subtitle">Dados do CTG participante</div>
@@ -237,7 +246,7 @@
 
   <div class="section-card">
     <div class="section-header">
-      <div class="section-number">II</div>
+      <div class="section-number"><span>II</span></div>
       <div>
         <div class="section-title">Relação com a Dança</div>
         <div class="section-subtitle">A tua vivência no tradicionalismo</div>
@@ -300,7 +309,7 @@
 
   <div class="section-card">
     <div class="section-header">
-      <div class="section-number">III</div>
+      <div class="section-number"><span>III</span></div>
       <div>
         <div class="section-title">Participação nos Festivais</div>
         <div class="section-subtitle">O teu histórico no evento</div>
@@ -345,7 +354,7 @@
 
   <div class="section-card">
     <div class="section-header">
-      <div class="section-number">IV</div>
+      <div class="section-number"><span>IV</span></div>
       <div>
         <div class="section-title">Impacto e Preservação</div>
         <div class="section-subtitle">A importância do evento para a cultura</div>
@@ -401,7 +410,7 @@
 
   <div class="section-card">
     <div class="section-header">
-      <div class="section-number">V</div>
+      <div class="section-number"><span>V</span></div>
       <div>
         <div class="section-title">Engajamento e Futuro</div>
         <div class="section-subtitle">O incentivo para as próximas gerações</div>
@@ -457,7 +466,7 @@
 </main>
 
 <footer>
-  <p><strong>JuvenArt & FestMirim 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião</p>
+  <p><strong>JuvenArt & FestMirim 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião Oficial</p>
 </footer>
 
 <script>
