@@ -18,7 +18,7 @@
     :root {
       --lenço-colorado: #8B1E28;
       --sangue-de-boi:  #3A0D12;
-      --galpão-escuro:  #100507; /* Fundo principal super escuro */
+      --galpão-escuro:  #100507; 
       
       --rs-verde:       #007A33;
       --rs-vermelho:    #ED1C24;
@@ -29,11 +29,11 @@
       --ouro-velho:     #C5A059;
       --ouro-brilho:    #E8D08D;
       
-      --surface:        #1A0C0E; /* Fundo dos cards */
-      --borda:          rgba(197,160,89,0.15); /* Bordas douradas suaves */
+      --surface:        #1A0C0E; 
+      --borda:          rgba(197,160,89,0.15); 
       --borda-hover:    rgba(197,160,89,0.4);
       
-      --texto:          #FDFBF7; /* Branco pergaminho */
+      --texto:          #FDFBF7; 
       --texto-dim:      rgba(253,251,247,0.65);
       --texto-muted:    rgba(253,251,247,0.4);
 
@@ -66,7 +66,6 @@
       background: rgba(16,5,7,0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      /* A borda inferior agora é a bandeira do RS */
       border-bottom: 3px solid transparent;
       border-image: linear-gradient(90deg, var(--rs-verde) 0%, var(--rs-verde) 33.3%, var(--rs-vermelho) 33.3%, var(--rs-vermelho) 66.6%, var(--rs-amarelo) 66.6%, var(--rs-amarelo) 100%) 1;
       padding: 0 32px;
@@ -106,7 +105,7 @@
     .last-update { font-size: 11px; font-weight: 500; color: var(--texto-dim); letter-spacing: 0.5px; }
 
     /* ═══════════════════════════════════════
-       HERO STRIP (COM TEXTURA PONCHO)
+       HERO STRIP (COM TEXTURA PONCHO E IMAGEM TEMA)
        ═══════════════════════════════════════ */
     .hero-strip {
       background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%);
@@ -114,24 +113,45 @@
       position: relative; overflow: hidden;
       border-bottom: 1px solid rgba(197,160,89,0.2);
     }
+    /* Trama de fundo */
     .hero-strip::before {
       content: ''; position: absolute; inset: 0;
       background-image: 
         repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px),
         repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
+      z-index: 0;
     }
+    /* Imagem Temática com Máscara de Fusão Suave */
+    .hero-strip::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 55%;
+      height: 100%;
+      background-image: url('tema.jpg'); /* Sua imagem gerada */
+      background-size: cover;
+      background-position: right center;
+      /* O Fade Out da imagem para a esquerda */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
+      mask-image: linear-gradient(to right, transparent 0%, black 50%);
+      opacity: 0.7; /* Suaviza a luz da imagem */
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .hero-strip-inner {
       max-width: 1300px; margin: 0 auto;
       position: relative; z-index: 1;
       display: flex; align-items: flex-end;
       justify-content: space-between; flex-wrap: wrap; gap: 24px;
     }
-    .hero-title { font-family: var(--fonte-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1; color: var(--texto); text-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    .hero-title { font-family: var(--fonte-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1; color: var(--texto); text-shadow: 0 4px 12px rgba(0,0,0,0.8); }
     .hero-title span { color: var(--ouro-brilho); font-style: italic; }
-    .hero-sub { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 8px; }
+    .hero-sub { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
     /* ═══════════════════════════════════════
-       KPI CARDS (COM ÍCONES VETORIAIS)
+       KPI CARDS
        ═══════════════════════════════════════ */
     .kpi-row {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
@@ -143,7 +163,6 @@
       animation: fadeUp 0.4s ease both;
       box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
-    /* Brilho superior */
     .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--ouro-velho), var(--lenço-colorado)); opacity: 0.8; }
     .kpi-card:hover { border-color: var(--ouro-velho); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
     
@@ -153,7 +172,7 @@
     .kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--texto-dim); }
 
     /* ═══════════════════════════════════════
-       GRID DE GRÁFICOS
+       GRID DE GRÁFICOS E TABELA
        ═══════════════════════════════════════ */
     .charts-grid {
       max-width: 1300px; margin: 0 auto; padding: 32px 32px 80px;
@@ -178,12 +197,10 @@
     .canvas-wrap { position: relative; height: 260px; }
     .canvas-wrap.tall { height: 320px; }
 
-    /* Legenda customizada */
     .custom-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
     .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--texto-dim); font-weight: 500; }
     .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-    /* Barras de progresso (texto livre / escala) */
     .bar-list { display: flex; flex-direction: column; gap: 16px; }
     .bar-row { display: flex; flex-direction: column; gap: 6px; }
     .bar-meta { display: flex; justify-content: space-between; align-items: baseline; }
@@ -192,7 +209,6 @@
     .bar-track { height: 8px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
     .bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(to right, var(--ouro-velho), var(--ouro-brilho)); transition: width 1s cubic-bezier(0.4,0,0.2,1); }
 
-    /* Tabela de CTGs - Estilo Livro de Ouro */
     .ctg-table { width: 100%; border-collapse: collapse; }
     .ctg-table th, .ctg-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
     .ctg-table th { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--ouro-velho); background: rgba(0,0,0,0.3); }
@@ -200,7 +216,6 @@
     .ctg-table tr:last-child td { border-bottom: none; }
     .ctg-table tr:hover td { color: var(--texto); background: rgba(197,160,89,0.05); }
 
-    /* ESTADO VAZIO / LOADING */
     .state-box { max-width: 1300px; margin: 0 auto; padding: 40px 32px; }
     .state-inner { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); padding: 80px 32px; text-align: center; box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
     .state-icon { font-size: 48px; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
@@ -218,6 +233,7 @@
     @media (max-width: 700px) {
       .topbar          { padding: 0 20px; border-bottom-width: 4px; }
       .hero-strip      { padding: 32px 20px 28px; }
+      .hero-strip::after { display: none; } /* Oculta a imagem no celular para não atrapalhar a leitura */
       .kpi-row         { padding: 24px 20px 0; }
       .charts-grid     { padding: 24px 20px 60px; grid-template-columns: 1fr; }
       .hero-title      { font-size: 36px; }
@@ -281,16 +297,8 @@
     { key: 'q14', label: 'Pretende continuar', type: 'pie' }
   ];
 
-  /* Paleta Tradicionalista para os Gráficos */
   const PALETTE = [
-    '#C5A059', /* Ouro Velho */
-    '#8B1E28', /* Lenço Colorado */
-    '#2A4B31', /* Erva-Mate */
-    '#E8D08D', /* Ouro Brilho */
-    '#4A1D23', /* Vinho Escuro */
-    '#5C6A4F', /* Verde Acinzentado */
-    '#D97D3A', /* Couro Laranja */
-    '#6B4F3A'  /* Marrom Pampa */
+    '#C5A059', '#8B1E28', '#2A4B31', '#E8D08D', '#4A1D23', '#5C6A4F', '#D97D3A', '#6B4F3A'
   ];
 
   let chartInstances = {};
@@ -379,7 +387,6 @@
       }
     }
 
-    /* ÍCONES VETORIAIS SVG PREMIUM */
     const svgDoc = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
     const svgHouse = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`;
     const svgMap = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
@@ -500,7 +507,6 @@
     const labels  = Object.keys(freq);
     const counts  = Object.values(freq);
     
-    // Repete a paleta caso haja muitas opções
     let bgColors = [];
     for(let i=0; i<labels.length; i++) {
       bgColors.push(PALETTE[i % PALETTE.length]);
@@ -510,7 +516,6 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // Estilo dos gráficos para o Dark Mode
     Chart.defaults.color = 'rgba(253,251,247,0.5)';
     Chart.defaults.font.family = "'Raleway', sans-serif";
 
