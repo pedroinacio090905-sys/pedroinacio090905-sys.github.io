@@ -105,7 +105,7 @@
     .last-update { font-size: 11px; font-weight: 500; color: var(--texto-dim); letter-spacing: 0.5px; }
 
     /* ═══════════════════════════════════════
-       HERO STRIP (COM TEXTURA PONCHO E IMAGEM TEMA)
+       HERO STRIP (COM TEXTURA PONCHO E IMAGEM PNG)
        ═══════════════════════════════════════ */
     .hero-strip {
       background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%);
@@ -121,7 +121,8 @@
         repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
       z-index: 0;
     }
-    /* Imagem Temática com Máscara de Fusão Suave */
+    
+    /* Imagem Temática Transparente (PNG) */
     .hero-strip::after {
       content: '';
       position: absolute;
@@ -129,13 +130,14 @@
       right: 0;
       width: 55%;
       height: 100%;
-      background-image: url('tema.jpg'); /* Sua imagem gerada */
+      background-image: url('tema.png'); /* Atualizado para buscar o arquivo .png */
       background-size: cover;
       background-position: right center;
-      /* O Fade Out da imagem para a esquerda */
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
-      mask-image: linear-gradient(to right, transparent 0%, black 50%);
-      opacity: 0.7; /* Suaviza a luz da imagem */
+      background-repeat: no-repeat;
+      /* Máscara muito suave só para a borda esquerda se fundir ao vermelho, já que não há mais o fundo branco/preto */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%);
+      mask-image: linear-gradient(to right, transparent 0%, black 25%);
+      opacity: 0.85; 
       z-index: 0;
       pointer-events: none;
     }
