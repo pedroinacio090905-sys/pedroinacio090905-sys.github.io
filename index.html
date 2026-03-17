@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JuvenArt & FestMirim 2026 — Pesquisa de Opinião</title>
   
-  <link rel="icon" type="image/png" href="favicon.png?v=4" />
+  <link rel="icon" type="image/png" href="favicon.png?v=5" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -75,24 +75,26 @@
       z-index: 0;
     }
 
-    /* SILHUETAS TEMÁTICAS (CORRIGIDAS PARA BRANCO E MAIS VISÍVEIS) */
+    /* SILHUETAS TEMÁTICAS PUXANDO DO SEU GITHUB */
     .silhueta-esquerda {
       position: absolute; top: 0; left: 2%; 
       width: 25vw; max-width: 350px; height: 100%;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/23/Tango.svg'); 
+      background-image: url('casal.png'); /* Arquivo local blindado */
       background-size: contain; background-repeat: no-repeat; background-position: left center;
-      /* Filtro inverte a imagem preta para branca, com leve opacidade */
-      filter: invert(100%) opacity(0.15); 
+      /* Transforma qualquer cor em branco perfeito para a marca d'água */
+      filter: brightness(0) invert(1);
+      opacity: 0.15; 
       pointer-events: none; z-index: 1;
     }
     
     .silhueta-direita {
       position: absolute; top: 0; right: 2%; 
       width: 25vw; max-width: 350px; height: 100%;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Silhouette_of_a_horse.svg'); 
+      background-image: url('cavalo.png'); /* Arquivo local blindado */
       background-size: contain; background-repeat: no-repeat; background-position: right center;
-      /* Filtro inverte a imagem preta para branca, com leve opacidade */
-      filter: invert(100%) opacity(0.15); 
+      /* Transforma qualquer cor em branco perfeito para a marca d'água */
+      filter: brightness(0) invert(1);
+      opacity: 0.15; 
       pointer-events: none; z-index: 1;
     }
     
