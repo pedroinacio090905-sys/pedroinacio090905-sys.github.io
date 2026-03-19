@@ -2,647 +2,550 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JuvenArt & FestMirim 2026 — Pesquisa de Opinião</title>
-  
-  <link rel="icon" type="image/png" href="favicon.png?v=6" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>JuvENART & FestMirim 2026 — Dashboard de Respostas</title>
+  <link rel="icon" type="image/png" href="favicon.png?v=7" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
   <style>
+    /* ═══════════════════════════════════════
+       VARIÁVEIS - TEMA GALPÃO DARK (TELÃO)
+       ═══════════════════════════════════════ */
     :root {
-      /* CORES PURAS DO TRADICIONALISMO */
       --lenço-colorado: #8B1E28;
       --sangue-de-boi:  #3A0D12;
-      --galpão-escuro:  #170305;
+      --galpão-escuro:  #100507; 
       
       --rs-verde:       #007A33;
       --rs-vermelho:    #ED1C24;
       --rs-amarelo:     #FFDE00;
       
       --erva-mate:      #2A4B31;
-      --erva-mate-dark: #1A301E;
-
+      
       --ouro-velho:     #C5A059;
       --ouro-brilho:    #E8D08D;
       
-      --pergaminho:     #F7F4EB;
-      --couro-cru:      #EBE5D8;
+      --surface:        #1A0C0E; 
+      --borda:          rgba(197,160,89,0.15); 
+      --borda-hover:    rgba(197,160,89,0.4);
       
-      --carvão:         #2B211E;
-      --cinza-pardo:    #75655B;
-      --branco:         #FFFFFF;
+      --texto:          #FDFBF7; 
+      --texto-dim:      rgba(253,251,247,0.75); /* Clareado levemente para melhor leitura */
+      --texto-muted:    rgba(253,251,247,0.4);
 
       --fonte-display: 'Cormorant Garamond', Georgia, serif;
       --fonte-corpo:   'Raleway', sans-serif;
-
-      --raio:   10px;
-      --sombra: 0 12px 32px rgba(58, 13, 18, 0.08);
-      --sombra-sm: 0 4px 12px rgba(58, 13, 18, 0.06);
-      --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --raio: 12px;
+      --trans: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: var(--fonte-corpo);
-      background-color: var(--pergaminho);
-      color: var(--carvão);
+      background-color: var(--galpão-escuro);
+      color: var(--texto);
       min-height: 100vh;
-      line-height: 1.7;
-      /* Textura sutil de papel antigo/couro cru */
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image:
+        radial-gradient(ellipse 70% 50% at 15% 0%,   rgba(139,30,40,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 85% 100%,  rgba(197,160,89,0.08) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
     }
 
-    /* O CABEÇALHO - ESTILO PONCHO E LENÇO COLORADO */
-    .hero {
-      position: relative;
-      padding: 0;
-      color: var(--branco);
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--galpão-escuro) 100%);
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(16,5,7,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(90deg, var(--rs-verde) 0%, var(--rs-verde) 33.3%, var(--rs-vermelho) 33.3%, var(--rs-vermelho) 66.6%, var(--rs-amarelo) 66.6%, var(--rs-amarelo) 100%) 1;
+      padding: 0 32px;
     }
+    .topbar-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 20px; height: 64px; }
+    .topbar-logo { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--texto); letter-spacing: -0.5px; flex-shrink: 0; }
+    .topbar-logo span { color: var(--ouro-brilho); font-style: italic; }
+    .topbar-divider { width: 1px; height: 22px; background: var(--borda); flex-shrink: 0; }
+    .topbar-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro-velho); white-space: nowrap; }
+    .topbar-spacer { flex: 1; }
 
-    /* Trama geométrica (Pala/Poncho) */
-    .hero::before {
+    .btn-refresh {
+      display: flex; align-items: center; gap: 8px;
+      background: transparent; border: 1px solid var(--borda-hover); color: var(--ouro-brilho);
+      font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px; border-radius: 100px;
+      cursor: pointer; transition: var(--trans); white-space: nowrap;
+    }
+    .btn-refresh:hover { background: rgba(197,160,89,0.1); border-color: var(--ouro-brilho); box-shadow: 0 0 12px rgba(197,160,89,0.2); }
+    .btn-refresh.loading .icon-refresh { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .last-update { font-size: 11px; font-weight: 500; color: var(--texto-dim); letter-spacing: 0.5px; white-space: nowrap; }
+
+    .hero-strip {
+      background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%);
+      padding: 48px 32px 40px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(197,160,89,0.2);
+    }
+    .hero-strip::before {
       content: ''; position: absolute; inset: 0;
       background-image: 
         repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px),
         repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
       z-index: 0;
     }
-
-    /* 🔴 ARTE COLORIDA - LADO ESQUERDO 🔴 */
-    .silhueta-esquerda {
-      position: absolute; top: 0; left: 0; 
-      width: 32vw; max-width: 400px; height: 100%;
-      background-image: url('esquerda.png'); 
-      background-size: contain; background-repeat: no-repeat; background-position: left center;
-      /* Mantém toda a cor da imagem e derrete suavemente para a direita e para cima/baixo */
-      -webkit-mask-image: radial-gradient(ellipse 80% 90% at 0% 50%, black 40%, transparent 100%);
-      mask-image: radial-gradient(ellipse 80% 90% at 0% 50%, black 40%, transparent 100%);
-      opacity: 0.9; /* Visibilidade altíssima para manter as cores vibrantes */
-      pointer-events: none; z-index: 1;
-    }
     
-    /* 🔴 ARTE COLORIDA - LADO DIREITO 🔴 */
-    .silhueta-direita {
-      position: absolute; top: 0; right: 0; 
-      width: 32vw; max-width: 400px; height: 100%;
-      background-image: url('direita.png'); 
-      background-size: contain; background-repeat: no-repeat; background-position: right center;
-      /* Mantém toda a cor da imagem e derrete suavemente para a esquerda e para cima/baixo */
-      -webkit-mask-image: radial-gradient(ellipse 80% 90% at 100% 50%, black 40%, transparent 100%);
-      mask-image: radial-gradient(ellipse 80% 90% at 100% 50%, black 40%, transparent 100%);
-      opacity: 0.9; /* Visibilidade altíssima para manter as cores vibrantes */
-      pointer-events: none; z-index: 1;
-    }
-    
-    .hero-inner {
-      position: relative; z-index: 2; max-width: 820px; margin: 0 auto;
-      padding: 64px 32px 48px; text-align: center;
-    }
-    
-    .ornament { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 24px; }
-    .ornament-line { flex: 1; max-width: 100px; height: 1px; background: linear-gradient(to right, transparent, var(--ouro-velho)); }
-    .ornament-line.right { background: linear-gradient(to left, transparent, var(--ouro-velho)); }
-    
-    .hero-logo { font-family: var(--fonte-display); font-size: clamp(56px, 12vw, 92px); font-weight: 700; line-height: 0.9; letter-spacing: -1px; color: var(--branco); margin-bottom: 12px; text-shadow: 0 4px 16px rgba(0,0,0,0.8); }
-    .hero-logo span { color: var(--ouro-brilho); font-style: italic; }
-    .hero-ano { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 500; letter-spacing: 12px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
-    
-    .hero-titulo { font-family: var(--fonte-display); font-size: clamp(18px, 3.5vw, 24px); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto 24px; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
-    
-    .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
-    .badge { background: rgba(197,160,89,0.15); border: 1px solid rgba(197,160,89,0.4); color: var(--ouro-brilho); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; backdrop-filter: blur(4px); }
-    
-    /* A BANDEIRA DO RS COMO BORDA OFICIAL */
-    .hero-border { 
-      position: relative; z-index: 2; height: 10px; 
-      background: linear-gradient(90deg, 
-        var(--rs-verde) 0%, var(--rs-verde) 33.33%, 
-        var(--rs-vermelho) 33.33%, var(--rs-vermelho) 66.66%, 
-        var(--rs-amarelo) 66.66%, var(--rs-amarelo) 100%); 
+    .hero-strip::after {
+      content: ''; position: absolute; top: -10%; right: -2%; width: 60%; height: 120%;
+      background-image: url('tema.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;
+      -webkit-mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
+      mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
+      opacity: 0.9; z-index: 0; pointer-events: none;
     }
 
-    /* GUARDA PAMPA DECORATIVO */
-    .guarda-pampa-band {
-      position: relative; z-index: 2; height: 26px; width: 100%;
-      background-color: var(--sangue-de-boi);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath fill='%23C5A059' opacity='0.75' d='M30,10 h20 v10 h10 v10 h10 v20 h-10 v10 h-10 v10 h-20 v-10 h-10 v-10 h-10 v-20 h10 v-10 h10 z'/%3E%3C/svg%3E");
-      background-size: 26px 26px; background-repeat: repeat-x; background-position: center;
-      border-bottom: 1px solid rgba(197,160,89,0.3);
-    }
+    .hero-strip-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .hero-title { font-family: var(--fonte-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1; color: var(--texto); text-shadow: 0 4px 12px rgba(0,0,0,0.8); }
+    .hero-title span { color: var(--ouro-brilho); font-style: italic; }
+    .hero-sub { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-    .progress-wrapper { background: var(--branco); border-bottom: 1px solid rgba(58,13,18,0.08); padding: 16px 32px; position: sticky; top: 0; z-index: 100; box-shadow: var(--sombra-sm); }
-    .progress-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
-    .progress-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-pardo); white-space: nowrap; }
-    .progress-track { flex: 1; height: 6px; background: var(--couro-cru); border-radius: 10px; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(to right, var(--erva-mate), var(--rs-vermelho), var(--rs-amarelo)); border-radius: 10px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
-    .progress-pct { font-family: var(--fonte-display); font-size: 16px; font-weight: 700; color: var(--sangue-de-boi); min-width: 40px; text-align: right; }
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; padding: 40px 32px 0; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); padding: 28px 24px; position: relative; overflow: hidden; transition: var(--trans); animation: fadeUp 0.4s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--ouro-velho), var(--lenço-colorado)); opacity: 0.8; }
+    .kpi-card:hover { border-color: var(--ouro-velho); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+    .kpi-icon-svg { color: var(--ouro-velho); margin-bottom: 12px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .kpi-value { font-family: var(--fonte-display); font-size: 48px; font-weight: 700; line-height: 1; color: var(--ouro-brilho); margin-bottom: 4px; }
+    .kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--texto-dim); }
 
-    .container { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; padding: 48px 20px 80px; }
+    .charts-grid { max-width: 1300px; margin: 0 auto; padding: 32px 32px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-card { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); overflow: hidden; transition: var(--trans); animation: fadeUp 0.5s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .chart-card:hover { border-color: var(--borda-hover); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
 
-    /* Estilo dos Cards */
-    .section-card { background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); margin-bottom: 32px; overflow: hidden; border: 1px solid rgba(58,13,18,0.06); animation: fadeUp 0.5s ease both; position: relative; }
-    .section-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background: var(--lenço-colorado); opacity: 0.8; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .chart-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 24px 28px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); }
+    .chart-q-num { font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro-velho); margin-bottom: 6px; }
+    .chart-q-text { font-family: var(--fonte-display); font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--texto); }
+    .chart-type-badge { flex-shrink: 0; background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); color: var(--ouro-brilho); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 100px; }
 
-    .section-header { display: flex; align-items: center; gap: 18px; padding: 24px 32px; border-bottom: 1px solid rgba(58,13,18,0.05); background: linear-gradient(to right, rgba(197,160,89,0.06), transparent); }
-    .section-number { width: 40px; height: 40px; border-radius: 4px; background: var(--sangue-de-boi); color: var(--ouro-brilho); font-family: var(--fonte-display); font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(197,160,89,0.3); transform: rotate(45deg); }
-    .section-number span { transform: rotate(-45deg); }
-    .section-title { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--sangue-de-boi); line-height: 1.2; }
-    .section-subtitle { font-size: 12px; font-weight: 600; color: var(--cinza-pardo); margin-top: 2px; letter-spacing: 1px; text-transform: uppercase; }
-    .section-body { padding: 32px; display: flex; flex-direction: column; gap: 32px; }
+    .chart-body { padding: 24px 28px; position: relative; }
+    .canvas-wrap { position: relative; height: 260px; }
+    .canvas-wrap.tall { height: 320px; }
 
-    .field { display: flex; flex-direction: column; gap: 12px; border-radius: 4px; }
-    .field-label { font-family: var(--fonte-display); font-size: 20px; font-weight: 700; color: var(--carvão); line-height: 1.3; }
-    .field-label .required { color: var(--lenço-colorado); margin-left: 4px; font-size: 20px; }
+    /* 🔴 AUMENTO DA FONTE DA LEGENDA 🔴 */
+    .custom-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--texto-dim); font-weight: 500; } /* de 12px para 14px */
+    .legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5); } /* Quadratinho um pouco maior */
 
-    .input-text { font-family: var(--fonte-corpo); font-size: 15px; font-weight: 500; color: var(--carvão); background: var(--pergaminho); border: 2px solid rgba(117,101,91,0.2); border-radius: 8px; padding: 14px 18px; width: 100%; transition: var(--transicao); outline: none; }
-    .input-text:focus { border-color: var(--ouro-velho); background: var(--branco); box-shadow: 0 0 0 4px rgba(197,160,89,0.15); }
+    .ctg-table { width: 100%; border-collapse: collapse; }
+    .ctg-table th, .ctg-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+    .ctg-table th { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--ouro-velho); background: rgba(0,0,0,0.3); }
+    .ctg-table td { color: var(--texto-dim); font-weight: 500; }
+    .ctg-table tr:last-child td { border-bottom: none; }
+    .ctg-table tr:hover td { color: var(--texto); background: rgba(197,160,89,0.05); }
 
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
+    .state-box { max-width: 1300px; margin: 0 auto; padding: 40px 32px; }
+    .state-inner { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); padding: 80px 32px; text-align: center; box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+    .state-icon { font-size: 48px; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+    .state-title { font-family: var(--fonte-display); font-size: 32px; font-weight: 700; color: var(--ouro-brilho); margin-bottom: 12px; }
+    .state-desc { font-size: 15px; color: var(--texto-dim); line-height: 1.6; max-width: 500px; margin: 0 auto; }
+    .spinner { width: 44px; height: 44px; border: 3px solid rgba(197,160,89,0.2); border-top-color: var(--ouro-brilho); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px; }
 
-    .radio-group { display: flex; flex-direction: column; gap: 10px; }
-    .radio-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px solid rgba(117,101,91,0.15); border-radius: 8px; cursor: pointer; transition: var(--transicao); background: var(--pergaminho); user-select: none; }
-    .radio-item:hover { border-color: var(--ouro-velho); background: var(--branco); }
-    .radio-item.selected { border-color: var(--lenço-colorado); background: rgba(139,30,40,0.03); box-shadow: 0 4px 12px rgba(139,30,40,0.06); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+    .kpi-card:nth-child(2) { animation-delay: 0.10s; }
+    .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+    .kpi-card:nth-child(4) { animation-delay: 0.20s; }
 
-    .radio-item input[type="radio"] { appearance: none; width: 22px; height: 22px; border: 2px solid rgba(117,101,91,0.4); flex-shrink: 0; transition: var(--transicao); position: relative; cursor: pointer; border-radius: 50%; background: var(--branco); }
-    .radio-item input[type="radio"]:checked { background-color: var(--lenço-colorado); border-color: var(--lenço-colorado); box-shadow: 0 0 0 3px rgba(139,30,40,0.15); }
-    .radio-item input[type="radio"]:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; border-radius: 50%; background: var(--ouro-brilho); }
-    
-    .option-label { font-size: 15px; font-weight: 500; color: var(--carvão); line-height: 1.4; }
-
-    .error-field { border-left: 4px solid var(--lenço-colorado) !important; padding-left: 16px !important; transition: all 0.3s ease; }
-
-    .divider { display: flex; align-items: center; gap: 16px; margin: 8px 0; }
-    .divider-line { flex: 1; height: 1px; background: rgba(117,101,91,0.15); }
-    .divider-icon { color: var(--ouro-velho); font-size: 16px; }
-
-    /* Botão Tradicional */
-    .submit-area { text-align: center; margin-top: 24px; }
-    .btn-submit { font-family: var(--fonte-corpo); font-size: 14px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--branco); background: var(--erva-mate); border: 2px solid var(--ouro-velho); padding: 20px 64px; border-radius: 4px; cursor: pointer; transition: var(--transicao); box-shadow: 0 10px 24px rgba(42,75,49,0.3); position: relative; overflow: hidden; }
-    .btn-submit::before { content: ''; position: absolute; inset: 0; background: var(--erva-mate-dark); opacity: 0; transition: var(--transicao); }
-    .btn-submit:hover::before { opacity: 1; }
-    .btn-submit:hover { box-shadow: 0 12px 32px rgba(42,75,49,0.4); transform: translateY(-2px); border-color: var(--ouro-brilho); }
-    .btn-submit span { position: relative; z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    
-    .submit-note { margin-top: 16px; font-size: 12px; font-weight: 600; color: var(--cinza-pardo); letter-spacing: 0.5px; }
-
-    #success-msg { display: none; background: var(--erva-mate); color: var(--branco); border-radius: var(--raio); padding: 48px 32px; text-align: center; margin-top: 32px; animation: fadeUp 0.5s ease; border: 2px solid var(--ouro-velho); box-shadow: 0 16px 48px rgba(42,75,49,0.25); }
-    #success-msg h2 { font-family: var(--fonte-display); font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--ouro-brilho); }
-    #error-msg { display: none; background: rgba(139,30,40,0.08); border: 2px solid rgba(139,30,40,0.3); color: var(--sangue-de-boi); border-radius: 8px; padding: 16px 24px; font-size: 14px; font-weight: 700; margin-top: 16px; }
-
-    footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(117,101,91,0.2); margin-top: 32px; position: relative; z-index: 1; }
-    footer p { font-size: 12px; color: var(--cinza-pardo); letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; }
-    footer strong { color: var(--sangue-de-boi); font-weight: 800; }
-
-    /* Oculta as artes nos celulares para priorizar a leitura do texto */
     @media (max-width: 700px) {
-      .hero-inner    { padding: 56px 20px 40px; }
-      .section-body  { padding: 24px; gap: 24px; }
-      .section-header{ padding: 20px 24px; }
-      .btn-submit    { padding: 18px 40px; width: 100%; }
-      .radio-item:hover { background: var(--pergaminho); }
-      .silhueta-esquerda, .silhueta-direita { display: none; }
+      .topbar { padding: 0 16px; border-bottom-width: 4px; }
+      .topbar-label, .topbar-divider, .last-update { display: none; }
+      .topbar-logo { font-size: 20px; }
+      .btn-refresh { padding: 8px 16px; font-size: 10px; }
+      .hero-strip { padding: 32px 16px 28px; }
+      .hero-strip::after { display: none; } 
+      .hero-title { font-size: 32px; }
+      .kpi-row { padding: 24px 16px 0; }
+      .charts-grid { padding: 24px 16px 60px; grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="silhueta-esquerda"></div>
-  <div class="silhueta-direita"></div>
-
-  <div class="hero-inner">
-    <div class="ornament">
-      <div class="ornament-line"></div>
-      <svg class="cuia-icon" viewBox="0 0 100 100" width="28" height="28" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
-        <path d="M 25 35 Q 25 90 50 95 Q 75 90 75 35 Z" fill="var(--ouro-velho)"/>
-        <path d="M 20 35 L 80 35 L 75 25 L 25 25 Z" fill="var(--ouro-brilho)"/>
-        <ellipse cx="50" cy="25" rx="25" ry="6" fill="var(--rs-verde)"/>
-        <line x1="60" y1="25" x2="35" y2="5" stroke="var(--ouro-brilho)" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="33" cy="3" r="4" fill="var(--ouro-brilho)"/>
+<nav class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-logo">Juv<span>ENART</span> & Fest<span>Mirim</span></span>
+    <div class="topbar-divider"></div>
+    <span class="topbar-label">Painel Oficial</span>
+    <div class="topbar-spacer"></div>
+    <span class="last-update" id="last-update"></span>
+    <button class="btn-refresh" id="btn-refresh" onclick="loadData()">
+      <svg class="icon-refresh" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
       </svg>
-      <div class="ornament-line right"></div>
-    </div>
-    
-    <h1 class="hero-logo">Juven<span>Art</span> & Fest<span>Mirim</span></h1>
-    <p class="hero-ano">2 · 0 · 2 · 6</p>
-    <p class="hero-titulo">
-      Pesquisa de opinião destinada às Entidades Tradicionalistas e seus dançarinos das categorias Mirim e Juvenil.
-    </p>
-    <div class="hero-badges">
-      <span class="badge">Danças Tradicionais Gaúchas</span>
-      <span class="badge">Categoria Mirim</span>
-      <span class="badge">Categoria Juvenil</span>
-    </div>
+      Atualizar
+    </button>
   </div>
-  <div class="hero-border"></div>
-  <div class="guarda-pampa-band"></div>
-</header>
+</nav>
 
-<div class="progress-wrapper">
-  <div class="progress-inner">
-    <span class="progress-label">Progresso</span>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
+<div class="hero-strip">
+  <div class="hero-strip-inner">
+    <div>
+      <h1 class="hero-title">Painel de <span>Resultados</span></h1>
+      <p class="hero-sub">Pesquisa de Opinião · Categorias Mirim e Juvenil 2026</p>
     </div>
-    <span class="progress-pct" id="progress-pct">0%</span>
   </div>
 </div>
 
-<main class="container">
-<form id="main-form" novalidate>
-
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number"><span>I</span></div>
-      <div>
-        <div class="section-title">Identificação da Entidade</div>
-        <div class="section-subtitle">Dados do CTG participante</div>
-      </div>
-    </div>
-    <div class="section-body">
-      <div class="field">
-        <label class="field-label" for="ctg-nome">Nome da Entidade <span class="required">*</span></label>
-        <input class="input-text" type="text" id="ctg-nome" name="ctg_nome" placeholder="Ex.: CTG Querência dos Pampas" required />
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="field-label" for="ctg-cidade">Município <span class="required">*</span></label>
-          <input class="input-text" type="text" id="ctg-cidade" name="ctg_cidade" placeholder="Ex.: Alegrete" required />
-        </div>
-        <div class="field">
-          <label class="field-label" for="ctg-regiao">Região Tradicionalista <span class="required">*</span></label>
-          <input class="input-text" type="text" id="ctg-regiao" name="ctg_regiao" placeholder="Ex.: 7ª Região" required />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number"><span>II</span></div>
-      <div>
-        <div class="section-title">Relação com a Dança</div>
-        <div class="section-subtitle">A tua vivência no tradicionalismo</div>
-      </div>
-    </div>
-    <div class="section-body">
-      
-      <div class="field">
-        <label class="field-label">1. Qual dança tradicional gaúcha tu mais gostas de dançar? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q1">
-          <label class="radio-item"><input type="radio" name="q1" value="Pezinho" required /><span class="option-label">Pezinho</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Maçanico" /><span class="option-label">Maçanico</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Anu" /><span class="option-label">Anu</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Balaio" /><span class="option-label">Balaio</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Rancheira de Carreirinha" /><span class="option-label">Rancheira de Carreirinha</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Todas as danças tradicionais gaúchas" /><span class="option-label">Todas as danças tradicionais gaúchas</span></label>
-          <label class="radio-item"><input type="radio" name="q1" value="Outra" /><span class="option-label">Outra</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">2. O que mais te motiva a participar do grupo de danças do teu CTG? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q2">
-          <label class="radio-item"><input type="radio" name="q2" value="Porque eu gosto de dançar" required /><span class="option-label">Porque eu gosto de dançar</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="Porque gosto de representar a cultura gaúcha" /><span class="option-label">Porque gosto de representar a cultura gaúcha</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="Porque fiz amigos no grupo" /><span class="option-label">Porque fiz amigos no grupo</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="Porque minha família participa ou incentiva" /><span class="option-label">Porque minha família participa ou incentiva</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="Porque gosto de me apresentar em rodeios e festivais" /><span class="option-label">Porque gosto de me apresentar em rodeios e festivais</span></label>
-          <label class="radio-item"><input type="radio" name="q2" value="Todas as alternativas acima" /><span class="option-label">Todas as alternativas acima</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">3. Como tu te sentes quando estás dançando uma dança tradicional gaúcha? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q3">
-          <label class="radio-item"><input type="radio" name="q3" value="Muito feliz" required /><span class="option-label">Muito feliz</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="Orgulhoso(a) de ser gaúcho(a)" /><span class="option-label">Orgulhoso(a) de ser gaúcho(a)</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="Animado(a) e empolgado(a)" /><span class="option-label">Animado(a) e empolgado(a)</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="Um pouco nervoso(a), mas gosto" /><span class="option-label">Um pouco nervoso(a), mas gosto</span></label>
-          <label class="radio-item"><input type="radio" name="q3" value="Indiferente" /><span class="option-label">Indiferente</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">4. Quem é a tua maior inspiração dentro do tradicionalismo gaúcho? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q4">
-          <label class="radio-item"><input type="radio" name="q4" value="Meu instrutor(a) de dança" required /><span class="option-label">Meu instrutor(a) de dança</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Um colega do grupo de danças" /><span class="option-label">Um colega do grupo de danças</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Alguém da minha família" /><span class="option-label">Alguém da minha família</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Um dançarino(a) que admiro" /><span class="option-label">Um dançarino(a) que admiro</span></label>
-          <label class="radio-item"><input type="radio" name="q4" value="Um outro grupo de danças que eu admiro" /><span class="option-label">Um outro grupo de danças que eu admiro</span></label>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number"><span>III</span></div>
-      <div>
-        <div class="section-title">Participação nos Festivais</div>
-        <div class="section-subtitle">O teu histórico no evento</div>
-      </div>
-    </div>
-    <div class="section-body">
-      
-      <div class="field">
-        <label class="field-label">5. O que tu mais gostas quando participas das apresentações em concursos de dança como os festivais JUVENART/FESTMIRIM? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q5">
-          <label class="radio-item"><input type="radio" name="q5" value="Confraternizar com o grupo" required /><span class="option-label">Confraternizar com o grupo</span></label>
-          <label class="radio-item"><input type="radio" name="q5" value="Ser finalista" /><span class="option-label">Ser finalista</span></label>
-          <label class="radio-item"><input type="radio" name="q5" value="Realizar uma boa apresentação" /><span class="option-label">Realizar uma boa apresentação</span></label>
-          <label class="radio-item"><input type="radio" name="q5" value="Viajar e conhecer outros lugares" /><span class="option-label">Viajar e conhecer outros lugares</span></label>
-          <label class="radio-item"><input type="radio" name="q5" value="Receber aplausos e reconhecimento" /><span class="option-label">Receber aplausos e reconhecimento</span></label>
-          <label class="radio-item"><input type="radio" name="q5" value="Todas as alternativas acima" /><span class="option-label">Todas as alternativas acima</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">6. Quantas vezes tu já participaste do FESTMIRIM? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q6">
-          <label class="radio-item"><input type="radio" name="q6" value="Nenhuma vez" required /><span class="option-label">Nenhuma vez</span></label>
-          <label class="radio-item"><input type="radio" name="q6" value="Uma vez" /><span class="option-label">Uma vez</span></label>
-          <label class="radio-item"><input type="radio" name="q6" value="Mais vezes" /><span class="option-label">Mais vezes</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">7. Quantas vezes tu já participaste do JUVENART? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q7">
-          <label class="radio-item"><input type="radio" name="q7" value="Nenhuma vez" required /><span class="option-label">Nenhuma vez</span></label>
-          <label class="radio-item"><input type="radio" name="q7" value="Uma vez" /><span class="option-label">Uma vez</span></label>
-          <label class="radio-item"><input type="radio" name="q7" value="Mais vezes" /><span class="option-label">Mais vezes</span></label>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number"><span>IV</span></div>
-      <div>
-        <div class="section-title">Impacto e Preservação</div>
-        <div class="section-subtitle">A importância do evento para a cultura</div>
-      </div>
-    </div>
-    <div class="section-body">
-
-      <div class="field">
-        <label class="field-label">8. Para ti, qual é o nível de importância do FestMirim e do Juvenart para a preservação das danças tradicionais gaúchas? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q8">
-          <label class="radio-item"><input type="radio" name="q8" value="Muito importante" required /><span class="option-label">Muito importante</span></label>
-          <label class="radio-item"><input type="radio" name="q8" value="Importante" /><span class="option-label">Importante</span></label>
-          <label class="radio-item"><input type="radio" name="q8" value="Pouco importante" /><span class="option-label">Pouco importante</span></label>
-          <label class="radio-item"><input type="radio" name="q8" value="Sem importância" /><span class="option-label">Sem importância</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">9. Tu acreditas que participar do FestMirim e do Juvenart aumenta teu interesse pelas danças tradicionais? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q9">
-          <label class="radio-item"><input type="radio" name="q9" value="Aumenta muito" required /><span class="option-label">Aumenta muito</span></label>
-          <label class="radio-item"><input type="radio" name="q9" value="Aumenta um pouco" /><span class="option-label">Aumenta um pouco</span></label>
-          <label class="radio-item"><input type="radio" name="q9" value="Não altera" /><span class="option-label">Não altera</span></label>
-          <label class="radio-item"><input type="radio" name="q9" value="Diminui" /><span class="option-label">Diminui</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">10. O quanto o FestMirim e o Juvenart te motivam a participar dos ensaios de danças tradicionais? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q10">
-          <label class="radio-item"><input type="radio" name="q10" value="Motivam muito" required /><span class="option-label">Motivam muito</span></label>
-          <label class="radio-item"><input type="radio" name="q10" value="Motivam moderadamente" /><span class="option-label">Motivam moderadamente</span></label>
-          <label class="radio-item"><input type="radio" name="q10" value="Motivam pouco" /><span class="option-label">Motivam pouco</span></label>
-          <label class="radio-item"><input type="radio" name="q10" value="Não motivam" /><span class="option-label">Não motivam</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">11. Na preparação para participar do FestMirim ou do Juvenart, com que frequência tu participas dos ensaios de danças tradicionais? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q11">
-          <label class="radio-item"><input type="radio" name="q11" value="Mais de duas vezes por semana" required /><span class="option-label">Mais de duas vezes por semana</span></label>
-          <label class="radio-item"><input type="radio" name="q11" value="Uma a duas vezes por semana" /><span class="option-label">Uma a duas vezes por semana</span></label>
-          <label class="radio-item"><input type="radio" name="q11" value="Esporadicamente" /><span class="option-label">Esporadicamente</span></label>
-          <label class="radio-item"><input type="radio" name="q11" value="Raramente" /><span class="option-label">Raramente</span></label>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-number"><span>V</span></div>
-      <div>
-        <div class="section-title">Engajamento e Futuro</div>
-        <div class="section-subtitle">O incentivo para as próximas gerações</div>
-      </div>
-    </div>
-    <div class="section-body">
-
-      <div class="field">
-        <label class="field-label">12. Tu consideras que o FestMirim e o Juvenart incentivam crianças e jovens a continuarem envolvidas e motivadas pelas danças tradicionais? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q12">
-          <label class="radio-item"><input type="radio" name="q12" value="Incentivam muito" required /><span class="option-label">Incentivam muito</span></label>
-          <label class="radio-item"><input type="radio" name="q12" value="Incentivam moderadamente" /><span class="option-label">Incentivam moderadamente</span></label>
-          <label class="radio-item"><input type="radio" name="q12" value="Incentivam pouco" /><span class="option-label">Incentivam pouco</span></label>
-          <label class="radio-item"><input type="radio" name="q12" value="Não incentivam" /><span class="option-label">Não incentivam</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">13. Para ti, participar do FestMirim e do Juvenart fortalece tua ligação com a cultura gaúcha? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q13">
-          <label class="radio-item"><input type="radio" name="q13" value="Fortalece muito" required /><span class="option-label">Fortalece muito</span></label>
-          <label class="radio-item"><input type="radio" name="q13" value="Fortalece um pouco" /><span class="option-label">Fortalece um pouco</span></label>
-          <label class="radio-item"><input type="radio" name="q13" value="Fortalece pouco" /><span class="option-label">Fortalece pouco</span></label>
-          <label class="radio-item"><input type="radio" name="q13" value="Não fortalece" /><span class="option-label">Não fortalece</span></label>
-        </div>
-      </div>
-      <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
-
-      <div class="field">
-        <label class="field-label">14. Tu pretendes continuar participando do FestMirim - Festival Mirim ou do Juvenart - Festival Juvenil nos próximos anos? <span class="required">*</span></label>
-        <div class="radio-group" data-name="q14">
-          <label class="radio-item"><input type="radio" name="q14" value="Sim" required /><span class="option-label">Sim</span></label>
-          <label class="radio-item"><input type="radio" name="q14" value="Talvez" /><span class="option-label">Talvez</span></label>
-          <label class="radio-item"><input type="radio" name="q14" value="Não" /><span class="option-label">Não</span></label>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="submit-area">
-    <button type="submit" class="btn-submit" id="btn-enviar"><span>Enviar Respostas</span></button>
-    <p class="submit-note">Suas respostas serão registradas com segurança e utilizadas exclusivamente para fins de pesquisa.</p>
-    <div id="error-msg">⚠️ Ocorreu um erro. Verifique sua conexão e tente novamente.</div>
-  </div>
-</form> 
-
-<div id="success-msg">
-  <h2>Obrigado! 🤠</h2>
-  <p>Suas respostas foram registradas com sucesso.<br>A organização agradece a tua participação!</p>
-</div>
-</main>
-
-<footer>
-  <p><strong>JuvenArt & FestMirim 2026</strong> &nbsp;·&nbsp; Pesquisa de Opinião Oficial</p>
-</footer>
+<div id="app-content"></div>
 
 <script>
-// =========================================================================
-// ATENÇÃO: COLOQUE A SUA URL DO APPS SCRIPT AQUI DENTRO DAS ASPAS!
-// =========================================================================
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynLJTODqbZGyhKpdBdpyrMbuc8NTHgtujnsfpw0r-7hpn6kStgYfTG8RmrRFnii2LuGQ/exec';
+/* ══════════════════════════════════════════════════════════════
+   ★  COLE A SUA URL ABAIXO  ★
+   ══════════════════════════════════════════════════════════════ */
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynLJTODqbZGyhKpdBdpyrMbuc8NTHgtujnsfpw0r-7hpn6kStgYfTG8RmrRFnii2LuGQ/exec';
 
-/* ── Seleção visual de opções ─────────── */
-document.querySelectorAll('.radio-item input[type="radio"]').forEach(input => {
-  input.addEventListener('change', () => {
-    const group = input.closest('.radio-group');
-    group.querySelectorAll('.radio-item').forEach(li => li.classList.remove('selected'));
-    input.closest('.radio-item').classList.add('selected');
-    updateProgress();
-  });
-});
+  const QUESTIONS_CONFIG = [
+    { key: 'ctg_nome',   label: 'CTG',        type: 'identity' },
+    { key: 'ctg_cidade', label: 'Município',  type: 'identity' },
+    { key: 'ctg_regiao', label: 'Região MTG', type: 'identity' },
 
-/* ── Progresso ─────────────────────────────────────────── */
-function updateProgress() {
-  const form        = document.getElementById('main-form');
-  const allInputs   = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
-  let answered      = 0;
-  let total         = 0;
+    { key: 'q1', label: 'Dança preferida', type: 'horizontal' },
+    { key: 'q2', label: 'O que mais te motiva', type: 'horizontal' },
+    { key: 'q3', label: 'Sentimento ao dançar', type: 'horizontal' },
+    { key: 'q4', label: 'Maior inspiração', type: 'horizontal' },
+    { key: 'q5', label: 'O que mais gosta nos festivais', type: 'horizontal' },
+    { key: 'q6', label: 'Participação FestMirim', type: 'pie' },
+    { key: 'q7', label: 'Participação Juvenart', type: 'pie' },
+    { key: 'q8', label: 'Importância na preservação', type: 'pie' },
+    { key: 'q9', label: 'Aumento do interesse pelas danças', type: 'pie' },
+    { key: 'q10', label: 'Motivação para os ensaios', type: 'pie' },
+    { key: 'q11', label: 'Frequência de ensaios', type: 'horizontal' },
+    { key: 'q12', label: 'Incentivo a crianças e jovens', type: 'pie' },
+    { key: 'q13', label: 'Fortalecimento com a cultura gaúcha', type: 'pie' },
+    { key: 'q14', label: 'Pretende continuar', type: 'pie' }
+  ];
 
-  allInputs.forEach(el => {
-    if (el.type === 'radio' || el.type === 'checkbox') {
-    } else {
-      total++;
-      if (el.value.trim()) answered++;
-    }
-  });
+  const PALETTE = [
+    '#C5A059', '#8B1E28', '#2A4B31', '#E8D08D', '#4A1D23', '#5C6A4F', '#D97D3A', '#6B4F3A'
+  ];
 
-  const radioGroups = [...new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name))];
-  radioGroups.forEach(name => {
-    total++;
-    if (form.querySelector(`input[name="${name}"]:checked`)) answered++;
-  });
+  let chartInstances = {};
 
-  const pct = total > 0 ? Math.round((answered / total) * 100) : 0;
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-pct').textContent  = pct + '%';
-}
+  async function loadData() {
+    const btn = document.getElementById('btn-refresh');
+    btn.classList.add('loading');
+    renderLoading();
 
-document.getElementById('main-form').querySelectorAll('input[type="text"], select, textarea').forEach(el => el.addEventListener('input', updateProgress));
+    try {
+      const res  = await fetch(APPS_SCRIPT_URL + '?action=getData&token=BasesDaTradicao2026');
+      const json = await res.json();
 
-/* ── Validação e Envio via POST (BLINDADO URL-ENCODED) ────────────── */
-document.getElementById('main-form').addEventListener('submit', async function(e) {
-  e.preventDefault(); 
-
-  const btn = document.getElementById('btn-enviar');
-  const errEl  = document.getElementById('error-msg');
-  const sucEl  = document.getElementById('success-msg');
-  errEl.style.display = 'none';
-
-  // 1. MONTA OS DADOS 
-  const formData = new FormData(this);
-  const payload  = {};
-  formData.forEach((value, key) => {
-    if (payload[key]) {
-      payload[key] = payload[key] + '; ' + value;
-    } else {
-      payload[key] = value;
-    }
-  });
-
-  // 2. VERIFICAÇÃO CRÍTICA DO PAYLOAD COM AS 14 QUESTÕES
-  const camposObrigatorios = ['ctg_nome', 'ctg_cidade', 'ctg_regiao', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14'];
-  let isValid = true;
-
-  document.querySelectorAll('.field').forEach(f => {
-    f.classList.remove('error-field');
-  });
-
-  camposObrigatorios.forEach(campo => {
-    if (!payload[campo] || payload[campo].toString().trim() === '') {
-      isValid = false; 
-      const inputElement = document.querySelector(`[name="${campo}"]`);
-      if (inputElement) {
-        const parent = inputElement.closest('.field');
-        if (parent) {
-          parent.classList.add('error-field');
-        }
+      if (!json.rows || json.rows.length === 0) {
+        renderEmpty();
+      } else {
+        renderDashboard(json.headers, json.rows);
       }
-    }
-  });
 
-  if (!isValid) {
-    errEl.innerHTML = '⚠️ Por favor, responda todas as questões com a barra lateral vermelha antes de enviar.';
-    errEl.style.display = 'block';
-    
-    const primeiroErro = document.querySelector('.error-field');
-    if (primeiroErro) {
-      const posicaoElemento = primeiroErro.getBoundingClientRect().top;
-      const posicaoAtual = window.pageYOffset || document.documentElement.scrollTop;
-      window.scrollTo({
-        top: posicaoAtual + posicaoElemento - 120, 
-        behavior: 'smooth'
-      });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' }); 
+      document.getElementById('last-update').textContent =
+        'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    } catch (err) {
+      renderError(err);
+    } finally {
+      btn.classList.remove('loading');
     }
-    return; 
   }
 
-  // 3. ENVIO SEGURO COM NOVO FORMATO
-  payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-  btn.disabled = true;
-  btn.querySelector('span').textContent = 'Enviando…';
+  function renderLoading() {
+    document.getElementById('app-content').innerHTML = `
+      <div class="state-box">
+        <div class="state-inner">
+          <div class="spinner"></div>
+          <div class="state-title">Carregando dados…</div>
+          <p class="state-desc">Buscando as últimas respostas na base de dados oficial.</p>
+        </div>
+      </div>`;
+  }
 
-  const urlEncodedData = new URLSearchParams(payload).toString();
+  function renderEmpty() {
+    document.getElementById('app-content').innerHTML = `
+      <div class="state-box">
+        <div class="state-inner">
+          <div class="state-icon">📋</div>
+          <div class="state-title">Nenhuma resposta registrada</div>
+          <p class="state-desc">Assim que as primeiras entidades enviarem o formulário, os gráficos serão gerados automaticamente neste painel.</p>
+        </div>
+      </div>`;
+  }
 
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method:  'POST',
-      mode:    'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body:    urlEncodedData
+  function renderError(err) {
+    document.getElementById('app-content').innerHTML = `
+      <div class="state-box">
+        <div class="state-inner">
+          <div class="state-icon">⚠️</div>
+          <div class="state-title">Falha de Conexão</div>
+          <p class="state-desc">Verifique se a URL do Apps Script está correta no código.<br><br><code>${err.message}</code></p>
+        </div>
+      </div>`;
+  }
+
+  function renderDashboard(headers, rows) {
+    Object.values(chartInstances).forEach(c => c.destroy());
+    chartInstances = {};
+
+    const colData = {};
+    headers.forEach(h => colData[h] = []);
+    rows.forEach(row => {
+      headers.forEach((h, i) => colData[h].push(row[i] ?? ''));
     });
 
-    this.style.display       = 'none';
-    sucEl.style.display      = 'block';
-    document.querySelector('.progress-wrapper').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const total      = rows.length;
+    const totalCtgs  = new Set(colData['ctg_nome'] || []).size;
+    const totalCid   = new Set(colData['ctg_cidade'] || []).size;
+    
+    const timestampArray = colData['timestamp'] || [];
+    let formattedLastDate = '—';
+    if (timestampArray.length > 0) {
+      const rawDate = timestampArray[timestampArray.length - 1];
+      const d = new Date(rawDate);
+      if (!isNaN(d.getTime())) {
+        formattedLastDate = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+      } else {
+        formattedLastDate = String(rawDate).split(' ')[0];
+      }
+    }
 
-  } catch (err) {
-    console.error(err);
-    errEl.innerHTML = '⚠️ Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.';
-    errEl.style.display      = 'block';
-    btn.disabled             = false;
-    btn.querySelector('span').textContent = 'Enviar Respostas';
+    const svgDoc = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
+    const svgHouse = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`;
+    const svgMap = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
+    const svgClock = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+
+    const kpiHtml = `
+      <div class="kpi-row">
+        <div class="kpi-card">
+          ${svgDoc}
+          <div class="kpi-value">${total}</div>
+          <div class="kpi-label">Respostas Recebidas</div>
+        </div>
+        <div class="kpi-card">
+          ${svgHouse}
+          <div class="kpi-value">${totalCtgs}</div>
+          <div class="kpi-label">Entidades Participantes</div>
+        </div>
+        <div class="kpi-card">
+          ${svgMap}
+          <div class="kpi-value">${totalCid}</div>
+          <div class="kpi-label">Municípios Atingidos</div>
+        </div>
+        <div class="kpi-card">
+          ${svgClock}
+          <div class="kpi-value" style="font-size:20px; padding: 12px 0 16px;">${formattedLastDate}</div>
+          <div class="kpi-label">Último Registro</div>
+        </div>
+      </div>`;
+
+    const identityKeys = QUESTIONS_CONFIG.filter(q => q.type === 'identity').map(q => q.key);
+    const ctgRows = rows.map(row => {
+      return identityKeys.map(k => {
+        const idx = headers.indexOf(k);
+        return idx >= 0 ? row[idx] : '—';
+      });
+    });
+    const ctgTableHtml = `
+      <div class="chart-card full" style="animation-delay:0.05s">
+        <div class="chart-header">
+          <div>
+            <div class="chart-q-num">Identificação</div>
+            <div class="chart-q-text">Mapeamento de Entidades</div>
+          </div>
+          <span class="chart-type-badge">Tabela Oficial</span>
+        </div>
+        <div class="chart-body" style="overflow-x:auto; padding:0">
+          <table class="ctg-table">
+            <thead><tr>
+              ${QUESTIONS_CONFIG.filter(q=>q.type==='identity').map(q=>`<th>${q.label}</th>`).join('')}
+            </tr></thead>
+            <tbody>
+              ${ctgRows.map(r=>`<tr>${r.map(c=>`<td>${c||'—'}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+
+    const questionConfigs = QUESTIONS_CONFIG.filter(q => q.type !== 'identity');
+    let chartsHtml = questionConfigs.map((q, idx) => {
+      return buildChartCardHtml(q, idx, headers, colData);
+    }).join('');
+
+    document.getElementById('app-content').innerHTML = `
+      ${kpiHtml}
+      <div class="charts-grid">
+        ${ctgTableHtml}
+        ${chartsHtml}
+      </div>`;
+
+    requestAnimationFrame(() => {
+      questionConfigs.forEach((q, idx) => {
+        initChart(q, idx, headers, colData);
+      });
+    });
   }
-});
+
+  function buildChartCardHtml(q, idx, headers, colData) {
+    const delay   = 0.05 + idx * 0.04;
+    const typeMap = { pie:'Gráfico de Pizza', bar:'Gráfico de Barras', horizontal:'Gráfico Horizontal', scale:'Média Geral', text:'Respostas Livres' };
+    const badge   = typeMap[q.type] || q.type;
+    const qNum    = `Questão ${idx + 1}`;
+
+    const tall = q.type === 'horizontal' ? 'tall' : '';
+    const full = q.type === 'horizontal' ? '' : '';
+
+    return `
+      <div class="chart-card ${full}" style="animation-delay:${delay}s">
+        <div class="chart-header">
+          <div>
+            <div class="chart-q-num">${qNum}</div>
+            <div class="chart-q-text">${q.label}</div>
+          </div>
+          <span class="chart-type-badge">${badge}</span>
+        </div>
+        <div class="chart-body">
+          <div class="canvas-wrap ${tall}">
+            <canvas id="chart-${idx}"></canvas>
+          </div>
+          <div class="custom-legend" id="legend-${idx}"></div>
+        </div>
+      </div>`;
+  }
+
+  function initChart(q, idx, headers, colData) {
+    const colIdx  = headers.indexOf(q.key);
+    if (colIdx < 0) return;
+
+    const values  = colData[q.key].filter(v => v && v.trim());
+
+    const freq = {};
+    values.forEach(v => {
+      v.split('; ').forEach(part => {
+        const k = part.trim();
+        if (k) freq[k] = (freq[k] || 0) + 1;
+      });
+    });
+
+    const labels  = Object.keys(freq);
+    const counts  = Object.values(freq);
+    
+    let bgColors = [];
+    for(let i=0; i<labels.length; i++) {
+      bgColors.push(PALETTE[i % PALETTE.length]);
+    }
+
+    const canvas = document.getElementById(`chart-${idx}`);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    Chart.defaults.color = 'rgba(253,251,247,0.5)';
+    Chart.defaults.font.family = "'Raleway', sans-serif";
+
+    const baseOpts = {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#170305',
+          borderColor: 'rgba(197,160,89,0.3)',
+          borderWidth: 1,
+          titleColor: '#E8D08D',
+          bodyColor: '#FDFBF7',
+          padding: 12,
+          boxPadding: 6,
+          usePointStyle: true,
+          callbacks: {
+            label: ctx => {
+              const pct = ((ctx.parsed / (q.type === 'pie' ? counts.reduce((a,b)=>a+b,0) : Math.max(...counts))) * 100).toFixed(1);
+              return ` ${ctx.raw} respostas (${pct}%)`;
+            }
+          }
+        }
+      }
+    };
+
+    if (q.type === 'pie') {
+      chartInstances[idx] = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels, datasets: [{ data: counts, backgroundColor: bgColors, borderColor: '#1A0C0E', borderWidth: 3, hoverOffset: 6 }] },
+        options: { ...baseOpts, cutout: '65%' }
+      });
+    } else {
+      const isHoriz = q.type === 'horizontal';
+      chartInstances[idx] = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            data: counts,
+            backgroundColor: bgColors,
+            borderRadius: 4,
+            barThickness: isHoriz ? 24 : undefined
+          }]
+        },
+        options: {
+          ...baseOpts,
+          indexAxis: isHoriz ? 'y' : 'x',
+          scales: {
+            x: { 
+              grid: { color: 'rgba(255,255,255,0.03)' }, 
+              border: { display: false },
+              ticks: {
+                callback: function(value) {
+                  if (!isHoriz) {
+                    let label = this.getLabelForValue(value);
+                    return label && label.length > 20 ? label.substring(0, 20) + '...' : label;
+                  }
+                  return value;
+                }
+              }
+            },
+            y: { 
+              grid: { color: 'rgba(255,255,255,0.03)' }, 
+              border: { display: false },
+              /* 🔴 CORTE INTELIGENTE NO EIXO Y 🔴 */
+              ticks: {
+                callback: function(value) {
+                  if (isHoriz) {
+                    let label = this.getLabelForValue(value);
+                    // Corta no caractere 20 para garantir espaço livre
+                    return label && label.length > 20 ? label.substring(0, 20) + '...' : label;
+                  }
+                  return value;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    const legendEl = document.getElementById(`legend-${idx}`);
+    if (legendEl) {
+      legendEl.innerHTML = labels.map((l, i) => `
+        <div class="legend-item">
+          <div class="legend-dot" style="background:${bgColors[i]}"></div>
+          <span>${l} <strong style="color:var(--ouro-brilho); margin-left:4px;">${counts[i]}</strong></span>
+        </div>`).join('');
+    }
+  }
+
+  loadData();
+  setInterval(loadData, 30000);
 </script>
 </body>
 </html>
