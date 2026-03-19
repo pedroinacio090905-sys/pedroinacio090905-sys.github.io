@@ -615,6 +615,16 @@ document.getElementById('main-form').addEventListener('submit', async function(e
     return; 
   }
 
+    // 🔴 AVISO LOCAL INJETADO DIRETAMENTE NA PERGUNTA 🔴
+          if (!parent.querySelector('.msg-erro-local')) {
+            const aviso = document.createElement('div');
+            aviso.className = 'msg-erro-local';
+            aviso.innerHTML = '⚠️ Esta resposta é obrigatória.';
+            aviso.style.color = '#ED1C24';
+            aviso.style.fontSize = '14px';
+            aviso.style.fontWeight = '700';
+            aviso.style.marginBottom = '12px';
+            
   // 3. ENVIO SEGURO COM NOVO FORMATO
   payload['timestamp'] = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   btn.disabled = true;
