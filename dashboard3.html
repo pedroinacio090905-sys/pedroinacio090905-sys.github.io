@@ -43,17 +43,8 @@
       --trans: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
 
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
-    
-    html, body {
-      max-width: 100vw;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100vw; overflow-x: hidden; scroll-behavior: smooth; }
 
     body {
       font-family: var(--fonte-corpo);
@@ -66,382 +57,60 @@
         url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
     }
 
-    /* ═══════════════════════════════════════
-       TOPBAR COM BANDEIRA DO RS
-       ═══════════════════════════════════════ */
-    .topbar {
-      position: sticky; 
-      top: 0; 
-      z-index: 200;
-      background: rgba(16,5,7,0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 3px solid transparent;
-      border-image: linear-gradient(90deg, var(--rs-verde) 0%, var(--rs-verde) 33.3%, var(--rs-vermelho) 33.3%, var(--rs-vermelho) 66.6%, var(--rs-amarelo) 66.6%, var(--rs-amarelo) 100%) 1;
-      padding: 0 32px;
-    }
-    
-    .topbar-inner { 
-      max-width: 1300px; 
-      margin: 0 auto; 
-      display: flex; 
-      align-items: center; 
-      gap: 20px; 
-      height: 64px; 
-    }
-    
-    .topbar-logo { 
-      font-family: var(--fonte-display); 
-      font-size: 24px; 
-      font-weight: 700; 
-      color: var(--texto); 
-      letter-spacing: -0.5px; 
-      flex-shrink: 0; 
-    }
-    
-    .topbar-logo span { 
-      color: var(--ouro-brilho); 
-      font-style: italic; 
-    }
-    
-    .topbar-divider { 
-      width: 1px; 
-      height: 22px; 
-      background: var(--borda); 
-      flex-shrink: 0; 
-    }
-    
-    .topbar-label { 
-      font-size: 11px; 
-      font-weight: 600; 
-      letter-spacing: 3px; 
-      text-transform: uppercase; 
-      color: var(--ouro-velho); 
-      white-space: nowrap; 
-    }
-    
-    .topbar-spacer { 
-      flex: 1; 
-    }
+    /* TOPBAR */
+    .topbar { position: sticky; top: 0; z-index: 200; background: rgba(16,5,7,0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, var(--rs-verde) 0%, var(--rs-verde) 33.3%, var(--rs-vermelho) 33.3%, var(--rs-vermelho) 66.6%, var(--rs-amarelo) 66.6%, var(--rs-amarelo) 100%) 1; padding: 0 32px; }
+    .topbar-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 20px; height: 64px; }
+    .topbar-logo { font-family: var(--fonte-display); font-size: 24px; font-weight: 700; color: var(--texto); letter-spacing: -0.5px; flex-shrink: 0; }
+    .topbar-logo span { color: var(--ouro-brilho); font-style: italic; }
+    .topbar-divider { width: 1px; height: 22px; background: var(--borda); flex-shrink: 0; }
+    .topbar-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro-velho); white-space: nowrap; }
+    .topbar-spacer { flex: 1; }
+    .btn-refresh { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid var(--borda-hover); color: var(--ouro-brilho); font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 10px 20px; border-radius: 100px; cursor: pointer; transition: var(--trans); white-space: nowrap; }
+    .btn-refresh:hover { background: rgba(197,160,89,0.1); border-color: var(--ouro-brilho); box-shadow: 0 0 12px rgba(197,160,89,0.2); }
+    .btn-refresh.loading .icon-refresh { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .last-update { font-size: 11px; font-weight: 500; color: var(--texto-dim); letter-spacing: 0.5px; white-space: nowrap; }
 
-    .btn-refresh {
-      display: flex; 
-      align-items: center; 
-      gap: 8px;
-      background: transparent; 
-      border: 1px solid var(--borda-hover); 
-      color: var(--ouro-brilho);
-      font-family: var(--fonte-corpo); 
-      font-size: 11px; 
-      font-weight: 700;
-      letter-spacing: 2px; 
-      text-transform: uppercase; 
-      padding: 10px 20px; 
-      border-radius: 100px;
-      cursor: pointer; 
-      transition: var(--trans); 
-      white-space: nowrap;
-    }
-    
-    .btn-refresh:hover { 
-      background: rgba(197,160,89,0.1); 
-      border-color: var(--ouro-brilho); 
-      box-shadow: 0 0 12px rgba(197,160,89,0.2); 
-    }
-    
-    .btn-refresh.loading .icon-refresh { 
-      animation: spin 1s linear infinite; 
-    }
-    
-    @keyframes spin { 
-      to { transform: rotate(360deg); } 
-    }
+    /* HERO STRIP */
+    .hero-strip { background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%); padding: 48px 32px 40px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(197,160,89,0.2); }
+    .hero-strip::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px); z-index: 0; }
+    .hero-strip::after { content: ''; position: absolute; top: -10%; right: -2%; width: 60%; height: 120%; background-image: url('tema.png'); background-size: cover; background-position: center; background-repeat: no-repeat; -webkit-mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%); mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%); opacity: 0.9; z-index: 0; pointer-events: none; }
+    .hero-strip-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .hero-title { font-family: var(--fonte-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1; color: var(--texto); text-shadow: 0 4px 12px rgba(0,0,0,0.8); }
+    .hero-title span { color: var(--ouro-brilho); font-style: italic; }
+    .hero-sub { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-top: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-    .last-update { 
-      font-size: 11px; 
-      font-weight: 500; 
-      color: var(--texto-dim); 
-      letter-spacing: 0.5px; 
-      white-space: nowrap; 
-    }
+    /* KPI CARDS */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; padding: 40px 32px 0; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); padding: 28px 24px; position: relative; overflow: hidden; transition: var(--trans); animation: fadeUp 0.4s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--ouro-velho), var(--lenço-colorado)); opacity: 0.8; }
+    .kpi-card:hover { border-color: var(--ouro-velho); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+    .kpi-icon-svg { color: var(--ouro-velho); margin-bottom: 12px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+    .kpi-value { font-family: var(--fonte-display); font-size: 48px; font-weight: 700; line-height: 1; color: var(--ouro-brilho); margin-bottom: 4px; }
+    .kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--texto-dim); }
 
     /* ═══════════════════════════════════════
-       HERO STRIP 
+       GRID DE GRÁFICOS (TELA CHEIA)
        ═══════════════════════════════════════ */
-    .hero-strip {
-      background: linear-gradient(135deg, var(--sangue-de-boi) 0%, var(--lenço-colorado) 100%);
-      padding: 48px 32px 40px; 
-      position: relative; 
-      overflow: hidden; 
-      border-bottom: 1px solid rgba(197,160,89,0.2);
-    }
-    
-    .hero-strip::before {
-      content: ''; 
-      position: absolute; 
-      inset: 0;
-      background-image: 
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
-      z-index: 0;
-    }
-    
-    .hero-strip::after {
-      content: ''; 
-      position: absolute; 
-      top: -10%; 
-      right: -2%; 
-      width: 60%; 
-      height: 120%;
-      background-image: url('tema.png'); 
-      background-size: cover; 
-      background-position: center; 
-      background-repeat: no-repeat;
-      -webkit-mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
-      mask-image: radial-gradient(ellipse 65% 65% at 75% 50%, black 25%, transparent 100%);
-      opacity: 0.9; 
-      z-index: 0; 
-      pointer-events: none;
-    }
+    .charts-grid { max-width: 1600px; margin: 0 auto; padding: 32px 32px 80px; display: grid; grid-template-columns: 1fr !important; gap: 60px; }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-card { background: var(--surface); border: 1px solid var(--borda); border-radius: var(--raio); overflow: hidden; transition: var(--trans); animation: fadeUp 0.5s ease both; box-shadow: 0 8px 24px rgba(0,0,0,0.2); min-height: 85vh; display: flex; flex-direction: column; }
+    .chart-card:hover { border-color: var(--borda-hover); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
 
-    .hero-strip-inner { 
-      max-width: 1300px; 
-      margin: 0 auto; 
-      position: relative; 
-      z-index: 1; 
-      display: flex; 
-      align-items: flex-end; 
-      justify-content: space-between; 
-      flex-wrap: wrap; 
-      gap: 24px; 
-    }
-    
-    .hero-title { 
-      font-family: var(--fonte-display); 
-      font-size: clamp(32px, 5vw, 52px); 
-      font-weight: 700; 
-      line-height: 1; 
-      color: var(--texto); 
-      text-shadow: 0 4px 12px rgba(0,0,0,0.8); 
-    }
-    
-    .hero-title span { 
-      color: var(--ouro-brilho); 
-      font-style: italic; 
-    }
-    
-    .hero-sub { 
-      font-size: 13px; 
-      font-weight: 600; 
-      letter-spacing: 4px; 
-      text-transform: uppercase; 
-      color: rgba(255,255,255,0.8); 
-      margin-top: 8px; 
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
-    }
+    .chart-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 24px 32px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); }
+    .chart-q-num { font-size: 13px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro-velho); margin-bottom: 6px; }
+    .chart-q-text { font-family: var(--fonte-display); font-size: 28px; font-weight: 600; line-height: 1.3; color: var(--texto); }
+    .chart-type-badge { flex-shrink: 0; background: rgba(197,160,89,0.1); border: 1px solid rgba(197,160,89,0.25); color: var(--ouro-brilho); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 14px; border-radius: 100px; white-space: nowrap; }
 
-    /* ═══════════════════════════════════════
-       KPI CARDS
-       ═══════════════════════════════════════ */
-    .kpi-row { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-      gap: 20px; 
-      max-width: 1300px; 
-      margin: 0 auto; 
-      padding: 40px 32px 0; 
-    }
-    
-    .kpi-card { 
-      background: var(--surface); 
-      border: 1px solid var(--borda); 
-      border-radius: var(--raio); 
-      padding: 28px 24px; 
-      position: relative; 
-      overflow: hidden; 
-      transition: var(--trans); 
-      animation: fadeUp 0.4s ease both; 
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3); 
-    }
-    
-    .kpi-card::before { 
-      content: ''; 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      right: 0; 
-      height: 3px; 
-      background: linear-gradient(90deg, var(--ouro-velho), var(--lenço-colorado)); 
-      opacity: 0.8; 
-    }
-    
-    .kpi-card:hover { 
-      border-color: var(--ouro-velho); 
-      transform: translateY(-3px); 
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5); 
-    }
-    
-    .kpi-icon-svg { 
-      color: var(--ouro-velho); 
-      margin-bottom: 12px; 
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); 
-    }
-    
-    .kpi-value { 
-      font-family: var(--fonte-display); 
-      font-size: 48px; 
-      font-weight: 700; 
-      line-height: 1; 
-      color: var(--ouro-brilho); 
-      margin-bottom: 4px; 
-    }
-    
-    .kpi-label { 
-      font-size: 11px; 
-      font-weight: 700; 
-      letter-spacing: 2px; 
-      text-transform: uppercase; 
-      color: var(--texto-dim); 
-    }
-
-    /* ═══════════════════════════════════════
-       GRID DE GRÁFICOS E TABELA (TELA CHEIA)
-       ═══════════════════════════════════════ */
-    .charts-grid { 
-      max-width: 1600px; /* Alargado para aproveitar telas Ultra-Wide */
-      margin: 0 auto; 
-      padding: 32px 32px 80px; 
-      display: grid; 
-      grid-template-columns: 1fr; /* Força apenas 1 gráfico por linha */
-      gap: 60px; /* Aumenta o respiro entre os gráficos na hora do scroll */
-    }
-    
-    .chart-card.full { 
-      grid-column: 1 / -1; 
-    }
-    
-    .chart-card { 
-      background: var(--surface); 
-      border: 1px solid var(--borda); 
-      border-radius: var(--raio); 
-      overflow: hidden; 
-      transition: var(--trans); 
-      animation: fadeUp 0.5s ease both; 
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2); 
-      
-      /* O card agora ocupa 85% da altura da tela inteira! */
-      min-height: 85vh; 
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .chart-card:hover { 
-      border-color: var(--borda-hover); 
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4); 
-    }
-
-    .chart-header { 
-      display: flex; 
-      align-items: flex-start; 
-      justify-content: space-between; 
-      flex-wrap: wrap; 
-      gap: 16px; 
-      padding: 24px 32px 20px; 
-      border-bottom: 1px solid rgba(255,255,255,0.05); 
-      background: rgba(0,0,0,0.2); 
-    }
-    
-    .chart-q-num { 
-      font-size: 13px; /* Aumentado */
-      font-weight: 800; 
-      letter-spacing: 3px; 
-      text-transform: uppercase; 
-      color: var(--ouro-velho); 
-      margin-bottom: 6px; 
-    }
-    
-    .chart-q-text { 
-      font-family: var(--fonte-display); 
-      font-size: 28px; /* Aumentado */
-      font-weight: 600; 
-      line-height: 1.3; 
-      color: var(--texto); 
-    }
-    
-    .chart-type-badge { 
-      flex-shrink: 0; 
-      background: rgba(197,160,89,0.1); 
-      border: 1px solid rgba(197,160,89,0.25); 
-      color: var(--ouro-brilho); 
-      font-size: 11px; 
-      font-weight: 700; 
-      letter-spacing: 1.5px; 
-      text-transform: uppercase; 
-      padding: 8px 14px; 
-      border-radius: 100px; 
-      white-space: nowrap;
-    }
-
-    .btn-jump { 
-      background: var(--sangue-de-boi); 
-      color: var(--ouro-brilho); 
-      border: 1px solid var(--ouro-velho); 
-      padding: 8px 18px; 
-      border-radius: 100px; 
-      font-family: var(--fonte-corpo); 
-      font-size: 11px; 
-      font-weight: 700; 
-      letter-spacing: 1px; 
-      text-transform: uppercase; 
-      cursor: pointer; 
-      transition: 0.3s; 
-      white-space: nowrap; 
-      flex-shrink: 0; 
-    }
+    .btn-jump { background: var(--sangue-de-boi); color: var(--ouro-brilho); border: 1px solid var(--ouro-velho); padding: 8px 18px; border-radius: 100px; font-family: var(--fonte-corpo); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: 0.3s; white-space: nowrap; flex-shrink: 0; }
     .btn-jump:hover { background: var(--lenço-colorado); color: #FFF; box-shadow: 0 4px 12px rgba(139,30,40,0.5); }
 
-    /* O corpo do gráfico estica dinamicamente */
-    .chart-body { 
-      padding: 32px 40px; 
-      position: relative; 
-      flex: 1; 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .canvas-wrap { 
-      position: relative; 
-      flex: 1; /* Ocupa todo o espaço vazio disponível */
-      min-height: 40vh; /* Garante tamanho mínimo num monitor deitado */
-      width: 100%;
-    }
+    .chart-body { padding: 32px 40px; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .canvas-wrap { position: relative; flex: 1; min-height: 40vh; width: 100%; }
 
-    /* Legendas Maiores e Centralizadas */
-    .custom-legend { 
-      display: flex; 
-      flex-wrap: wrap; 
-      justify-content: center; /* Centraliza embaixo do gráfico */
-      gap: 32px; 
-      margin-top: 40px; 
-    }
-    
-    .legend-item { 
-      display: flex; 
-      align-items: center; 
-      gap: 12px; 
-      font-size: 18px; /* Fonte bem maior */
-      color: var(--texto-dim); 
-      font-weight: 500; 
-    }
-    
-    .legend-dot { 
-      width: 22px; /* Quadrado de cor bem maior */
-      height: 22px; 
-      border-radius: 4px; 
-      flex-shrink: 0; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5); 
-    }
+    .custom-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 40px; }
+    .legend-item { display: flex; align-items: center; gap: 12px; font-size: 18px; color: var(--texto-dim); font-weight: 500; }
+    .legend-dot { width: 22px; height: 22px; border-radius: 4px; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
     .ctg-table { width: 100%; border-collapse: collapse; }
     .ctg-table th, .ctg-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
@@ -463,7 +132,7 @@
     .kpi-card:nth-child(3) { animation-delay: 0.15s; }
     .kpi-card:nth-child(4) { animation-delay: 0.20s; }
 
-    /* 🔴 MODO CELULAR (Restaurado ao Original) 🔴 */
+    /* MODO CELULAR */
     @media (max-width: 700px) {
       .topbar { padding: 0 16px; border-bottom-width: 4px; }
       .topbar-label, .topbar-divider, .last-update { display: none; }
@@ -473,19 +142,12 @@
       .hero-strip::after { display: none; } 
       .hero-title { font-size: 32px; }
       .kpi-row { padding: 24px 16px 0; }
-      .charts-grid { padding: 24px 16px 60px; grid-template-columns: 1fr; gap: 24px; }
-      
+      .charts-grid { padding: 24px 16px 60px; grid-template-columns: 1fr !important; gap: 24px; }
       .chart-header { flex-direction: column; gap: 16px; padding: 20px; }
-      
-      /* Desliga o modo "Tela Cheia" no celular */
       .chart-card { min-height: auto; } 
       .chart-body { padding: 24px 20px; }
-      
-      /* Restaura a altura exata dos gráficos que você tinha antes */
       .canvas-wrap { min-height: auto; height: 260px; }
       .canvas-wrap.tall { height: 320px; }
-      
-      /* Restaura as legendas menores */
       .custom-legend { margin-top: 20px; gap: 16px; justify-content: flex-start; }
       .legend-item { font-size: 14px; }
       .legend-dot { width: 14px; height: 14px; }
@@ -523,9 +185,6 @@
 <div id="app-content"></div>
 
 <script>
-/* ══════════════════════════════════════════════════════════════
-   ★  COLE A SUA URL ABAIXO  ★
-   ══════════════════════════════════════════════════════════════ */
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynLJTODqbZGyhKpdBdpyrMbuc8NTHgtujnsfpw0r-7hpn6kStgYfTG8RmrRFnii2LuGQ/exec';
 
   const QUESTIONS_CONFIG = [
@@ -549,10 +208,7 @@
     { key: 'q14', label: 'Pretende continuar', type: 'pie' }
   ];
 
-  const PALETTE = [
-    '#C5A059', '#8B1E28', '#2A4B31', '#E8D08D', '#4A1D23', '#5C6A4F', '#D97D3A', '#6B4F3A'
-  ];
-
+  const PALETTE = [ '#C5A059', '#8B1E28', '#2A4B31', '#E8D08D', '#4A1D23', '#5C6A4F', '#D97D3A', '#6B4F3A' ];
   let chartInstances = {};
 
   async function loadData() {
@@ -563,16 +219,8 @@
     try {
       const res  = await fetch(APPS_SCRIPT_URL + '?action=getData&token=BasesDaTradicao2026');
       const json = await res.json();
-
-      if (!json.rows || json.rows.length === 0) {
-        renderEmpty();
-      } else {
-        renderDashboard(json.headers, json.rows);
-      }
-
-      document.getElementById('last-update').textContent =
-        'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
+      if (!json.rows || json.rows.length === 0) { renderEmpty(); } else { renderDashboard(json.headers, json.rows); }
+      document.getElementById('last-update').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
       renderError(err);
     } finally {
@@ -580,38 +228,9 @@
     }
   }
 
-  function renderLoading() {
-    document.getElementById('app-content').innerHTML = `
-      <div class="state-box">
-        <div class="state-inner">
-          <div class="spinner"></div>
-          <div class="state-title">Carregando dados…</div>
-          <p class="state-desc">Buscando as últimas respostas na base de dados oficial.</p>
-        </div>
-      </div>`;
-  }
-
-  function renderEmpty() {
-    document.getElementById('app-content').innerHTML = `
-      <div class="state-box">
-        <div class="state-inner">
-          <div class="state-icon">📋</div>
-          <div class="state-title">Nenhuma resposta registrada</div>
-          <p class="state-desc">Assim que as primeiras entidades enviarem o formulário, os gráficos serão gerados automaticamente neste painel.</p>
-        </div>
-      </div>`;
-  }
-
-  function renderError(err) {
-    document.getElementById('app-content').innerHTML = `
-      <div class="state-box">
-        <div class="state-inner">
-          <div class="state-icon">⚠️</div>
-          <div class="state-title">Falha de Conexão</div>
-          <p class="state-desc">Verifique se a URL do Apps Script está correta no código.<br><br><code>${err.message}</code></p>
-        </div>
-      </div>`;
-  }
+  function renderLoading() { document.getElementById('app-content').innerHTML = `<div class="state-box"><div class="state-inner"><div class="spinner"></div><div class="state-title">Carregando dados…</div></div></div>`; }
+  function renderEmpty() { document.getElementById('app-content').innerHTML = `<div class="state-box"><div class="state-inner"><div class="state-icon">📋</div><div class="state-title">Nenhuma resposta registrada</div></div></div>`; }
+  function renderError(err) { document.getElementById('app-content').innerHTML = `<div class="state-box"><div class="state-inner"><div class="state-icon">⚠️</div><div class="state-title">Falha de Conexão</div><p class="state-desc">${err.message}</p></div></div>`; }
 
   function renderDashboard(headers, rows) {
     Object.values(chartInstances).forEach(c => c.destroy());
@@ -619,65 +238,32 @@
 
     const colData = {};
     headers.forEach(h => colData[h] = []);
-    rows.forEach(row => {
-      headers.forEach((h, i) => colData[h].push(row[i] ?? ''));
-    });
+    rows.forEach(row => { headers.forEach((h, i) => colData[h].push(row[i] ?? '')); });
 
     const total      = rows.length;
     const totalCtgs  = new Set(colData['ctg_nome'] || []).size;
     const totalCid   = new Set(colData['ctg_cidade'] || []).size;
     
-    const timestampArray = colData['timestamp'] || [];
     let formattedLastDate = '—';
-    if (timestampArray.length > 0) {
-      const rawDate = timestampArray[timestampArray.length - 1];
-      const d = new Date(rawDate);
-      if (!isNaN(d.getTime())) {
-        formattedLastDate = d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
-      } else {
-        formattedLastDate = String(rawDate).split(' ')[0];
-      }
+    if (colData['timestamp'] && colData['timestamp'].length > 0) {
+      const d = new Date(colData['timestamp'][colData['timestamp'].length - 1]);
+      formattedLastDate = !isNaN(d.getTime()) ? d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) : '—';
     }
-
-    const svgDoc = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
-    const svgHouse = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`;
-    const svgMap = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`;
-    const svgClock = `<svg class="kpi-icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
 
     const kpiHtml = `
       <div class="kpi-row">
-        <div class="kpi-card">
-          ${svgDoc}
-          <div class="kpi-value">${total}</div>
-          <div class="kpi-label">Respostas Recebidas</div>
-        </div>
-        <div class="kpi-card">
-          ${svgHouse}
-          <div class="kpi-value">${totalCtgs}</div>
-          <div class="kpi-label">Entidades Participantes</div>
-        </div>
-        <div class="kpi-card">
-          ${svgMap}
-          <div class="kpi-value">${totalCid}</div>
-          <div class="kpi-label">Municípios Atingidos</div>
-        </div>
-        <div class="kpi-card">
-          ${svgClock}
-          <div class="kpi-value" style="font-size:20px; padding: 12px 0 16px;">${formattedLastDate}</div>
-          <div class="kpi-label">Último Registro</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-value">${total}</div><div class="kpi-label">Respostas</div></div>
+        <div class="kpi-card"><div class="kpi-value">${totalCtgs}</div><div class="kpi-label">Entidades</div></div>
+        <div class="kpi-card"><div class="kpi-value">${totalCid}</div><div class="kpi-label">Municípios</div></div>
+        <div class="kpi-card"><div class="kpi-value" style="font-size:20px; padding: 12px 0 16px;">${formattedLastDate}</div><div class="kpi-label">Último Registro</div></div>
       </div>`;
 
     const identityKeys = QUESTIONS_CONFIG.filter(q => q.type === 'identity').map(q => q.key);
-    const ctgRows = rows.map(row => {
-      return identityKeys.map(k => {
-        const idx = headers.indexOf(k);
-        return idx >= 0 ? row[idx] : '—';
-      });
-    });
+    const ctgRows = rows.map(row => identityKeys.map(k => { const idx = headers.indexOf(k); return idx >= 0 ? row[idx] : '—'; }));
     
+    // 🔴 AQUI ESTÁ A CORREÇÃO DE ALTURA DA TABELA 🔴
     const ctgTableHtml = `
-      <div class="chart-card full" style="animation-delay:0.05s; min-height: auto;">
+      <div class="chart-card full" style="animation-delay:0.05s; min-height: auto !important; display: block;">
         <div class="chart-header">
           <div>
             <div class="chart-q-num">Identificação</div>
@@ -688,22 +274,16 @@
             <span class="chart-type-badge">Tabela Oficial</span>
           </div>
         </div>
-        <div class="chart-body" style="overflow-x:auto; overflow-y:auto; max-height: 400px; padding:0; display: block;">
+        <div class="chart-body" style="overflow-x:auto; overflow-y:auto; max-height: 350px !important; padding:0; display: block; flex: none;">
           <table class="ctg-table">
-            <thead><tr>
-              ${QUESTIONS_CONFIG.filter(q=>q.type==='identity').map(q=>`<th>${q.label}</th>`).join('')}
-            </tr></thead>
-            <tbody>
-              ${ctgRows.map(r=>`<tr>${r.map(c=>`<td>${c||'—'}</td>`).join('')}</tr>`).join('')}
-            </tbody>
+            <thead><tr>${QUESTIONS_CONFIG.filter(q=>q.type==='identity').map(q=>`<th>${q.label}</th>`).join('')}</tr></thead>
+            <tbody>${ctgRows.map(r=>`<tr>${r.map(c=>`<td>${c||'—'}</td>`).join('')}</tr>`).join('')}</tbody>
           </table>
         </div>
       </div>`;
 
     const questionConfigs = QUESTIONS_CONFIG.filter(q => q.type !== 'identity');
-    let chartsHtml = questionConfigs.map((q, idx) => {
-      return buildChartCardHtml(q, idx, headers, colData);
-    }).join('');
+    let chartsHtml = questionConfigs.map((q, idx) => buildChartCardHtml(q, idx)).join('');
 
     document.getElementById('app-content').innerHTML = `
       ${kpiHtml}
@@ -713,167 +293,67 @@
         ${chartsHtml}
       </div>`;
 
-    requestAnimationFrame(() => {
-      questionConfigs.forEach((q, idx) => {
-        initChart(q, idx, headers, colData);
-      });
-    });
+    requestAnimationFrame(() => { questionConfigs.forEach((q, idx) => initChart(q, idx, headers, colData)); });
   }
 
-  function buildChartCardHtml(q, idx, headers, colData) {
-    const delay   = 0.05 + idx * 0.04;
-    const typeMap = { pie:'Gráfico de Pizza', bar:'Gráfico de Barras', horizontal:'Gráfico Horizontal', scale:'Média Geral', text:'Respostas Livres' };
-    const badge   = typeMap[q.type] || q.type;
-    const qNum    = `Questão ${idx + 1}`;
-
-    const tall = q.type === 'horizontal' ? 'tall' : '';
-    const full = q.type === 'horizontal' ? '' : '';
-
+  function buildChartCardHtml(q, idx) {
+    const delay = 0.05 + idx * 0.04;
+    const badge = { pie:'Gráfico de Pizza', horizontal:'Gráfico Horizontal' }[q.type] || q.type;
     return `
-      <div class="chart-card ${full}" style="animation-delay:${delay}s">
+      <div class="chart-card" style="animation-delay:${delay}s">
         <div class="chart-header">
-          <div>
-            <div class="chart-q-num">${qNum}</div>
-            <div class="chart-q-text">${q.label}</div>
-          </div>
+          <div><div class="chart-q-num">Questão ${idx + 1}</div><div class="chart-q-text">${q.label}</div></div>
           <span class="chart-type-badge">${badge}</span>
         </div>
         <div class="chart-body">
-          <div class="canvas-wrap ${tall}">
-            <canvas id="chart-${idx}"></canvas>
-          </div>
+          <div class="canvas-wrap ${q.type === 'horizontal' ? 'tall' : ''}"><canvas id="chart-${idx}"></canvas></div>
           <div class="custom-legend" id="legend-${idx}"></div>
         </div>
       </div>`;
   }
 
   function initChart(q, idx, headers, colData) {
-    const colIdx  = headers.indexOf(q.key);
+    const colIdx = headers.indexOf(q.key);
     if (colIdx < 0) return;
 
-    const values  = colData[q.key].filter(v => v && v.trim());
-
+    const values = colData[q.key].filter(v => v && v.trim());
     const freq = {};
-    values.forEach(v => {
-      v.split('; ').forEach(part => {
-        const k = part.trim();
-        if (k) freq[k] = (freq[k] || 0) + 1;
-      });
-    });
+    values.forEach(v => { v.split('; ').forEach(part => { const k = part.trim(); if (k) freq[k] = (freq[k] || 0) + 1; }); });
 
-    const labels  = Object.keys(freq);
-    const counts  = Object.values(freq);
-    
-    let bgColors = [];
-    for(let i=0; i<labels.length; i++) {
-      bgColors.push(PALETTE[i % PALETTE.length]);
-    }
+    const labels = Object.keys(freq);
+    const counts = Object.values(freq);
+    const bgColors = labels.map((_, i) => PALETTE[i % PALETTE.length]);
 
-    const canvas = document.getElementById(`chart-${idx}`);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = document.getElementById(`chart-${idx}`)?.getContext('2d');
+    if (!ctx) return;
 
     Chart.defaults.color = 'rgba(253,251,247,0.5)';
     Chart.defaults.font.family = "'Raleway', sans-serif";
-    Chart.defaults.font.size = 15; // NOVO: Aumenta a fonte geral dos eixos numéricos/textuais
+    Chart.defaults.font.size = 15;
 
     const baseOpts = {
-      responsive: true, 
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: '#170305',
-          borderColor: 'rgba(197,160,89,0.3)',
-          borderWidth: 1,
-          titleColor: '#E8D08D',
-          bodyColor: '#FDFBF7',
-          titleFont: { size: 16, family: "'Raleway', sans-serif" }, // NOVO: Título maior
-          bodyFont: { size: 15, family: "'Raleway', sans-serif" },  // NOVO: Corpo maior
-          padding: 16, // Aumentado para respirar melhor
-          boxPadding: 8,
-          usePointStyle: true,
-          callbacks: {
-            label: ctx => {
-              const pct = ((ctx.parsed / (q.type === 'pie' ? counts.reduce((a,b)=>a+b,0) : Math.max(...counts))) * 100).toFixed(1);
-              return ` ${ctx.raw} respostas (${pct}%)`;
-            }
-          }
+          backgroundColor: '#170305', borderColor: 'rgba(197,160,89,0.3)', borderWidth: 1, titleColor: '#E8D08D', bodyColor: '#FDFBF7',
+          titleFont: { size: 16 }, bodyFont: { size: 15 }, padding: 16, boxPadding: 8, usePointStyle: true,
+          callbacks: { label: ctx => ` ${ctx.raw} respostas (${((ctx.parsed / (q.type === 'pie' ? counts.reduce((a,b)=>a+b,0) : Math.max(...counts))) * 100).toFixed(1)}%)` }
         }
       }
     };
 
     if (q.type === 'pie') {
-      chartInstances[idx] = new Chart(ctx, {
-        type: 'doughnut',
-        data: { 
-          labels, 
-          datasets: [{ 
-            data: counts, 
-            backgroundColor: bgColors, 
-            borderColor: '#1A0C0E', 
-            borderWidth: 3, 
-            hoverOffset: 6 
-          }] 
-        },
-        options: { ...baseOpts, cutout: '55%' } // NOVO: Deixa a pizza mais grossa
-      });
+      chartInstances[idx] = new Chart(ctx, { type: 'doughnut', data: { labels, datasets: [{ data: counts, backgroundColor: bgColors, borderColor: '#1A0C0E', borderWidth: 3, hoverOffset: 6 }] }, options: { ...baseOpts, cutout: '55%' } });
     } else {
-      const isHoriz = q.type === 'horizontal';
       chartInstances[idx] = new Chart(ctx, {
         type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            data: counts,
-            backgroundColor: bgColors,
-            borderRadius: 4,
-            barThickness: isHoriz ? 36 : undefined // NOVO: Barras mais grossas na horizontal
-          }]
-        },
-        options: {
-          ...baseOpts,
-          indexAxis: isHoriz ? 'y' : 'x',
-          scales: {
-            x: { 
-              grid: { color: 'rgba(255,255,255,0.03)' }, 
-              border: { display: false },
-              ticks: {
-                callback: function(value) {
-                  if (!isHoriz) {
-                    let label = this.getLabelForValue(value);
-                    return label && label.length > 20 ? label.substring(0, 20) + '...' : label;
-                  }
-                  return value;
-                }
-              }
-            },
-            y: { 
-              grid: { color: 'rgba(255,255,255,0.03)' }, 
-              border: { display: false },
-              ticks: {
-                callback: function(value) {
-                  if (isHoriz) {
-                    let label = this.getLabelForValue(value);
-                    return label && label.length > 20 ? label.substring(0, 20) + '...' : label;
-                  }
-                  return value;
-                }
-              }
-            }
-          }
-        }
+        data: { labels, datasets: [{ data: counts, backgroundColor: bgColors, borderRadius: 4, barThickness: 36 }] },
+        options: { ...baseOpts, indexAxis: 'y', scales: { x: { grid: { color: 'rgba(255,255,255,0.03)' }, border: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.03)' }, border: { display: false }, ticks: { callback: function(value) { let label = this.getLabelForValue(value); return label && label.length > 20 ? label.substring(0, 20) + '...' : label; } } } } }
       });
     }
 
-    const legendEl = document.getElementById(`legend-${idx}`);
-    if (legendEl) {
-      legendEl.innerHTML = labels.map((l, i) => `
-        <div class="legend-item">
-          <div class="legend-dot" style="background:${bgColors[i]}"></div>
-          <span>${l} <strong style="color:var(--ouro-brilho); margin-left:4px;">${counts[i]}</strong></span>
-        </div>`).join('');
-    }
+    document.getElementById(`legend-${idx}`).innerHTML = labels.map((l, i) => `<div class="legend-item"><div class="legend-dot" style="background:${bgColors[i]}"></div><span>${l} <strong style="color:var(--ouro-brilho); margin-left:4px;">${counts[i]}</strong></span></div>`).join('');
   }
 
   loadData();
